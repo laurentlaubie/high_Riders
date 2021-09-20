@@ -5,56 +5,42 @@
 {% block body %}
 <main class="container">
     <h1>Les utilisateurs</h1>
-        {% for user in users %}
 
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>Id</th>
-                        <td>{{ user.id }}</td>
-                    </tr>  
-                    <tr>
-                        <th>Pseudo</th>
-                        <td>{{ user.pseudo }}</td>
-                    </tr>  
-                     <tr>
-                        <th>Avatar</th>
-                        <th> <image src="{{ user.avatar }}" width="75" > </th>
-                    </tr>          
-                    <tr>
-                        <th>Firstname</th>
-                        <td>{{ user.firstname }}</td>
-                    </tr>
-                    <tr>
-                        <th>Lastname</th>
-                        <td>{{ user.lastname }}</td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td>{{ user.email }}</td>
-                    </tr>
-                    <tr>
-                        <th>Password</th>
-                        <td>{{ user.password }}</td>
-                    </tr>
-                    <tr>
-                        <th>Présentation</th>
-                        <td>{{ user.presentation }}</td>
-                    </tr>
-                     <tr>
-                        <th>Ville</th>
-                        <td>{{ user.city }}</td>
-                    </tr>
-                     <tr>
-                        <th>Département</th>
-                        <td>{{ user.departement }}</td>
-                    </tr>
-                     <tr>
-                        <th>Equipement</th>
-                        <td>{{ user.equipement }}</td>
-                    </tr>
-                </tbody>
-            </table>  
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Avatar</th>
+                    <th>Pseudo</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Présentation</th>
+                    <th>Email</th>
+                    <th>Mot de Passe</th>
+                    <th>ville</th>
+                    <th>Département</th>
+                    <th>Equipement</th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for user in users %}
+           <tr>
+                <td>{{ user.id }}</td>
+                <th> <image src="{{ user.avatar }}" width="75" > </th>
+                <td>{{ user.pseudo }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.presentation }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.city }}</td>
+                <td>{{ user.departement }}</td>
+                <td>{{ user.equipement }}</td>
+                
+                <td>
+                   
+
+            <a href="">Create new</a>
 
         {% endfor %}
 

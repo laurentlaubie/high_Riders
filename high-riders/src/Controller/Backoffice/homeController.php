@@ -14,15 +14,13 @@ class homeController extends AbstractController
 {
     // =====================affiche page d accueil =================//
     /**
-     * @Route("/home", name="home")
+     * @Route("/", name="home")
      */
-    public function index( SpotRepository $spotRepository): Response
+    public function index(): Response
     {
-        $spotshow = $spotRepository->findAll();
-
-        return $this->render('backoffice/home/index.html.twig', [
-           
-            'spots' => $spotshow,
+       
+        return $this->render('backoffice/index.html.twig', [
+            'home' => 'BackofficeController',
 
         ]);
     }
