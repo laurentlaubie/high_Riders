@@ -1,0 +1,22 @@
+USER: pseudo, avatar, firstname, lastname, email,password, presentation, city, departement equipement, created At, updated At
+SPOT: title, image, description, adress, city, longitude, latitude, openingHours, saisonDate, numbersUser, averageRating, difficulty, link, price, accessibility, like,dPositif, dNegatif, trackNumber typeSpot, status, created At, updated At, published At
+EVENT: title, image, description, openingHours, dateEvent, difficulty, link, price, accessibility, participationUser, like, typeEvent, status, created At, updated At, published At
+COMMENT: title, content, rate, image, labeltype, status, created At, updated At, published At
+CATEGORY: title, created At, updated At
+DEPARTEMENT: title, created At, updated At
+CONCTACTUS: firstname, lastname, email, content, created At
+PARTICIPATION : status
+
+is written by, 0N USER, 11 COMMENT
+s_is created by, 0N USER, 11 SPOT
+e_is created by, 0N USER, 11 EVENT
+s_is connected to, 0N CATEGORY, 1N SPOT
+e_is connected to, 0N CATEGORY, 1N EVENT
+u_is connected to, 0N CATEGORY, 0N USER
+is associated to, 0N SPOT, 11 EVENT
+cs_is created for, 11 COMMENT, 0N SPOT
+ce_is created for, 11 COMMENT, 0N EVENT
+s_is joint for, 01 DEPARTEMENT, 11 SPOT
+e_is joint for, 01 DEPARTEMENT, 11 EVENT
+u_participed to, 0N USER, 11 PARTICIPATION
+e_has participation to, 0N EVENT, 11 PARTICIPATION
