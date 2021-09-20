@@ -5,10 +5,8 @@ namespace App\Controller\Backoffice;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Componentuser\Routing\Annotation\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
      * @Route("/backoffice/user", name="backoffice_")
@@ -32,10 +30,10 @@ class userController extends AbstractController
     /**
     * @Route("/{id}", name="user_show",  methods={"GET"})
     */
-    //public function show(User $user): Response
-   // {
-    //    return $this->render('backoffice/user/show.html.twig', [
-    //        'user' => $user,
-    //    ]);
-   // }
+    public function show(User $user): Response
+    {
+        return $this->render('backoffice/user/show.html.twig', [
+        'user' => $user,
+        ]);
+    }
 }
