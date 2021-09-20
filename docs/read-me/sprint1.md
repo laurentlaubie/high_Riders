@@ -24,12 +24,9 @@ Reprendre les étapes faites en cours
 - Création d'une BDD _high-riders_dev_ via la ligne de commandes
     - Lancez la commande `php bin/console doctrine:database:create`
 
-### Entité `Post`
-- Créez l'entité _Post_ avec la commande `php bin/console make:entity` :
-    - Exemple de propriétés pour commencer : `title`, `body`, `nbLikes`, `publishedAt`, `createdAt`, `updatedAt`.
-    - Voir la doc : [Creating an Entity Class](https://symfony.com/doc/current/doctrine.html#creating-an-entity-class)
+### Entité `Spot`
+- Créetion de  l'entité _Spot_ avec la commande `php bin/console make:entity` :
 - Mettre à jour la BDD : `php bin/console doctrine:schema:update --force`
-    - Vos tables ont bien été créées 🎉
 
 ### Controleur `src/Controller/PostController`
 -  Créer les routes suivantes permettant de :
