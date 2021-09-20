@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
      * @Route("/backoffice", name="backoffice_")
      */
-class homeController extends AbstractController
+class HomeController extends AbstractController
 {
     // =====================affiche page d accueil =================//
     /**
