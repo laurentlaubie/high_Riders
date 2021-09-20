@@ -30,10 +30,9 @@ Reprendre les étapes faites en cours
 - Création de  l'entité _Departement_ .
 - Création de  l'entité _Discipline_ .
 - Création de  l'entité _Comment_ .
-- Création de  l'entité _Contact_ . --DOING
-- _
-- Creation de du shema de migration : `php bin/console make:migrate`
-- Insertion du shema dans la base de données : `php bin/console make:migrate:migrate`
+- Création de  l'entité _Contact_ . 
+
+
 
 - Mettre à jour la BDD : `php bin/console doctrine:schema:update --force`
 
