@@ -1,7 +1,7 @@
-USER: pseudo, avatar, firstname, lastname, email,password, presentation, city, departement equipement, created At, updated At
-SPOT: title, image, description, adress, city, longitude, latitude, openingHours, saisonDate, numbersUser, averageRating, difficulty, link, price, accessibility, like,dPositif, dNegatif, trackNumber typeSpot, status, created At, updated At, published At
-EVENT: title, image, description, openingHours, dateEvent, difficulty, link, price, accessibility, participationUser, like, typeEvent, status, created At, updated At, published At
-COMMENT: title, content, rate, image, labeltype, status, created At, updated At, published At
+USER: pseudo, avatar, firstname, lastname, email, password, presentation, city, departement, equipement, created At, updated At
+SPOT: title, image, description, adress, city, longitude, latitude, opening_hours, closed_hours, saison_date, numbers_user, average_rating, difficulty, link, price, accessibility, s_like, d_positif, d_negatif, track_number, type_spot, status, created At, updated At, published At
+EVENT: title, image, description, opening_hours, closed_hours, date_event, difficulty, link, price, accessibility, participation_user, e_like, type_event, status, created At, updated At, published At
+COMMENT: title, content, rate, image, label_type, status, created At, updated At, published At
 CATEGORY: title, created At, updated At
 DEPARTEMENT: title, created At, updated At
 CONCTACTUS: firstname, lastname, email, content, created At
