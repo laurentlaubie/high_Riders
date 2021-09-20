@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Discipline;
+use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Discipline|null find($id, $lockMode = null, $lockVersion = null)
- * @method Discipline|null findOneBy(array $criteria, array $orderBy = null)
- * @method Discipline[]    findAll()
- * @method Discipline[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Category|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Category|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Category[]    findAll()
+ * @method Category[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DisciplineRepository extends ServiceEntityRepository
+class CategoryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Discipline::class);
+        parent::__construct($registry, Category::class);
     }
 
     // /**
-    //  * @return Discipline[] Returns an array of Discipline objects
+    //  * @return Category[] Returns an array of Category objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class DisciplineRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Discipline
+    public function findOneBySomeField($value): ?Category
     {
         return $this->createQueryBuilder('d')
             ->andWhere('d.exampleField = :val')
