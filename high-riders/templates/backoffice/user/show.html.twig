@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello page user backoffice{% endblock %}
+
+{% block body %}
+<main class="container">
+    <h1>Utilisateur</h1>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ user.id }}</td>
+                    </tr>  
+                    <tr>
+                        <th>Pseudo</th>
+                        <td>{{ user.pseudo }}</td>
+                    </tr>  
+                     <tr>
+                        <th>Avatar</th>
+                        <th> <image src="{{ user.avatar }}" width="75" > </th>
+                    </tr>          
+                    <tr>
+                        <th>Firstname</th>
+                        <td>{{ user.firstname }}</td>
+                    </tr>
+                    <tr>
+                        <th>Lastname</th>
+                        <td>{{ user.lastname }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Password</th>
+                        <td>{{ user.password }}</td>
+                    </tr>
+                    <tr>
+                        <th>Présentation</th>
+                        <td>{{ user.presentation }}</td>
+                    </tr>
+                     <tr>
+                        <th>Ville</th>
+                        <td>{{ user.city }}</td>
+                    </tr>
+                     <tr>
+                        <th>Département</th>
+                        <td>{{ user.departement }}</td>
+                    </tr>
+                     <tr>
+                        <th>Equipement</th>
+                        <td>{{ user.equipement }}</td>
+                    </tr>
+                </tbody>
+            </table>  
+
+
+</main>
+{% endblock %}
