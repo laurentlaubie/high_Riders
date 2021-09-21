@@ -15,7 +15,7 @@ class HomeController extends AbstractController
      */
     public function index(SpotRepository $spotRepository, EventRepository $eventRepository): Response
     {
-        return $this->render('api/v1/home/index.html.twig', [
+        return $this->json(  [
 
             // data recovery from the entiy spot whith findBy by selection orderBy and limit the last 3 register.
             'lastSpots' => $spotRepository->findBy([],['id' => 'DESC'], 3),
@@ -23,6 +23,6 @@ class HomeController extends AbstractController
             'lastEvents' => $eventRepository->findBy([],['id' => 'DESC'], 3),
             // data recovery from the entiy spot whith findBy by selection orderBy and limit 3 best like register.
             'bestSpots' => $spotRepository->findBy([],['s_like' => 'DESC'], 3),
-        ]);
+        ],200);
     }
 }
