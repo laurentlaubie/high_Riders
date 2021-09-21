@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello page Event Backoffice{% endblock %}
+
+{% block body %}
+<main class="container">
+    <h1>Evenement</h1>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ event.id }}</td>
+                    </tr>  
+                    <tr>
+                        <th>Titre</th>
+                        <td>{{ event.title }}</td>
+                    </tr>  
+                     <tr>
+                        <th>Image</th>
+                        <th> <image src="{{ event.image }}" width="75" > </th>
+                    </tr>          
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ event.description }}</td>
+                    </tr>
+                    <tr>
+                        <th>Horaire d'ouverture</th>
+                        <td>{{ event.openingHours|date('d-m-Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Horaire de fermeture</th>
+                        <td>{{ event.closedHours|date('d-m-Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Difficultées</th>
+                        <td>{{ event.difficulty }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de l'evenement</th>
+                        <td>{{ event.dateEvent|date('d-m-Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Lien site</th>
+                        <td>{{ event.link }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prix d'entrée</th>
+                        <td>{{ event.price }}</td>
+                    </tr>
+                    <tr>
+                        <th>Accessibilités</th>
+                        <td>{{ event.accessibility }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nbre de Participant</th>
+                        <td>{{ event.participationUser }}</td>
+                    </tr>
+                     <tr>
+                        <th>Nbre de Like</th>
+                        <td>{{ event.eLike }}</td>
+                    </tr>
+                     <tr>
+                        <th>Status</th>
+                        <td>{{ event.status }}</td>
+                    </tr>
+                     <tr>
+                        <th>Type d'évenement</th>
+                        <td>{{ event.typeEvent }}</td>
+                    </tr>
+                    
+
+                </tbody>
+            </table>  
+
+
+</main>
+{% endblock %}
