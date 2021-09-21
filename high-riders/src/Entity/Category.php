@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,28 @@ class Category
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="categories")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Spot::class, inversedBy="categories")
+     */
+    private $spot;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="categories")
+     */
+    private $event;
+
+    public function __construct()
+    {
+        $this->user = new ArrayCollection();
+        $this->spot = new ArrayCollection();
+        $this->event = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +93,78 @@ class Category
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        $this->user->removeElement($user);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Spot[]
+     */
+    public function getSpot(): Collection
+    {
+        return $this->spot;
+    }
+
+    public function addSpot(Spot $spot): self
+    {
+        if (!$this->spot->contains($spot)) {
+            $this->spot[] = $spot;
+        }
+
+        return $this;
+    }
+
+    public function removeSpot(Spot $spot): self
+    {
+        $this->spot->removeElement($spot);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvent(): Collection
+    {
+        return $this->event;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->event->contains($event)) {
+            $this->event[] = $event;
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        $this->event->removeElement($event);
 
         return $this;
     }

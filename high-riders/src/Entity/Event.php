@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -101,6 +103,38 @@ class Event
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $publishedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="event")
+     */
+    private $comments;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="event")
+     */
+    private $categories;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Spot::class, inversedBy="event")
+     */
+    private $spot;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="event")
+     */
+    private $departement;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="event")
+     */
+    private $participations;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->participations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -307,6 +341,117 @@ class Event
     public function setPublishedAt(?\DateTimeImmutable $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getEvent() === $this) {
+                $comment->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->addEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removeEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function getSpot(): ?Spot
+    {
+        return $this->spot;
+    }
+
+    public function setSpot(?Spot $spot): self
+    {
+        $this->spot = $spot;
+
+        return $this;
+    }
+
+    public function getDepartement(): ?Departement
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?Departement $departement): self
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Participation[]
+     */
+    public function getParticipations(): Collection
+    {
+        return $this->participations;
+    }
+
+    public function addParticipation(Participation $participation): self
+    {
+        if (!$this->participations->contains($participation)) {
+            $this->participations[] = $participation;
+            $participation->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipation(Participation $participation): self
+    {
+        if ($this->participations->removeElement($participation)) {
+            // set the owning side to null (unless already changed)
+            if ($participation->getEvent() === $this) {
+                $participation->setEvent(null);
+            }
+        }
 
         return $this;
     }

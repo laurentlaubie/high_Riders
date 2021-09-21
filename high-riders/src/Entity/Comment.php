@@ -62,6 +62,21 @@ class Comment
      */
     private $publishedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comment")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Spot::class, inversedBy="comments")
+     */
+    private $spot;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="comments")
+     */
+    private $event;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -171,6 +186,42 @@ class Comment
     public function setPublishedAt(?\DateTimeImmutable $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getSpot(): ?Spot
+    {
+        return $this->spot;
+    }
+
+    public function setSpot(?Spot $spot): self
+    {
+        $this->spot = $spot;
+
+        return $this;
+    }
+
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Event $event): self
+    {
+        $this->event = $event;
 
         return $this;
     }
