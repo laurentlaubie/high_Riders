@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DepartementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,22 @@ class Departement
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Spot::class, mappedBy="departement")
+     */
+    private $spot;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="departement")
+     */
+    private $event;
+
+    public function __construct()
+    {
+        $this->spot = new ArrayCollection();
+        $this->event = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +87,66 @@ class Departement
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Spot[]
+     */
+    public function getSpot(): Collection
+    {
+        return $this->spot;
+    }
+
+    public function addSpot(Spot $spot): self
+    {
+        if (!$this->spot->contains($spot)) {
+            $this->spot[] = $spot;
+            $spot->setDepartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpot(Spot $spot): self
+    {
+        if ($this->spot->removeElement($spot)) {
+            // set the owning side to null (unless already changed)
+            if ($spot->getDepartement() === $this) {
+                $spot->setDepartement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvent(): Collection
+    {
+        return $this->event;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->event->contains($event)) {
+            $this->event[] = $event;
+            $event->setDepartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->event->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getDepartement() === $this) {
+                $event->setDepartement(null);
+            }
+        }
 
         return $this;
     }

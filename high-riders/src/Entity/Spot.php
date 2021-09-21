@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SpotRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -141,6 +143,33 @@ class Spot
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $publishedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="spot")
+     */
+    private $comments;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="spot")
+     */
+    private $categories;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="spot")
+     */
+    private $event;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="spot")
+     */
+    private $departement;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->event = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -443,6 +472,105 @@ class Spot
     public function setPublishedAt(?\DateTimeImmutable $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setSpot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getSpot() === $this) {
+                $comment->setSpot(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->addSpot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removeSpot($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvent(): Collection
+    {
+        return $this->event;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->event->contains($event)) {
+            $this->event[] = $event;
+            $event->setSpot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->event->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getSpot() === $this) {
+                $event->setSpot(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDepartement(): ?Departement
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?Departement $departement): self
+    {
+        $this->departement = $departement;
 
         return $this;
     }
