@@ -9,11 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
-     * @Route("/backoffice/user", name="backoffice_")
+     * @Route("/backoffice/users", name="backoffice_")
      */
 class UserController extends AbstractController
 {
-    // ===================== Page User Display  =================//
+    // ===================== Page Users Display  =================//
     /**
     * @Route("/", name="user_index",  methods={"GET"})
     */
