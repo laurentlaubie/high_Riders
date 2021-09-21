@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+
+<div class="container">
+     <ul class="navbar-nav me-4 mb-md-0">
+                        {% if app.user %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ app.user.firstname }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Profil</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li><a class="dropdown-item" href="{{ path('backoffice_home') }}">Back Office</a></li>
+                                {% endif %}
+                                <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
+                            </ul>
+                        </li>
+                            
+                        {% else %}
+                        <li class="nav-item">
+                        <a class="btn btn-danger" aria-current="page" href="{{ path('app_login') }}">Se connecter</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+</div>
+
+{% endblock %}
