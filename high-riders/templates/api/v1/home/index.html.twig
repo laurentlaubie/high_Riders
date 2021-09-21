@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <h1>High Riders - Accueil ! </h1>
+
+    <div class="container">
+            <h2>Les derniérs évenements</h2>
+            {% for lastEvent in lastEvents%}
+            <p>
+              *  {{lastEvent.title}} - {{ lastEvent.dateEvent|date('d/m/y') }}
+            </p>
+            {% endfor %}
+            <h2>Les derniérs spots</h2>
+            {% for lastSpot in lastSpots%}
+            <p>
+              *  {{lastSpot.title}} 
+             - {{ lastSpot.createdAt|date('d/m/y') }}
+            </p>
+            {% endfor %}
+            <h2>Les Meilleurs spots</h2>
+            {% for bestSpot in bestSpots%}
+            <p>
+              *  {{bestSpot.title}} - {{bestSpot.sLike}}
+            </p>
+            {% endfor %}
+        </div>
+{% endblock %}
