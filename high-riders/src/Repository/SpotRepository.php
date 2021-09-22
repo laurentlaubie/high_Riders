@@ -19,6 +19,27 @@ class SpotRepository extends ServiceEntityRepository
         parent::__construct($registry, Spot::class);
     }
 
+    /**
+     * Effectue une recherche de séries en fonction de la variable
+     * $title
+     * 
+     * Version 1 : Query builder
+     *
+     * @param $title
+     * @return TvShow[]
+     */
+    public function searchSpotByTitle($title)
+    {
+        // https://www.doctrine-project.org/projects/doctrine-orm/en/2.9/reference/query-builder.html
+        return $this->createQueryBuilder('spot')
+            // Clause WHERE pour filtre en fonction de $title
+            ->where('spot.title LIKE :title')
+            ->orderBy('spot.createdAt', 'DESC')
+            ->setParameter(':title', "%$title%")
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Spot[] Returns an array of Spot objects
     //  */
