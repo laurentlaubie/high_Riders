@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ParticipationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 /**
  * @ORM\Entity(repositoryClass=ParticipationRepository::class)
  */

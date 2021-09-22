@@ -17,7 +17,7 @@ class Comment
      * @ORM\Column(type="integer")
      * 
      * 
-     * @Groups({"spot_detail"})
+     * @Groups({"spot_detail"}, "event_detail")
      * 
      */
     private $id;
@@ -25,7 +25,7 @@ class Comment
     /**
      * @ORM\Column(type="string", length=255)
      * 
-     * @Groups({"spot_detail"})
+     * @Groups({"spot_detail", "event_detail"})
      * 
      */
     private $title;
@@ -33,7 +33,7 @@ class Comment
     /**
      * @ORM\Column(type="text")
      * 
-     * @Groups({"spot_detail"})
+     * @Groups({"spot_detail"}, "event_detail")
      * 
      */
     private $content;
@@ -41,7 +41,7 @@ class Comment
     /**
      * @ORM\Column(type="smallint", nullable=true)
      * 
-     * @Groups({"spot_detail"})
+     * @Groups({"spot_detail"}, "event_detail")
      * 
      */
     private $rate;
@@ -49,7 +49,7 @@ class Comment
     /**
      * @ORM\Column(type="string", length=2100, nullable=true)
      * 
-     * @Groups({"spot_detail"})
+     * @Groups({"spot_detail"}, "event_detail")
      * 
      */
     private $image;
@@ -57,7 +57,7 @@ class Comment
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"spot_detail"})
+     * @Groups({"spot_detail"}, "event_detail")
      * 
      */
     private $status;
@@ -65,7 +65,7 @@ class Comment
     /**
      * @ORM\Column(type="string", length=50)
      * 
-     * @Groups({"spot_detail"})
+     * @Groups({"spot_detail"}, "event_detail")
      * 
      */
     private $label_type;
@@ -73,7 +73,7 @@ class Comment
     /**
      * @ORM\Column(type="datetime_immutable")
      * 
-     * @Groups({"spot_detail"})
+     * @Groups({"spot_detail"}, "event_detail")
      * 
      */
     private $createdAt;
@@ -81,7 +81,7 @@ class Comment
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      * 
-     * @Groups({"spot_detail"})
+     * @Groups({"spot_detail"}, "event_detail")
      * 
      */
     private $updatedAt;
@@ -94,7 +94,7 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comment")
      * 
-     * @Groups({"spot_detail"})
+     * @Groups({"spot_detail"}, "event_detail")
      * 
      */
     private $user;
@@ -110,7 +110,7 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="comments")
      * 
-     * @Groups({"spot_detail"})
+     * @Groups("event_detail")
      * 
      */
     private $event;

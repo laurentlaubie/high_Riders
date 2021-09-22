@@ -19,6 +19,26 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    /**
+     * Effectue une recherche de séries en fonction de la variable
+     * $title
+     * 
+     * Version 1 : Query builder
+     *
+     * @param $title
+     * @return TvShow[]
+     */
+    public function searchEventByTitle($title)
+    {
+        // https://www.doctrine-project.org/projects/doctrine-orm/en/2.9/reference/query-builder.html
+        return $this->createQueryBuilder('event')
+            // Clause WHERE pour filtre en fonction de $title
+            ->where('event.title LIKE :title')
+            ->orderBy('event.createdAt', 'DESC')
+            ->setParameter(':title', "%$title%")
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */
