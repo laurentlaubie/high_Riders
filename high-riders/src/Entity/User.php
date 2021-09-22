@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,16 +21,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"index_user", "show_user", "add_user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * 
+     *  @Groups({"index_user", "show_user", "add_user", "edit_user"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"index_user", "add_user"})
      */
     private $roles = [];
 
@@ -42,68 +48,92 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=150)
      * 
-     * @Groups({"event_list", "event_detail"}, {"spot_list", "spot_detail"})
+     * @Groups({"index_user", "show_user","add_user", "edit_user", "event_list", "event_detail", "spot_list", "spot_detail"})
      * 
      */
     private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=2100, nullable=true)
+     * 
+     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
      */
     private $avatar;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * 
+     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
      */
     private $presentation;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
      */
     private $departement;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * 
+     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
      */
     private $equipement;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * 
+     * @Groups({"index_user", "show_user", "add_user"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * 
+     * @Groups({"index_user"})
      */
     private $updatedAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
+     * 
+     * @Groups({"index_user", "show_user"})
      */
     private $comment;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="user")
+     * 
+     * @Groups({"index_user", "show_user", "add_user","edit_user"})
      */
     private $categories;
 
     /**
      * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="user")
+     * 
+     * @Groups({"index_user", "show_user"})
      */
     private $participations;
 
@@ -112,6 +142,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->comment = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->participations = new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int
