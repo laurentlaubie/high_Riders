@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Spot
+{% endblock %}
+
+{% block body %}
+    <h1>Edition de Spot</h1>
+
+    
+    {{ include('backoffice/spots/_form.html.twig') }}
+
+    <a href="{{ path('backoffice_spots') }}">back to list</a>
+
+    
+{% endblock %}

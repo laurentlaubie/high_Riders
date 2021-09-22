@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Spot
+{% endblock %}
+
+{% block body %}
+    <h1>Creation d'un nouveau Sport</h1>
+
+    {{ include('backoffice/spots/_form.html.twig') }}
+
+    <a href="{{ path('backoffice_spots') }}">Retour aux spots</a>
+{% endblock %}
