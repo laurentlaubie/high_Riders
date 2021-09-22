@@ -21,7 +21,7 @@ class Spot
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"spot_list", "spot_detail"})
+     * @Groups({"spot_list", "spot_detail", "event_detail"})
      * 
      */
     private $id;
@@ -39,7 +39,7 @@ class Spot
      * @ORM\Column(type="string", length=2100)
      * 
      * 
-     * @Groups({"spot_list", "spot_detail"})
+     * @Groups({"spot_list", "spot_detail", "event_detail"})
      * 
      */
     private $image;
@@ -279,6 +279,7 @@ class Spot
         $this->categories = new ArrayCollection();
         $this->event = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int
