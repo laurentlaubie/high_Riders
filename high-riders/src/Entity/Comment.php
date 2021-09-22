@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -14,46 +15,74 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $content;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $rate;
 
     /**
      * @ORM\Column(type="string", length=2100, nullable=true)
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $image;
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $status;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $label_type;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $updatedAt;
 
@@ -64,16 +93,25 @@ class Comment
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comment")
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Spot::class, inversedBy="comments")
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $spot;
 
     /**
      * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="comments")
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $event;
 
