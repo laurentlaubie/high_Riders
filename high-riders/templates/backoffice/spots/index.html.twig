@@ -1,20 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello spotsController!{% endblock %}
+{% block title %}Hello page Spots backoffice{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<main >
+    <h1>Les Spots</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Titre</th>
+                    <th>Image</th>
+                    <th>Description du spot</th>
+                    <th>Adresse</th>
+                    <th>Ville</th>
+                    <th>Heures d'ouverture</th>
+                    <th>Heures de fermeture</th>
+                    <th>Ouverture saison</th>
+                    <th>nbres de Riders</th>
+                    <th>Difficulté du site</th>
+                    <th>Liens vers site Officiel</th>
+                    <th>Prix d'entrée</th>
+                    <th>Accessibilité</th>
+                    <th>Nbre de Like/th>
+                    <th>Denivelé + </th>
+                    <th>Denivelé - </th>
+                    <th>traknumber</th>
+                    <th>Type de Spot</th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for listspot in spots %}
+            <tr>
+                <td>{{ listspot.id }}</td>
+                <td>{{ listspot.title }}</td>
+                <th> <image src="{{ listspot.image }}" width="75" > </th>
+                <td>{{ listspot.description }}</td>
+                <td>{{ listspot.address }}</td>
+                <td>{{ listspot.city }}</td>
+                <td>{{ listspot.openingHours }}</td>
+                <td>{{ listspot.closedHours }}</td>
+                <td>{{ listspot.saisonDate }}</td>
+                <td>{{ listspot.numbersUsers }}</td>
+                <td>{{ listspot.difficulty }}</td>
+                <td>{{ listspot.link }}</td>
+                <td>{{ listspot.price }}</td>
+                <td>{{ listspot.accessibility}}</td>
+                <td>{{ listspot.sLike }}</td>
+                <td>{{ listspot.dPositif }}</td>
+                <td>{{ listspot.dNegatif }}</td>
+                <td>{{ listspot.trackNumber	 }}</td>
+                <td>{{ listspot.typeSpot	 }}</td>
+            
+                <td> 
+                <a href="">Editer</a> 
+                <a href="">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/Spé Symfo/Apothéose/high-riders/high-riders/src/Controller/Backoffice/spotsController.php'|file_link(0) }}">src/Controller/Backoffice/spotsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/Spé Symfo/Apothéose/high-riders/high-riders/templates/backoffice/spots/index.html.twig'|file_link(0) }}">templates/backoffice/spots/index.html.twig</a></code></li>
-    </ul>
-</div>
+
+</main>
+
+
 {% endblock %}
