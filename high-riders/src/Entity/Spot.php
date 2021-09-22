@@ -3,9 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\SpotRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SpotRepository::class)
@@ -16,151 +20,256 @@ class Spot
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150)
+     * 
+     *
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=2100)
+     * 
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $image;
 
     /**
      * @ORM\Column(type="text")
+     * 
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $city;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $latitude;
 
     /**
      * @ORM\Column(type="time", nullable=true)
+     * 
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $openingHours;
 
     /**
      * @ORM\Column(type="time", nullable=true)
+     * 
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $closed_hours;
 
     /**
      * @ORM\Column(type="dateinterval", nullable=true)
+     * 
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $saison_date;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $numbers_users;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $average_rating;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * 
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $difficulty;
 
     /**
      * @ORM\Column(type="string", length=2100, nullable=true)
+     * 
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $link;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $price;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $accessibility;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $s_like;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $d_positif;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $d_negatif;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $track_number;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $type_spot;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", options={"default" : 1})
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
+     * 
      */
     private $status;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $updatedAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $publishedAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="spot")
+     * 
+     * @Groups({"spot_detail"})
+     * 
      */
     private $comments;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="spot")
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $categories;
 
     /**
      * @ORM\OneToMany(targetEntity=Event::class, mappedBy="spot")
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $event;
 
     /**
      * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="spot")
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     * 
      */
     private $departement;
 
@@ -169,6 +278,7 @@ class Spot
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->event = new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int
