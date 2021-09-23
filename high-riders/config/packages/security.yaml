@@ -38,3 +38,16 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        
+        # Il faut avoir le role Admin pour afficher Back office
+        - { path: ^/backoffice, roles: ROLE_ADMIN }
+
+        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+
+    role_hierarchy:
+        # Un role Admin peut faire, tout ce que fait un roleUser
+        ROLE_ADMIN: ROLE_USER
+
+        # Un role SUPER Admin peut faire, tout ce que fait un role Admin
+        ROLE_SUPER_ADMIN: ROLE_ADMIN  

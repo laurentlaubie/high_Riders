@@ -1,61 +1,74 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello page user backoffice{% endblock %}
+{% block title %}User{% endblock %}
 
 {% block body %}
-<main class="container">
-    <h1>Utilisateur</h1>
-            <a href="{{ path('backoffice_user_index')  }}">Retour aux Utilisateurs</a> 
+    <h1>User</h1>
 
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>Id</th>
-                        <td>{{ user.id }}</td>
-                    </tr>  
-                    <tr>
-                        <th>Pseudo</th>
-                        <td>{{ user.pseudo }}</td>
-                    </tr>  
-                     <tr>
-                        <th>Avatar</th>
-                        <th> <image src="{{ user.avatar }}" width="75" > </th>
-                    </tr>          
-                    <tr>
-                        <th>Firstname</th>
-                        <td>{{ user.firstname }}</td>
-                    </tr>
-                    <tr>
-                        <th>Lastname</th>
-                        <td>{{ user.lastname }}</td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td>{{ user.email }}</td>
-                    </tr>
-                    <tr>
-                        <th>Password</th>
-                        <td>{{ user.password }}</td>
-                    </tr>
-                    <tr>
-                        <th>Présentation</th>
-                        <td>{{ user.presentation }}</td>
-                    </tr>
-                     <tr>
-                        <th>Ville</th>
-                        <td>{{ user.city }}</td>
-                    </tr>
-                     <tr>
-                        <th>Département</th>
-                        <td>{{ user.departement }}</td>
-                    </tr>
-                     <tr>
-                        <th>Equipement</th>
-                        <td>{{ user.equipement }}</td>
-                    </tr>
-                </tbody>
-            </table>  
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ user.password }}</td>
+            </tr>
+            <tr>
+                <th>Pseudo</th>
+                <td>{{ user.pseudo }}</td>
+            </tr>
+            <tr>
+                <th>Avatar</th>
+                <td>{{ user.avatar }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ user.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Presentation</th>
+                <td>{{ user.presentation }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ user.city }}</td>
+            </tr>
+            <tr>
+                <th>Departement</th>
+                <td>{{ user.departement }}</td>
+            </tr>
+            <tr>
+                <th>Equipement</th>
+                <td>{{ user.equipement }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
 
+    <a href="{{ path('backoffice_user_index') }}">back to list</a>
 
-</main>
+    <a href="{{ path('backoffice_user_edit', {'id': user.id}) }}">edit</a>
+
+    {{ include('backoffice/user/_delete_form.html.twig') }}
 {% endblock %}

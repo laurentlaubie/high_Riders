@@ -1,51 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello page user backoffice{% endblock %}
+{% block title %}User index{% endblock %}
 
 {% block body %}
-<main class="container">
-    <h1>Les utilisateurs</h1>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Avatar</th>
-                    <th>Pseudo</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Présentation</th>
-                    <th>Email</th>
-                    <th>Mot de Passe</th>
-                    <th>ville</th>
-                    <th>Département</th>
-                    <th>Equipement</th>
-                </tr>
-            </thead>
-            <tbody>
+    <h1>User index</h1>
+    <div class='container'>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+               
+                <th>Pseudo</th>
+                <th>Avatar</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Presentation</th>
+                <th>City</th>
+                <th>Departement</th>
+                <th>Equipement</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
         {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
-                <th> <image src="{{ user.avatar }}" width="75" > </th>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                
                 <td>{{ user.pseudo }}</td>
+                <td>{{ user.avatar }}</td>
                 <td>{{ user.firstname }}</td>
                 <td>{{ user.lastname }}</td>
                 <td>{{ user.presentation }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.password }}</td>
                 <td>{{ user.city }}</td>
                 <td>{{ user.departement }}</td>
                 <td>{{ user.equipement }}</td>
-                  
+                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                <a href="">Editer</a>
-                <a href="">Supprimer</a>
+                    <a href="{{ path('backoffice_user_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('backoffice_user_edit', {'id': user.id}) }}">edit</a>
                 </td>
             </tr>
+        {% else %}
+            <tr>
+                <td colspan="15">no records found</td>
+            </tr>
         {% endfor %}
-                <a href="{{ path('backoffice_home')  }}">Retour à l'accueil</a> 
-
-
-
-</main>
+        </tbody>
+    </table>
+</div>
+    <a href="{{ path('backoffice_user_add') }}">Create new</a>
 {% endblock %}
