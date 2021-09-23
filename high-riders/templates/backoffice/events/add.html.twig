@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel Evenement
+{% endblock %}
+
+{% block body %}
+    <h1>Creation d'un nouvel Evenement</h1>
+    <main class="container">
+        <div class="m-4">
+            {{ include('backoffice/events/_form.html.twig') }}
+
+            <a href="{{ path('backoffice_events') }}">Retour aux spots</a>
+        </div>
+    </main>
+{% endblock %}
