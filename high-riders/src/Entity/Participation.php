@@ -20,7 +20,7 @@ class Participation
     private $id;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", options={"default" : 1})
      */
     private $status;
 

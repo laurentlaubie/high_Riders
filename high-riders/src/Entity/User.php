@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -29,13 +29,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * 
-     *  @Groups({"index_user", "show_user", "add_user", "edit_user"})
+     * @Assert\NotBlank(message="merci de saisir un email")
+     * @Groups({"show_user", "add_user", "edit_user"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"index_user", "add_user"})
+     * @Groups({"add_user"})
      */
     private $roles = [];
 
@@ -48,57 +49,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=150)
      * 
+     * @Assert\NotBlank(message="merci de saisir un pseudo")
      * @Groups({"index_user", "show_user","add_user", "edit_user", "event_list", "event_detail", "spot_list", "spot_detail"})
-     * 
      */
     private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=2100, nullable=true)
      * 
-     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
+     * @Groups({"show_user", "add_user", "edit_user"})
      */
     private $avatar;
 
     /**
      * @ORM\Column(type="string", length=255)
      * 
-     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
+     * @Assert\NotBlank(message="merci de saisir un prénom")
+     * @Groups({"show_user", "add_user", "edit_user"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * 
-     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
+     * @Groups({"show_user", "add_user", "edit_user"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * 
-     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
+     * @Groups({"show_user", "add_user", "edit_user"})
      */
     private $presentation;
 
     /**
      * @ORM\Column(type="string", length=255)
      * 
-     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
+     * @Assert\NotBlank(message="merci de saisir une ville")
+     * @Groups({"show_user", "add_user", "edit_user"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255)
      * 
-     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
+     * @Assert\NotBlank(message="merci de saisir un département")
+     * @Groups({"show_user", "add_user", "edit_user"})
      */
     private $departement;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * 
-     * @Groups({"index_user", "show_user", "add_user", "edit_user"})
+     * @Groups({"show_user", "add_user", "edit_user"})
      */
     private $equipement;
 
@@ -119,21 +123,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
      * 
-     * @Groups({"index_user", "show_user"})
+     * @Groups({"show_user"})
      */
     private $comment;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="user")
      * 
-     * @Groups({"index_user", "show_user", "add_user","edit_user"})
+     * @Groups({"show_user", "add_user","edit_user"})
      */
     private $categories;
 
     /**
      * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="user")
      * 
-     * @Groups({"index_user", "show_user"})
+     * @Groups({"show_user"})
      */
     private $participations;
 

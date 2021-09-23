@@ -7,7 +7,7 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -20,7 +20,7 @@ class Event
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"event_list", "event_detail"}, {"spot_list", "spot_detail"})
+     * @Groups({"event_list", "event_detail", "spot_list", "spot_detail"})
      * 
      */
     private $id;
@@ -28,7 +28,8 @@ class Event
     /**
      * @ORM\Column(type="string", length=255)
      * 
-     * @Groups({"event_list", "event_detail"},{"spot_list", "spot_detail"})
+     * @Assert\NotBlank(message="merci de saisir un titre")
+     * @Groups({"event_list", "event_detail","spot_list", "spot_detail"})
      * 
      */
     private $title;
@@ -36,6 +37,7 @@ class Event
     /**
      * @ORM\Column(type="string", length=2100)
      * 
+     * @Assert\NotBlank(message="merci d'upload une image")
      * @Groups({"event_list", "event_detail"})
      *
      */
@@ -44,6 +46,7 @@ class Event
     /**
      * @ORM\Column(type="text")
      * 
+     * @Assert\NotBlank(message="merci de saisir un nom")
      * @Groups({"event_detail"})
      *
      */
@@ -76,6 +79,7 @@ class Event
     /**
      * @ORM\Column(type="date")
      * 
+     * @Assert\NotBlank(message="merci de saisir un nom")
      * @Groups({"event_list", "event_detail"})
      *
      */
@@ -130,7 +134,7 @@ class Event
     private $status;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, options={"default" : 1})
      * 
      * @Groups({"event_list", "event_detail"})
      *
