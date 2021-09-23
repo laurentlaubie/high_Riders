@@ -52,6 +52,14 @@ class Departement
      */
     private $event;
 
+    /**
+     * Si l'on tente de faire un echo sur l'objet Departement, PHP retournera la valeur du nom
+     */
+    public function __toString()
+    {
+        return $this->title;
+    }
+
     public function __construct()
     {
         $this->spot = new ArrayCollection();

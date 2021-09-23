@@ -57,6 +57,14 @@ class Category
      */
     private $event;
 
+    /**
+     * Si l'on tente de faire un echo sur l'objet Category, PHP retournera la valeur du nom
+     */
+    public function __toString()
+    {
+        return $this->title;
+    }
+
     public function __construct()
     {
         $this->user = new ArrayCollection();

@@ -53,8 +53,8 @@ class SpotsType extends AbstractType
             ->add('track_number')
             ->add('type_spot')
             //->add('status')
-            //->add('categories')
-            //->add('departement')
+            ->add('categories')
+            ->add('departement')
         ;
     }
 
