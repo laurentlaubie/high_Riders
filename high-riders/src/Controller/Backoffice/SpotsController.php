@@ -46,95 +46,50 @@ class SpotsController extends AbstractController
 
 
 
-    // /* // ===================== Page add spot  =================//
-    // /**
-    // * @Route("/add", name="spot_add", methods={"GET","POST"})
-    // */
-    // public function add(Request $request, ImageUploader $imageUploader, SluggerInterface $slugger) :Response
-    // {
-    //     $spot = new spot();
-    //     $form = $this->createForm(SpotsType::class, $spot);
-    //     $form->handleRequest($request);
+    // ===================== Page add spot  =================//
+    /**
+    * @Route("/add", name="spot_add", methods={"GET","POST"}, priority=2)
+    */
+    public function add(Request $request, ImageUploader $imageUploader, SluggerInterface $slugger) :Response
+    {
+        $spot = new Spot();
+        $form = $this->createForm(SpotsType::class, $spot);
+        $form->handleRequest($request);
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-    //         $imageFile = $imageUploader->upload($form, 'imgupload');
-    //         if ($imageFile) {
-    //             $spot->setImage($imageFile);
-    //         }
+            // $imageFile = $imageUploader->upload($form, 'image');
+            // dd($imageFile);
+            // if ($imageFile) {
+            //     $spot->setImage($imageFile);
+            // }
            
-    //         // recovery the spot's title
-    //         $title = $spot->getTitle();
+            // recovery the spot's title
+            $title = $spot->getTitle();
 
-    //         // transform in slug
-    //         $slug = $slugger->slug(strtolower($title));
+            // transform in slug
+            $slug = $slugger->slug(strtolower($title));
 
-    //         // update the entity
-    //         $spot->setSlug($slug);
+            // update the entity
+            $spot->setSlug($slug);
 
-    //         $entityManager = $this->getDoctrine()->getManager();
-    //         $entityManager->persist($spot);
-    //         $entityManager->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($spot);
+            $entityManager->flush();
 
-    //         return $this->redirectToRoute('backoffice_spots', [], Response::HTTP_SEE_OTHER);
-    //     }
-    //         return $this->renderForm('backoffice/spots/new.html.twig', [
-    //             'spot' => $spot,
-    //             'form' => $form,
-    //         ]);
+            
 
-    // }
+            return $this->redirectToRoute('backoffice_spots', [], Response::HTTP_SEE_OTHER);
+        }
+            return $this->renderForm('backoffice/spots/add.html.twig', [
+                'spot' => $spot,
+                'form' => $form,
+            ]);
+
+    }
 
     // // ===================== Page edit spot  =================//
-    // /**
-    //  * @Route("/{id}/edit", name="spot_edit", methods={"GET","POST"})
-    //  */
-    // public function edit(Request $request, Spot $spot, SluggerInterface $slugger, ImageUploader $imageUploader ): Response
-    // {
-    //     $form = $this->createForm(SpotsType::class, $spot);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-
-    //     // recovery the spot's title
-    //         $title = $spot->getTitle();
-
-    //         // transform in slug
-    //         $slug = $slugger->slug(strtolower($title));
-
-    //         // update the entity
-    //         $spot->setSlug($slug);
-
-    //         $imageFile = $imageUploader->upload($form, 'imgupload');
-    //         if ($imageFile) {
-    //             $spot->setImage($imageFile);
-    //         }
-
-    //         $this->getDoctrine()->getManager()->flush();
-
-    //         return $this->redirectToRoute('backoffice_spots', [], Response::HTTP_SEE_OTHER);
-    //     }
-    //         return $this->renderForm('backoffice/spots/edit.html.twig', [
-    //             'spot' => $spot,
-    //             'form' => $form,
-    //         ]);
-
-    // }
-
-    //     /**
-    //     * @Route("/{id}/delete", name="spot_delete", methods={"POST"})
-    //     */
-    //     public function delete(Request $request, Spot $spot): Response
-    //     {
-    //         if ($this->isCsrfTokenValid('delete' . $spot->getId(), $request->request->get('_token'))) {
-    //             $entityManager = $this->getDoctrine()->getManager();
-    //             $entityManager->remove($spot);
-    //             $entityManager->flush();
-    //         }
-
-    //         return $this->redirectToRoute('backoffice_spots', [], Response::HTTP_SEE_OTHER);
-    //     }
- 
+    
         
 
 

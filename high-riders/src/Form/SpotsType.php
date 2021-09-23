@@ -17,21 +17,24 @@ class SpotsType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('imgupload', FileType::class, [
-                'label' => "Choisir une image",
-                'mapped' => false,
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/png',
-                            'image/jpeg'
-                        ],
-                        'mimeTypesMessage' => 'Merci de ne choisir que des fichiers .png et .jpeg',
-                    ]) 
-                ],
-            ])
+            ->add('image')
+            // , 
+            
+            // FileType::class, [
+            //     'label' => "Choisir une image",
+            //     'mapped' => false,
+            //     'required' => false,
+            //     'constraints' => [
+            //         new File([
+            //             'maxSize' => '1024k',
+            //             'mimeTypes' => [
+            //                 'image/png',
+            //                 'image/jpeg'
+            //             ],
+            //             'mimeTypesMessage' => 'Merci de ne choisir que des fichiers .png et .jpeg',
+            //         ]) 
+            //     ],
+            // ])
             ->add('description')
             ->add('address')
             ->add('city')
@@ -49,9 +52,9 @@ class SpotsType extends AbstractType
             ->add('d_negatif')
             ->add('track_number')
             ->add('type_spot')
-            ->add('status')
-            ->add('categories')
-            ->add('departement')
+            //->add('status')
+            //->add('categories')
+            //->add('departement')
         ;
     }
 

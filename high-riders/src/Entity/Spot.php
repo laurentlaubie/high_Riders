@@ -283,6 +283,7 @@ class Spot
         $this->event = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
+        $this->status = 1;
     }
 
     public function getId(): ?int
