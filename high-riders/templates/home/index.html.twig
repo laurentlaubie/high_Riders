@@ -15,7 +15,7 @@
                     {{ app.user.firstname }}
                  </div>
 
-                <a type="button" class="btn btn-primary" href="#">Profil</a>
+                <a type="button" class="btn btn-primary" href="{{ path('backoffice_user_show', {id:app.user.id}) }}">Profil</a>
                  {% if is_granted('ROLE_ADMIN') %}
                  <a type="button" class="btn btn-primary" href="{{ path('backoffice_home') }}">Back Office</a>
                  {% endif %}
