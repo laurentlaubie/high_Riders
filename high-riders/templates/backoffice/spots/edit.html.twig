@@ -4,12 +4,14 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Edition de Spot</h1>
-
+    <h1>Edition d'un Spot</h1>
+     <main class="container">
+        <div class="m-4">
     
-    {{ include('backoffice/spots/_form.html.twig') }}
+            {{ include('backoffice/spots/_form.html.twig') }}
 
-    <a href="{{ path('backoffice_spots') }}">back to list</a>
-
+            <a href="{{ path('backoffice_spots') }}">back to list</a>
+        </div>
+    </main>
     
 {% endblock %}

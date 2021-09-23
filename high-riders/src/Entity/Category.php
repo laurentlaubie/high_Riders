@@ -49,6 +49,8 @@ class Category
 
     /**
      * @ORM\ManyToMany(targetEntity=Spot::class, inversedBy="categories")
+     * @JoinTable(name="category_spot")
+     * 
      */
     private $spot;
 

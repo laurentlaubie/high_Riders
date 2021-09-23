@@ -249,7 +249,7 @@ class Spot
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="spot")
-     * 
+     *
      * @Groups({"spot_list", "spot_detail"})
      * 
      */
