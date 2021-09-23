@@ -128,7 +128,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $comment;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="user")
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="user")
      * 
      * @Groups({"show_user", "add_user","edit_user"})
      */

@@ -7,7 +7,9 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity(repositoryClass=SpotRepository::class)
@@ -247,8 +249,8 @@ class Spot
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="spot")
-     * 
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="spot")
+     *
      * @Groups({"spot_list", "spot_detail"})
      * 
      */
@@ -282,6 +284,7 @@ class Spot
         $this->event = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
+        $this->status = 1;
     }
 
     public function getId(): ?int

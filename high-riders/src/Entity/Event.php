@@ -171,7 +171,7 @@ class Event
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="event")
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="event")
      * 
      * @Groups({"event_list", "event_detail"})
      *
