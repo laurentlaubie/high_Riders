@@ -8,10 +8,10 @@
             <div class="col-3">
                 <h2>Administration</h2>
                 <div class="btn-group-vertical" role="group" aria-label="Button group with nested dropdown">
-                    <a href="" class="btn btn-secondary">Accueil</a>
-                    <a href="" class="btn btn-secondary">Spots</a>
-                    <a href="" class="btn btn-secondary">Evenements</a>
-                    <a href="" class="btn btn-secondary">Utilisateurs</a>
+                    <a href="{{ path('backoffice_home') }}" class="btn btn-secondary">Accueil</a>
+                    <a href="{{ path('backoffice_spots') }}" class="btn btn-secondary">Spots</a>
+                    <a href="{{ path('backoffice_events') }}" class="btn btn-secondary">Evenements</a>
+                    <a href="{{ path('backoffice_user_index') }}" class="btn btn-secondary">Utilisateurs</a>
                     
                     <div class="btn-group" role="group">
                         <a id="btnGroupDrop1" href="" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

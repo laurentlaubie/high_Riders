@@ -15,7 +15,7 @@ class EventsController extends AbstractController
 {
     // ===================== Page Events Display  =================//
     /**
-     * @Route("/", name="_events", methods={"GET"})
+     * @Route("/", name="events", methods={"GET"})
      */
     public function index(EventRepository $eventRepository): Response
     {
