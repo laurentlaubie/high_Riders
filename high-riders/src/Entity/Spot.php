@@ -29,7 +29,7 @@ class Spot
     /**
      * @ORM\Column(type="string", length=150)
      * 
-     *
+     * @Assert\NotBlank(message="merci de saisir un nom")
      * @Groups({"spot_list", "spot_detail"})
      * 
      */
@@ -38,7 +38,7 @@ class Spot
     /**
      * @ORM\Column(type="string", length=2100)
      * 
-     * 
+     * @Assert\NotBlank(message="merci d'upload une image")
      * @Groups({"spot_list", "spot_detail", "event_detail"})
      * 
      */
@@ -47,7 +47,7 @@ class Spot
     /**
      * @ORM\Column(type="text")
      * 
-     * 
+     * @Assert\NotBlank(message="merci de saisir un nom")
      * @Groups({"spot_list", "spot_detail"})
      * 
      */
@@ -55,7 +55,6 @@ class Spot
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * 
      * 
      * @Groups({"spot_list", "spot_detail"})
      * 
@@ -65,7 +64,7 @@ class Spot
     /**
      * @ORM\Column(type="string", length=255)
      * 
-     * 
+     * @Assert\NotBlank(message="merci de saisir une ville")
      * @Groups({"spot_list", "spot_detail"})
      * 
      */

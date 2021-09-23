@@ -19,7 +19,7 @@ class Category
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"spot_list", "spot_detail", "event_list", "event_detail"})
+     * @Groups({"show_user", "spot_list", "spot_detail", "event_list", "event_detail"})
      * 
      */
     private $id;
@@ -27,7 +27,7 @@ class Category
     /**
      * @ORM\Column(type="string", length=255)
      * 
-     * @Groups({"spot_list", "spot_detail", "event_list", "event_detail"})
+     * @Groups({"show_user", "spot_list", "spot_detail", "event_list", "event_detail"})
      * 
      */
     private $title;
