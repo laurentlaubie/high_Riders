@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -19,7 +20,7 @@ class Event
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"spot_list", "spot_detail"})
+     * @Groups({"event_list", "event_detail", "spot_list", "spot_detail"})
      * 
      */
     private $id;
@@ -27,83 +28,132 @@ class Event
     /**
      * @ORM\Column(type="string", length=255)
      * 
-     * @Groups({"spot_list", "spot_detail"})
+     * @Assert\NotBlank(message="merci de saisir un titre")
+     * @Groups({"event_list", "event_detail","spot_list", "spot_detail"})
      * 
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=2100)
+     * 
+     * @Assert\NotBlank(message="merci d'upload une image")
+     * @Groups({"event_list", "event_detail"})
+     *
      */
     private $image;
 
     /**
      * @ORM\Column(type="text")
+     * 
+     * @Assert\NotBlank(message="merci de saisir un nom")
+     * @Groups({"event_detail"})
+     *
      */
     private $description;
 
     /**
      * @ORM\Column(type="time", nullable=true)
+     * 
+     * @Groups({"event_detail"})
+     *
      */
     private $opening_hours;
 
     /**
      * @ORM\Column(type="time", nullable=true)
+     * 
+     * @Groups({"event_detail"})
+     *
      */
     private $closed_hours;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * 
+     * @Groups({"event_detail"})
+     *
      */
     private $difficulty;
 
     /**
      * @ORM\Column(type="date")
+     * 
+     * @Assert\NotBlank(message="merci de saisir un nom")
+     * @Groups({"event_list", "event_detail"})
+     *
      */
     private $date_event;
 
     /**
      * @ORM\Column(type="string", length=2100, nullable=true)
+     * 
+     * @Groups({"event_detail"})
+     *
      */
     private $link;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
+     * @Groups({"event_detail"})
+     *
      */
     private $price;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * 
+     * @Groups({"event_detail"})
+     *
      */
     private $accessibility;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
+     * @Groups({"event_list", "event_detail"})
+     *
      */
     private $participation_user;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
+     * @Groups({"event_list", "event_detail"})
+     *
      */
     private $e_like;
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Groups({"event_list", "event_detail"})
+     *
      */
     private $status;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, options={"default" : 1})
+     * 
+     * @Groups({"event_list", "event_detail"})
+     *
      */
     private $type_event;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * 
+     * @Groups({"event_list", "event_detail"})
+     *
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * 
+     * @Groups({"event_list", "event_detail"})
+     *
      */
     private $updatedAt;
 
@@ -114,26 +164,41 @@ class Event
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="event")
+     * 
+     * @Groups({"event_detail"})
+     *
      */
     private $comments;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="event")
+     * 
+     * @Groups({"event_list", "event_detail"})
+     *
      */
     private $categories;
 
     /**
      * @ORM\ManyToOne(targetEntity=Spot::class, inversedBy="event")
+     * 
+     * @Groups({"event_list", "event_detail"})
+     *
      */
     private $spot;
 
     /**
      * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="event")
+     * 
+     * @Groups({"event_list", "event_detail"})
+     *
      */
     private $departement;
 
     /**
      * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="event")
+     * 
+     * @Groups({"event_list", "event_detail"})
+     *
      */
     private $participations;
 
@@ -142,6 +207,8 @@ class Event
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->participations = new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int

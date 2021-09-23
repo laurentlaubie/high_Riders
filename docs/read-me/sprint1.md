@@ -13,7 +13,7 @@
 
 ### Configuration de la base de données
 
-Reprendre les étapes faites en cours
+- Reprendre les étapes faites en cours
 - Configuration du fichier d'environnement
     -  Créez un fichier `.env.local`
     -  Configurez le fichier avec les informations de connexion à la BDD : `DATABASE_URL=mysql://votreDBUser:votreDBPassword@127.0.0.1:3306/high-riders_dev?serverVersion=5.7.31`

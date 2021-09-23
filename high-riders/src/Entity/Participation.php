@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ParticipationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 /**
  * @ORM\Entity(repositoryClass=ParticipationRepository::class)
  */
@@ -18,7 +20,7 @@ class Participation
     private $id;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", options={"default" : 1})
      */
     private $status;
 
