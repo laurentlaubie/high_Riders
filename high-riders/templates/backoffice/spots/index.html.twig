@@ -55,7 +55,7 @@
             
                 <td> 
                 <a href="{{ path('backoffice_spot_edit', {id:listspot.id}) }}">Editer</a> 
-                <a href="">Supprimer</a>
+                <a href="{{ path('backoffice_spot_delete', {id:listspot.id}) }}" onclick="return confirm('Êtes-vous sur de vouloir effectuer cette action ?')" >Supprimer</a>
                 </td>
             </tr>
         {% endfor %}
