@@ -43,19 +43,18 @@ class Category
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="categories")
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="categories")
      */
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Spot::class, inversedBy="categories")
-     * @JoinTable(name="category_spot")
+     * @ORM\ManyToMany(targetEntity=Spot::class, mappedBy="categories")
      * 
      */
     private $spot;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="categories")
+     * @ORM\ManyToMany(targetEntity=Event::class, mappedBy="categories")
      */
     private $event;
 

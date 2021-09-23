@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+
 /** 
     * @Route("/backoffice/spots", name="backoffice_", requirements={"id":"\d+"} )
     */
@@ -26,7 +27,7 @@ class SpotsController extends AbstractController
         $spotsShow = $spotRepository->findAll();
 
         return $this->render('backoffice/spots/index.html.twig', [
-            'spots' => $spotsShow,
+          'spots' => $spotsShow,
         ]);
     }
 
@@ -109,10 +110,10 @@ class SpotsController extends AbstractController
     //         // update the entity
              $spot->setSlug($slug);
 
-             $imageFile = $imageUploader->upload($form, 'imgupload');
-             if ($imageFile) {
-                 $spot->setImage($imageFile);
-             }
+             //$imageFile = $imageUploader->upload($form, 'imgupload');
+             //if ($imageFile) {
+             //    $spot->setImage($imageFile);
+             //}
 
              $this->getDoctrine()->getManager()->flush();
 
