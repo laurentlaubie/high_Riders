@@ -77,7 +77,8 @@ class SpotsController extends AbstractController
             $entityManager->persist($spot);
             $entityManager->flush();
 
-            
+            // Flash Message
+            $this->addFlash('success', 'Le Spot ' . $spot->getTitle() . ' a bien été ajoutée');
 
             return $this->redirectToRoute('backoffice_spots', [], Response::HTTP_SEE_OTHER);
         }
