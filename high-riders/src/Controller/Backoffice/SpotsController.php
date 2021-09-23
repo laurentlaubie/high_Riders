@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 /** 
-    * @Route("/backoffice/spots", name="backoffice_, requirements={"id":"\d+"})
+    * @Route("/backoffice/spots", name="backoffice_", requirements={"id":"\d+"} )
     */
 class SpotsController extends AbstractController
 {
@@ -46,7 +46,7 @@ class SpotsController extends AbstractController
 
 
 
-    // /* // ===================== Page new spot  =================//
+    // /* // ===================== Page add spot  =================//
     // /**
     // * @Route("/add", name="spot_add", methods={"GET","POST"})
     // */
