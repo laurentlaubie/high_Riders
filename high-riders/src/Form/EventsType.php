@@ -27,7 +27,7 @@ class EventsType extends AbstractType
             //->add('opening_hours')
             //->add('closed_hours')
             ->add('difficulty')
-            //->add('date_event')
+            ->add('date_event')
             ->add('link')
             ->add('price')
             ->add('accessibility')
