@@ -77,7 +77,7 @@ class Event
     private $difficulty;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="string", length=50)
      * 
      * @Assert\NotBlank(message="merci de saisir un nom")
      * @Groups({"event_list", "event_detail"})
@@ -258,24 +258,24 @@ class Event
         return $this;
     }
 
-    public function getOpeningHours(): ?\DateTimeInterface
+    public function getOpeningHours(): ?string
     {
         return $this->opening_hours;
     }
 
-    public function setOpeningHours(?\DateTimeInterface $opening_hours): self
+    public function setOpeningHours(?string $opening_hours): self
     {
         $this->opening_hours = $opening_hours;
 
         return $this;
     }
 
-    public function getClosedHours(): ?\DateTimeInterface
+    public function getClosedHours(): ?string
     {
         return $this->closed_hours;
     }
 
-    public function setClosedHours(?\DateTimeInterface $closed_hours): self
+    public function setClosedHours(?string $closed_hours): self
     {
         $this->closed_hours = $closed_hours;
 
@@ -294,12 +294,12 @@ class Event
         return $this;
     }
 
-    public function getDateEvent(): ?\DateTimeInterface
+    public function getDateEvent(): ?string
     {
         return $this->date_event;
     }
 
-    public function setDateEvent(\DateTimeInterface $date_event): self
+    public function setDateEvent(?string $date_event): self
     {
         $this->date_event = $date_event;
 
