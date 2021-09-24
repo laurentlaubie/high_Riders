@@ -13,14 +13,17 @@ class EventsType extends AbstractType
     {
         $builder
             ->add('title', null , [
-                'label' => 'Nom de l\'Evenement*',
+                'label' => 'Nom de l\'Evenement *',
                 'attr' => ['placeholder' => 'Saisir le nom de l\'Evenement']
             ])
             ->add('image', null , [
                 'label' => 'Image de l\'Evenement *',
                 'attr' => ['placeholder' => 'Ajouter votre image']
             ])
-            ->add('description')
+            ->add('description', null , [
+                'label' => 'Description de l\'Evenement *',
+                'attr' => ['placeholder' => 'Ajouter votre description']
+            ])
             //->add('opening_hours')
             //->add('closed_hours')
             ->add('difficulty')
@@ -31,7 +34,10 @@ class EventsType extends AbstractType
             //->add('participation_user')
             ->add('e_like')
             //->add('status')
-            ->add('type_event')
+            ->add('type_event', null , [
+                'label' => 'Type de l\'Evenement *',
+                'attr' => ['placeholder' => 'Ajouter un type d\'Evenement']
+            ])
             //->add('createdAt')
             //->add('updatedAt')
             //->add('publishedAt')
