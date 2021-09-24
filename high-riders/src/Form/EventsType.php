@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class EventsType extends AbstractType
 {
@@ -16,21 +18,55 @@ class EventsType extends AbstractType
                 'label' => 'Nom de l\'Evenement *',
                 'attr' => ['placeholder' => 'Saisir le nom de l\'Evenement']
             ])
-            ->add('image', null , [
+            ->add('image', null, [
                 'label' => 'Image de l\'Evenement *',
-                'attr' => ['placeholder' => 'Ajouter votre image']
-            ])
+                'attr' => ['placeholder' => 'Ajouter votre image'],
+                ])
+                
+               //test for upload imge
+                //FileType::class
+                   /*  'mapped' => false,
+                    'required' => false,
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '1024k',
+                            'mimeTypes' => [
+                                'image/png',
+                                'image/jpeg'
+                            ],
+                            'mimeTypesMessage' => 'Merci de ne choisir que des fichiers .png et .jpeg',
+                        ]) 
+                    ], */
+            
             ->add('description', null , [
                 'label' => 'Description de l\'Evenement *',
                 'attr' => ['placeholder' => 'Ajouter votre description']
             ])
-            //->add('opening_hours')
-            //->add('closed_hours')
+            ->add('opening_hours', null , [
+                'label' => 'Horaire d\'ouverture de l\'Evenement',
+                'attr' => ['placeholder' => 'Ajouter l\'horaire']
+            ])
+            ->add('closed_hours', null , [
+                'label' => 'Horaire de fermeture de l\'Evenement',
+                'attr' => ['placeholder' => 'Ajouter l\'horaire']
+            ])
             ->add('difficulty')
-            //->add('date_event')
-            ->add('link')
-            ->add('price')
-            ->add('accessibility')
+            ->add('date_event', null , [
+                'label' => 'Date de l\'Evenement *',
+                'attr' => ['placeholder' => 'Ajouter une date']
+            ])
+            ->add('link', null , [
+                'label' => 'Lien du site de l\'Evenement',
+                'attr' => ['placeholder' => 'Ajouter un lien https...']
+            ])
+            ->add('price', null , [
+                'label' => 'Tarif de l\'Evenement',
+                'attr' => ['placeholder' => 'Ajouter un tarif']
+            ])
+            ->add('accessibility', null , [
+                'label' => 'Acces à l\'Evenement *',
+                'attr' => ['placeholder' => 'Ajouter un descriptif d\'acces']
+            ])
             //->add('participation_user')
             ->add('e_like')
             //->add('status')
