@@ -128,9 +128,25 @@ class SpotsController extends AbstractController
              ]);
 
     }
-    // // ===================== Page edit spot  =================//
-    
-        
+ 
+    // ===================== Delete a spot  =================//
+    /**
+    * @Route("/{id}/delete", name="spot_delete" )
+    *
+    */
+     public function delete(Spot $spot): Response
+    {
+        // delete Spot in Bdd
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($spot);
+        $entityManager->flush();
+            
+        // Flash Message
+        $this->addFlash('info', 'Le Spot ' . $spot->getTitle() . ' a bien été supprimé');
+
+        return $this->redirectToRoute('backoffice_spots');
+    }
+
 
 
 }

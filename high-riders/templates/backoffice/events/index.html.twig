@@ -3,9 +3,10 @@
 {% block title %}Hello page Evenements backoffice{% endblock %}
 
 {% block body %}
-<main >
+<main class"container">
     <h1>Les Evenements</h1>
-
+        
+        <div class="m-4">
         <table class="table">
             <thead>
                 <tr>
@@ -53,9 +54,10 @@
                 </td>
             </tr>
         {% endfor %}
-
+                <a href="{{ path('backoffice_event_add')  }}">Ajouter un nouvel Evenement </a> |
                 <a href="{{ path('backoffice_home')  }}">Retour à l'accueil</a> 
 
+            </div>            
 </main>
 
 

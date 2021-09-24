@@ -3,9 +3,12 @@
 {% block title %}Hello page Spots backoffice{% endblock %}
 
 {% block body %}
-<main >
+
+<main class"container">
+
     <h1>Les Spots</h1>
 
+    <div class="m-4">
         <table class="table">
             <thead>
                 <tr>
@@ -55,14 +58,15 @@
             
                 <td> 
                 <a href="{{ path('backoffice_spot_edit', {id:listspot.id}) }}">Editer</a> 
-                <a href="">Supprimer</a>
+                <a href="{{ path('backoffice_spot_delete', {id:listspot.id}) }}" onclick="return confirm('Êtes-vous sur de vouloir effectuer cette action ?')" >Supprimer</a>
                 </td>
             </tr>
         {% endfor %}
 
+                <a href="{{ path('backoffice_spot_add')  }}">Ajouter un nouveau spot </a> | 
                 <a href="{{ path('backoffice_home')  }}">Retour à l'accueil</a> 
 
-                <a href="{{ path('backoffice_spot_add')  }}">Ajouter un nouveau spot </a>
+    </div>            
 </main>
 
 
