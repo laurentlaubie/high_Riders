@@ -376,36 +376,36 @@ class Spot
         return $this;
     }
 
-    public function getOpeningHours(): ?\DateTimeInterface
+    public function getOpeningHours(): ?string
     {
         return $this->openingHours;
     }
 
-    public function setOpeningHours(?\DateTimeInterface $openingHours): self
+    public function setOpeningHours(?string $openingHours): self
     {
         $this->openingHours = $openingHours;
 
         return $this;
     }
 
-    public function getClosedHours(): ?\DateTimeInterface
+    public function getClosedHours(): ?string
     {
         return $this->closed_hours;
     }
 
-    public function setClosedHours(?\DateTimeInterface $closed_hours): self
+    public function setClosedHours(?string $closed_hours): self
     {
         $this->closed_hours = $closed_hours;
 
         return $this;
     }
 
-    public function getSaisonDate(): ?\DateInterval
+    public function getSaisonDate(): ?string
     {
         return $this->saison_date;
     }
 
-    public function setSaisonDate(?\DateInterval $saison_date): self
+    public function setSaisonDate(?string $saison_date): self
     {
         $this->saison_date = $saison_date;
 

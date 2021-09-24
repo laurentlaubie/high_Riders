@@ -50,11 +50,13 @@ class SpotsType extends AbstractType
                 'label' => 'Ville du Spot *',
                 'attr' => ['placeholder' => 'Ajouter la ville']
             ])
-            //->add('openingHours')
-            //->add('closed_hours')
-            //->add('saison_date')
-            //->add('numbers_users')
-            //->add('average_rating')
+            ->add('openingHours')
+            ->add('closed_hours')
+            ->add('saison_date')
+            ->add('numbers_users')
+            ->add('average_rating')
+            ->add('Latitude')
+            ->add('Longitude')
             ->add('difficulty')
             ->add('link')
             ->add('price')
