@@ -3,7 +3,8 @@
 namespace App\Controller\Backoffice;
 
 use App\Entity\Event;
-use App\Entity\EventsType;
+use App\Entity\Spot;
+use App\Form\EventsType;
 use App\Repository\EventRepository;
 use App\Service\ImageUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,13 +54,13 @@ class EventsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // $imageFile = $imageUploader->upload($form, 'image');
-            // dd($imageFile);
-            // if ($imageFile) {
-            //     $spot->setImage($imageFile);
-            // }
+            /* $imageFile = $imageUploader->upload($form, 'image');
+            dd($imageFile);
+            if ($imageFile) {
+                $spot->setImage($imageFile);
+            } */
            
-            // recovery the spot's title
+            //recovery the spot's title
             $title = $event->getTitle();
 
             // transform in slug
