@@ -24,13 +24,31 @@ class EventsType extends AbstractType
                 'label' => 'Description de l\'Evenement *',
                 'attr' => ['placeholder' => 'Ajouter votre description']
             ])
-            //->add('opening_hours')
-            //->add('closed_hours')
+            ->add('opening_hours', null , [
+                'label' => 'Horaire d\'ouverture de l\'Evenement',
+                'attr' => ['placeholder' => 'Ajouter l\'horaire']
+            ])
+            ->add('closed_hours', null , [
+                'label' => 'Horaire de fermeture de l\'Evenement',
+                'attr' => ['placeholder' => 'Ajouter l\'horaire']
+            ])
             ->add('difficulty')
-            ->add('date_event')
-            ->add('link')
-            ->add('price')
-            ->add('accessibility')
+            ->add('date_event', null , [
+                'label' => 'Date de l\'Evenement *',
+                'attr' => ['placeholder' => 'Ajouter une date']
+            ])
+            ->add('link', null , [
+                'label' => 'Lien du site de l\'Evenement',
+                'attr' => ['placeholder' => 'Ajouter un lien https...']
+            ])
+            ->add('price', null , [
+                'label' => 'Tarif de l\'Evenement',
+                'attr' => ['placeholder' => 'Ajouter un tarif']
+            ])
+            ->add('accessibility', null , [
+                'label' => 'Acces à l\'Evenement *',
+                'attr' => ['placeholder' => 'Ajouter un descriptif d\'acces']
+            ])
             //->add('participation_user')
             ->add('e_like')
             //->add('status')
