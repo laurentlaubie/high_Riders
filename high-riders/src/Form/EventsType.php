@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class EventsType extends AbstractType
 {
@@ -16,10 +18,26 @@ class EventsType extends AbstractType
                 'label' => 'Nom de l\'Evenement *',
                 'attr' => ['placeholder' => 'Saisir le nom de l\'Evenement']
             ])
-            ->add('image', null , [
+            ->add('image', null, [
                 'label' => 'Image de l\'Evenement *',
-                'attr' => ['placeholder' => 'Ajouter votre image']
-            ])
+                'attr' => ['placeholder' => 'Ajouter votre image'],
+                ])
+                
+               //test for upload imge
+                //FileType::class
+                   /*  'mapped' => false,
+                    'required' => false,
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '1024k',
+                            'mimeTypes' => [
+                                'image/png',
+                                'image/jpeg'
+                            ],
+                            'mimeTypesMessage' => 'Merci de ne choisir que des fichiers .png et .jpeg',
+                        ]) 
+                    ], */
+            
             ->add('description', null , [
                 'label' => 'Description de l\'Evenement *',
                 'attr' => ['placeholder' => 'Ajouter votre description']
