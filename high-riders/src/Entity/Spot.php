@@ -89,7 +89,7 @@ class Spot
     private $latitude;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      * 
      * 
      * @Groups({"spot_list", "spot_detail"})
@@ -98,7 +98,7 @@ class Spot
     private $openingHours;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      * 
      * 
      * @Groups({"spot_detail"})
@@ -107,7 +107,7 @@ class Spot
     private $closed_hours;
 
     /**
-     * @ORM\Column(type="dateinterval", nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      * 
      * 
      * @Groups({"spot_detail"})

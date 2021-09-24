@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -22,14 +23,6 @@ class Comment
      * 
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * 
-     * @Groups({"spot_detail", "event_detail"})
-     * 
-     */
-    private $title;
 
     /**
      * @ORM\Column(type="text")
@@ -117,6 +110,12 @@ class Comment
      */
     private $event;
 
+    public function __construct()
+    {
+        $this->status = 1;
+        $this->createdAt = new DateTimeImmutable();
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
