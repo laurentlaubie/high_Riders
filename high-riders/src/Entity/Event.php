@@ -46,7 +46,7 @@ class Event
     /**
      * @ORM\Column(type="text")
      * 
-     * @Assert\NotBlank(message="merci de saisir un nom")
+     * @Assert\NotBlank(message="merci de saisir une description")
      * @Groups({"event_detail"})
      *
      */
