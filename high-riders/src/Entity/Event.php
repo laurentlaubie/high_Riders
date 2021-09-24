@@ -53,7 +53,7 @@ class Event
     private $description;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      * 
      * @Groups({"event_detail"})
      *
@@ -61,7 +61,7 @@ class Event
     private $opening_hours;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      * 
      * @Groups({"event_detail"})
      *
@@ -126,7 +126,7 @@ class Event
     private $e_like;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", options={"default" : 1})
      * 
      * @Groups({"event_list", "event_detail"})
      *
@@ -134,7 +134,7 @@ class Event
     private $status;
 
     /**
-     * @ORM\Column(type="string", length=50, options={"default" : 1})
+     * @ORM\Column(type="string", length=50)
      * 
      * @Groups({"event_list", "event_detail"})
      *
@@ -214,6 +214,7 @@ class Event
         $this->participations = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
+        $this->status = 1;
     }
 
     public function getId(): ?int

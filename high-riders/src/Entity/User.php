@@ -47,7 +47,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=150, unique=true)
      * 
      * @Assert\NotBlank(message="merci de saisir un pseudo")
      * @Groups({"index_user", "show_user","add_user", "edit_user", "event_list", "event_detail", "spot_list", "spot_detail"})
@@ -69,12 +69,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $firstname;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * 
-     * @Groups({"show_user", "add_user", "edit_user"})
-     */
-    private $lastname;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -140,6 +134,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"show_user"})
      */
     private $participations;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lastname;
 
     public function __construct()
     {

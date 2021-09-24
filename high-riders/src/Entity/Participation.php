@@ -34,6 +34,12 @@ class Participation
      */
     private $event;
 
+    public function __construct()
+    {
+        $this->status = 1;
+
+    }
+
     public function getId(): ?int
     {
         return $this->id;
