@@ -20,7 +20,7 @@ class Event
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"event_list", "event_detail", "spot_list", "spot_detail"})
+     * @Groups({"event_list", "event_detail", "spot_list", "spot_detail", "api_home"})
      * 
      */
     private $id;
@@ -29,7 +29,7 @@ class Event
      * @ORM\Column(type="string", length=255)
      * 
      * @Assert\NotBlank(message="merci de saisir un titre")
-     * @Groups({"event_list", "event_detail","spot_list", "spot_detail"})
+     * @Groups({"event_list", "event_detail","spot_list", "spot_detail", "api_home"})
      * 
      */
     private $title;
@@ -38,7 +38,7 @@ class Event
      * @ORM\Column(type="string", length=2100)
      * 
      * @Assert\NotBlank(message="merci d'upload une image")
-     * @Groups({"event_list", "event_detail"})
+     * @Groups({"event_list", "event_detail", "api_home"})
      *
      */
     private $image;
@@ -80,7 +80,7 @@ class Event
      * @ORM\Column(type="string", length=50)
      * 
      * @Assert\NotBlank(message="merci de saisir un nom")
-     * @Groups({"event_list", "event_detail"})
+     * @Groups({"event_list", "event_detail", "api_home"})
      *
      */
     private $date_event;
@@ -120,7 +120,7 @@ class Event
     /**
      * @ORM\Column(type="integer", nullable=true)
      * 
-     * @Groups({"event_list", "event_detail"})
+     * @Groups({"event_list", "event_detail", "api_home"})
      *
      */
     private $e_like;
@@ -136,7 +136,7 @@ class Event
     /**
      * @ORM\Column(type="string", length=50)
      * 
-     * @Groups({"event_list", "event_detail"})
+     * @Groups({"event_list", "event_detail", "api_home"})
      *
      */
     private $type_event;
@@ -144,7 +144,7 @@ class Event
     /**
      * @ORM\Column(type="datetime_immutable")
      * 
-     * @Groups({"event_list", "event_detail"})
+     * @Groups({"event_list", "event_detail", "api_home"})
      *
      */
     private $createdAt;
@@ -173,7 +173,7 @@ class Event
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="event")
      * 
-     * @Groups({"event_list", "event_detail"})
+     * @Groups({"event_list", "event_detail", "api_home"})
      *
      */
     private $categories;

@@ -27,7 +27,7 @@ class HomeController extends AbstractController
             // This input to the Serialiser to transform the objects
             // objects into JSON, fetching only the properties
             // tagged with the name event_list
-            'groups' => ['event_list','spot_list']
+            'groups' => ['api_home']
             
         ]);
     }
