@@ -21,7 +21,7 @@ class Spot
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"spot_list", "spot_detail", "event_detail"})
+     * @Groups({"spot_list", "spot_detail", "event_detail", "api_home"})
      * 
      */
     private $id;
@@ -30,7 +30,7 @@ class Spot
      * @ORM\Column(type="string", length=150)
      * 
      * @Assert\NotBlank(message="merci de saisir un nom")
-     * @Groups({"spot_list", "spot_detail"})
+     * @Groups({"spot_list", "spot_detail", "api_home"})
      * 
      */
     private $title;
@@ -39,7 +39,7 @@ class Spot
      * @ORM\Column(type="string", length=2100)
      * 
      * @Assert\NotBlank(message="merci d'upload une image")
-     * @Groups({"spot_list", "spot_detail", "event_detail"})
+     * @Groups({"spot_list", "spot_detail", "event_detail", "api_home"})
      * 
      */
     private $image;
@@ -65,7 +65,7 @@ class Spot
      * @ORM\Column(type="string", length=255)
      * 
      * @Assert\NotBlank(message="merci de saisir une ville")
-     * @Groups({"spot_list", "spot_detail"})
+     * @Groups({"spot_list", "spot_detail", "api_home"})
      * 
      */
     private $city;
@@ -119,7 +119,7 @@ class Spot
      * @ORM\Column(type="integer", nullable=true)
      * 
      * 
-     * @Groups({"spot_detail"})
+     * @Groups({"spot_detail", "api_home"})
      * 
      */
     private $numbers_users;
@@ -128,7 +128,7 @@ class Spot
      * @ORM\Column(type="integer", nullable=true)
      * 
      * 
-     * @Groups({"spot_list", "spot_detail"})
+     * @Groups({"spot_list", "spot_detail", "api_home"})
      * 
      */
     private $average_rating;
@@ -170,7 +170,7 @@ class Spot
     /**
      * @ORM\Column(type="integer", nullable=true)
      * 
-     * @Groups({"spot_list", "spot_detail"})
+     * @Groups({"spot_list", "spot_detail", "api_home"})
      * 
      */
     private $s_like;
@@ -202,7 +202,7 @@ class Spot
     /**
      * @ORM\Column(type="string", length=50)
      * 
-     * @Groups({"spot_detail"})
+     * @Groups({"spot_detail", "api_home"})
      * 
      */
     private $type_spot;
@@ -219,7 +219,7 @@ class Spot
     /**
      * @ORM\Column(type="datetime_immutable")
      * 
-     * @Groups({"spot_list", "spot_detail"})
+     * @Groups({"spot_list", "spot_detail", "api_home"})
      * 
      */
     private $createdAt;
@@ -251,7 +251,7 @@ class Spot
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="spot")
      *
-     * @Groups({"spot_list", "spot_detail"})
+     * @Groups({"spot_list", "spot_detail", "api_home"})
      * 
      */
     private $categories;
