@@ -43,7 +43,7 @@ security:
         - { path: ^/backoffice, roles: ROLE_ADMIN }
 
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api∕v1∕(spots|events|users)/\d+$,       roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
 
     role_hierarchy:
         # Un role Admin peut faire, tout ce que fait un roleUser
