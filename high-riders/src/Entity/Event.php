@@ -207,6 +207,20 @@ class Event
      */
     private $slug;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     * 
+     * @Groups({"event_list", "event_detail"})
+     */
+    private $Longitude;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     * 
+     * @Groups({"event_list", "event_detail"})
+     */
+    private $Latitude;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -545,6 +559,30 @@ class Event
     public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->Longitude;
+    }
+
+    public function setLongitude(?float $Longitude): self
+    {
+        $this->Longitude = $Longitude;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->Latitude;
+    }
+
+    public function setLatitude(?float $Latitude): self
+    {
+        $this->Latitude = $Latitude;
 
         return $this;
     }
