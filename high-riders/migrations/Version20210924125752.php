@@ -1,12 +1,8 @@
 <?php
-
 declare(strict_types=1);
-
 namespace DoctrineMigrations;
-
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
-
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
@@ -16,7 +12,6 @@ final class Version20210924125752 extends AbstractMigration
     {
         return '';
     }
-
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -46,7 +41,6 @@ final class Version20210924125752 extends AbstractMigration
         $this->addSql('ALTER TABLE user_category ADD CONSTRAINT FK_E6C1FDC1A76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE user_category ADD CONSTRAINT FK_E6C1FDC112469DE2 FOREIGN KEY (category_id) REFERENCES category (id) ON DELETE CASCADE');
     }
-
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
