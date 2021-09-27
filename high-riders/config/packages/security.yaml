@@ -21,11 +21,6 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\LoginFormAuthentificatorAuthenticator
-            logout:
-                path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -40,10 +35,10 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
         
         # Il faut avoir le role Admin pour afficher Back office
-        - { path: ^/backoffice, roles: ROLE_ADMIN }
+        - { path: ^/backoffice, roles: PUBLIC_ACCESS }
 
-        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/api/v1/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: PUBLIC_ACCESS }
         #- { path: ^/api∕v1∕(spots|events|users)/\d+$,       roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
 
     role_hierarchy:

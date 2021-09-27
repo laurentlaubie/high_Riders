@@ -4,12 +4,17 @@
 
 {% block body %}
 <main class"container">
-    <h1>Les Evenements</h1>
-        
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <h1>Les Evenements</h1>
+        </div>
+    </nav>
+    
         <div class="m-4">
-        <table class="table">
+        <table class="table table-striped table-hover">
             <thead>
-                <tr>
+                <tr class="table-dark">
                     <th>Id</th>
                     <th>Titre</th>
                     <th>Image</th>
@@ -49,13 +54,15 @@
                
             
                 <td> 
-                <a href="">Editer</a> 
-                <a href="">Supprimer</a>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <a href="" class="btn btn-outline-secondary btn-sm">Modifier</a> 
+                    <a href="" class="btn btn-outline-secondary btn-sm">Supprimer</a>
+                </div>
                 </td>
             </tr>
         {% endfor %}
-                <a href="{{ path('backoffice_event_add')  }}">Ajouter un nouvel Evenement </a> |
-                <a href="{{ path('backoffice_home')  }}">Retour à l'accueil</a> 
+                <a href="{{ path('backoffice_event_add')  }}" class="btn btn-outline-success btn-sm">Ajouter un nouvel Evenement </a>   
+                <a href="{{ path('backoffice_home')  }}" class="btn btn-outline-secondary btn-sm">Retour à l'accueil</a> 
 
             </div>            
 </main>

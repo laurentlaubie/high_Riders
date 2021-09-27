@@ -3,9 +3,9 @@
 {% block title %}New User{% endblock %}
 
 {% block body %}
-    <h1>Create new User</h1>
+    <h1>Creation d'un nouvel Utilisateur</h1>
+        <a href="{{ path('backoffice_user_index') }}">Retour à la liste des utilisateurs</a>
+             {{ include('backoffice/user/_form.html.twig') }}
 
-    {{ include('backoffice/user/_form.html.twig') }}
-
-    <a href="{{ path('backoffice_user_index') }}">back to list</a>
+    
 {% endblock %}
