@@ -207,19 +207,6 @@ class Event
      */
     private $slug;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * 
-     * @Groups({"event_list", "event_detail"})
-     */
-    private $Longitude;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * 
-     * @Groups({"event_list", "event_detail"})
-     */
-    private $Latitude;
 
     public function __construct()
     {

@@ -71,7 +71,7 @@ class Spot
     private $city;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="int", nullable=true)
      * 
      * 
      * @Groups({"spot_list", "spot_detail"})
@@ -80,7 +80,7 @@ class Spot
     private $longitude;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="int", nullable=true)
      * 
      * 
      * @Groups({"spot_list", "spot_detail"})
@@ -352,24 +352,24 @@ class Spot
         return $this;
     }
 
-    public function getLongitude(): ?float
+    public function getLongitude(): ?int
     {
         return $this->longitude;
     }
 
-    public function setLongitude(?float $longitude): self
+    public function setLongitude(?int $longitude): self
     {
         $this->longitude = $longitude;
 
         return $this;
     }
 
-    public function getLatitude(): ?float
+    public function getLatitude(): ?int
     {
         return $this->latitude;
     }
 
-    public function setLatitude(?float $latitude): self
+    public function setLatitude(?int $latitude): self
     {
         $this->latitude = $latitude;
 
