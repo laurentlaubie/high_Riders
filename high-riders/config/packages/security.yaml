@@ -42,8 +42,8 @@ security:
         # Il faut avoir le role Admin pour afficher Back office
         - { path: ^/backoffice, roles: ROLE_ADMIN }
 
-        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS  }
+        - { path: ^/api, roles: PUBLIC_ACCESS }
         #- { path: ^/api∕v1∕(spots|events|users)/\d+$,       roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
 
     role_hierarchy:
