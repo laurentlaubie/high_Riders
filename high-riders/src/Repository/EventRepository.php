@@ -26,7 +26,7 @@ class EventRepository extends ServiceEntityRepository
      * Version 1 : Query builder
      *
      * @param $title
-     * @return TvShow[]
+     * @return Event[]
      */
     public function searchEventByTitle($title)
     {

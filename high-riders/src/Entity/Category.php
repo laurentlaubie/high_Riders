@@ -19,7 +19,7 @@ class Category
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"show_user", "spot_list", "spot_detail", "event_list", "event_detail"})
+     * @Groups({"show_user", "spot_list", "spot_detail", "event_list", "event_detail", "api_home"})
      * 
      */
     private $id;
