@@ -5,15 +5,19 @@
 {% block body %}
  <main class='container'>
 
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <h1>Liste des utilisateurs</h1>
+            <a class="navbar-brand" href="{{ path('backoffice_home')  }}">
+            <img src="{{ asset('images/LogoridersV1.1.png') }}" alt="" width="100" height="80" class="d-inline-block align-text">
+            High Riders | Les utilisateurs
+            </a>
         </div>
     </nav>
+
     <div class="m-4">
         <table class="table table-striped table-hover">
             <thead>
-                <tr class="table-dark">
+                <tr class="table-success">
                     <th>Id</th>
                     <th>Email</th>
                     <th>Roles</th>
@@ -60,8 +64,8 @@
             {% endfor %}
 
             <div class="d-grid gap-2 d-md-block">
-            <a href="{{ path('backoffice_user_add') }}" class="btn btn-outline-success btn-sm">Ajouter un utilisateur</a>  
-            <a  href="{{ path('backoffice_home')  }}" class="btn btn-outline-secondary btn-sm">Retour à l'accueil</a> 
+            <a href="{{ path('backoffice_user_add') }}" class="btn btn-outline-success btn-sm mb-2">Ajouter un utilisateur</a>  
+            <a  href="{{ path('backoffice_home')  }}" class="btn btn-outline-secondary btn-sm mb-2">Retour à l'accueil</a> 
             </div>
             
             </tbody>
