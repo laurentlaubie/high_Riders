@@ -4,13 +4,15 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Edition d'un Spot</h1>
+    <h1>Modifier un Spot</h1>
      <main class="container">
         <div class="m-4">
     
+        
             {{ include('backoffice/spots/_form.html.twig') }}
 
-            <a href="{{ path('backoffice_spots') }}">Retours aux spots</a>
+            <a href="{{ path('backoffice_spots') }}" class="btn btn-outline-secondary btn-lg">Retours aux spots</a>
+        
         </div>
     </main>
     
