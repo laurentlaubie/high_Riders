@@ -26,7 +26,7 @@ class SpotRepository extends ServiceEntityRepository
      * Version 1 : Query builder
      *
      * @param $title
-     * @return TvShow[]
+     * @return Spot[]
      */
     public function searchSpotByTitle($title)
     {
