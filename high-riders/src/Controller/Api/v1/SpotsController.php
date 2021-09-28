@@ -31,11 +31,11 @@ class SpotsController extends AbstractController
     {
         // We retrieve the series stored in BDD
         $spots = $spotRepository->findAll();
-        // $category = $categoryRepository->findAll();
-        // $departement = $departementRepository->findAll();
+        $category = $categoryRepository->findAll();
+        $departement = $departementRepository->findAll();
         // Return the list in JSON format
         // To solve the bug : Reference circular
-        return $this->json($spots, 200, [], [
+        return $this->json([$spots,$category,$departement], 200, [], [
             // This input to the Serialiser to transform the objects
             // objects into JSON, fetching only the properties
             // tagged with the name spot_list

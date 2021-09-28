@@ -31,12 +31,12 @@ class EventsController extends AbstractController
     {
         // We retrieve the series stored in BDD
         $events =$eventRepository->findAll();
-        // $category = $categoryRepository->findAll();
-        // $departement = $departementRepository->findAll();
+        $category = $categoryRepository->findAll();
+        $departement = $departementRepository->findAll();
 
         // Return the list in JSON format
         // To solve the bug : Reference circular
-        return $this->json($events, 200, [], [
+        return $this->json([$events,$category,$departement], 200, [], [
             // This input to the Serialiser to transform the objects
             // objects into JSON, fetching only the properties
             // tagged with the name event_list
