@@ -3,6 +3,8 @@
 namespace App\Controller\Api\v1;
 
 use App\Entity\Spot;
+use App\Repository\CategoryRepository;
+use App\Repository\DepartementRepository;
 use App\Repository\SpotRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,14 +27,15 @@ class SpotsController extends AbstractController
      * 
      * @Route("/", name="index")
      */
-    public function index(SpotRepository $spotRepository): Response
+    public function index(SpotRepository $spotRepository, CategoryRepository $categoryRepository, DepartementRepository $departementRepository): Response
     {
         // We retrieve the series stored in BDD
-        $spots =$spotRepository->findAll();
-
+        $spots = $spotRepository->findAll();
+        $category = $categoryRepository->findAll();
+        $departement = $departementRepository->findAll();
         // Return the list in JSON format
         // To solve the bug : Reference circular
-        return $this->json($spots, 200, [], [
+        return $this->json([$spots, $category, $departement], 200, [], [
             // This input to the Serialiser to transform the objects
             // objects into JSON, fetching only the properties
             // tagged with the name spot_list
