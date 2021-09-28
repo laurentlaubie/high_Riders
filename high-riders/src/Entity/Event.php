@@ -204,8 +204,24 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     * @Groups({"event_list", "event_detail"})
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     * 
+     * @Groups({"event_list", "event_detail"})
+     */
+    private $latitude;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     * 
+     * @Groups({"event_list", "event_detail"})
+     */
+    private $longitude;
 
 
     public function __construct()
@@ -426,6 +442,41 @@ class Event
 
         return $this;
     }
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(?float $longitude): self
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(?float $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
 
     /**
      * @return Collection|Comment[]
@@ -538,39 +589,5 @@ class Event
         return $this;
     }
 
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(?string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    public function getLongitude(): ?float
-    {
-        return $this->Longitude;
-    }
-
-    public function setLongitude(?float $Longitude): self
-    {
-        $this->Longitude = $Longitude;
-
-        return $this;
-    }
-
-    public function getLatitude(): ?float
-    {
-        return $this->Latitude;
-    }
-
-    public function setLatitude(?float $Latitude): self
-    {
-        $this->Latitude = $Latitude;
-
-        return $this;
-    }
+   
 }
