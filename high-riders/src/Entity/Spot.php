@@ -71,7 +71,7 @@ class Spot
     private $city;
 
     /**
-     * @ORM\Column(type="int", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * 
      * 
      * @Groups({"spot_list", "spot_detail"})
@@ -80,7 +80,7 @@ class Spot
     private $longitude;
 
     /**
-     * @ORM\Column(type="int", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * 
      * 
      * @Groups({"spot_list", "spot_detail"})

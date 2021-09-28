@@ -1,0 +1,5 @@
+{
+    "require": {
+        "twig/string-extra": "^3.3"
+    }
+}
