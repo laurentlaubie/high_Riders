@@ -3,6 +3,8 @@
 namespace App\Controller\Api\v1;
 
 use App\Entity\Event;
+use App\Repository\CategoryRepository;
+use App\Repository\DepartementRepository;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,14 +27,16 @@ class EventsController extends AbstractController
      * 
      * @Route("/", name="index")
      */
-    public function index(EventRepository $eventRepository): Response
+    public function index(EventRepository $eventRepository, CategoryRepository $categoryRepository, DepartementRepository $departementRepository): Response
     {
         // We retrieve the series stored in BDD
         $events =$eventRepository->findAll();
+        $category = $categoryRepository->findAll();
+        $departement = $departementRepository->findAll();
 
         // Return the list in JSON format
         // To solve the bug : Reference circular
-        return $this->json($events, 200, [], [
+        return $this->json([$events, $category, $departement], 200, [], [
             // This input to the Serialiser to transform the objects
             // objects into JSON, fetching only the properties
             // tagged with the name event_list
