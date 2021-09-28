@@ -2,30 +2,36 @@
 
 {% block body %}
 
-    <nav class="navbar navbar-dark bg-dark">
+        <!-- NavBar -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ path('backoffice_home')  }}">
             <img src="{{ asset('images/LogoridersV1.1.png') }}" alt="" width="100" height="80" class="d-inline-block align-text">
-            High Riders | Page d'Administration
+            High Riders |
             </a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ path('backoffice_home') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('backoffice_spots') }}">Spots</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('backoffice_events') }}">Evenements</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('backoffice_user_index') }}">Utilisateurs</a>
+                </li>
+            </ul>
         </div>
     </nav>
 
-        <main class="row">
-            <!-- Menu de navigation -->
-            <div class="col-3 ms-5">
-                <h2 class="mt-2 mb-3">Menu</h2>
-                <div class="btn-group-vertical" role="group" aria-label="Button group with nested dropdown">
-                    <a href="{{ path('backoffice_home') }}" class="btn btn-secondary">Accueil</a>
-                    <a href="{{ path('backoffice_spots') }}" class="btn btn-secondary">Spots</a>
-                    <a href="{{ path('backoffice_events') }}" class="btn btn-secondary">Evenements</a>
-                    <a href="{{ path('backoffice_user_index') }}" class="btn btn-secondary">Utilisateurs</a>
-                    
-                    
-                </div>
-            </div>
 
-            <!-- Contenu principal -->
+            <!-- Main content -->
+
             <div class="col-8">
 
                 {% block content %}{% endblock %}
