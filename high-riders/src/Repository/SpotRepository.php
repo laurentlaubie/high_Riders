@@ -34,8 +34,8 @@ class SpotRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('spot')
             // Clause WHERE pour filtre en fonction de $title
             ->where('spot.title LIKE :title')
-            ->orderBy('spot.createdAt', 'DESC')
             ->setParameter(':title', "%$title%")
+            ->orderBy('spot.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }

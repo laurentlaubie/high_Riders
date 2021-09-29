@@ -53,7 +53,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("", name="add", methods={"POST"})
+     * @Route("/add", name="add", methods={"POST"})
      */
     public function add(Request $request, UserPasswordHasherInterface $passwordEncoder): Response
     {

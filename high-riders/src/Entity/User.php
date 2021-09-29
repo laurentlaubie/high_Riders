@@ -36,7 +36,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"add_user"})
      */
     private $roles = [];
 
@@ -45,6 +44,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    public $confirmedPassword;
 
     /**
      * @ORM\Column(type="string", length=150, unique=true)
