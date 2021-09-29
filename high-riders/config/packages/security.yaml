@@ -55,8 +55,9 @@ security:
         - { path: ^/api/v1/user/\d+, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
         - { path: ^/api/v1/spots/\d+, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/v1/events/\d+, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/v1/users/add, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/v1/events, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/v1/user, roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: ^/api/v1/users, roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
         - { path: ^/api/v1/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/v1/search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/v1/spots, roles: IS_AUTHENTICATED_ANONYMOUSLY }

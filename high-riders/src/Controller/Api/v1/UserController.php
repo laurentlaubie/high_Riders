@@ -55,7 +55,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/", name="add", methods={"POST"})
+     * @Route("/add", name="add", methods={"POST"})
      */
     public function add(Request $request, UserPasswordHasherInterface $passwordEncoder, SerializerInterface $serialiser, ValidatorInterface $validator): Response
     {
@@ -90,7 +90,7 @@ class UserController extends AbstractController
         $user->setPassword(
             $passwordEncoder->hashPassword(
                 $user,
-                $user->get('password')->getData()
+                $user->getPassword('password')
             )
         );
     
@@ -173,19 +173,14 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"}, requirements={"id": "\d+"})
      */
-    public function delete(User $user, Request $request): Response
+    public function delete(User $user): Response
     {
 
-        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+        if ($this->denyAccessUnlessGranted('delete', $user,"Vous n'avez pas accés à cette page' !")) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
         }
-
-
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($user);
-        $em->flush();
 
         return $this->json(['l\'utilisateur à été suprimer'], 204);
     }
