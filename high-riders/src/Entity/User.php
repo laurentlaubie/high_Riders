@@ -45,8 +45,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
-    public $confirmedPassword;
-
     /**
      * @ORM\Column(type="string", length=150, unique=true)
      * 
@@ -444,4 +442,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 }

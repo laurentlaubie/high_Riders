@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 /**
@@ -53,35 +55,81 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/add", name="add", methods={"POST"})
+     * @Route("/", name="add", methods={"POST"})
      */
-    public function add(Request $request, UserPasswordHasherInterface $passwordEncoder): Response
+    public function add(Request $request, UserPasswordHasherInterface $passwordEncoder, SerializerInterface $serialiser, ValidatorInterface $validator): Response
     {
-        $user = new User();
+        // We retrieve the JSON
+        $jsonData = $request->getContent();
 
-        $form = $this->createForm(UserType::class, $user, ['csrf_protection' => false]);
+        //  We transform the json into an object : deserialization
+        // - We indicate the data to transform (deserialize)
+        // - We indicate the format of arrival after conversion (object of type spot)
+        // - We indicate the format of departure: we want to pass from json towards an object spot
+        $user = $serialiser->deserialize($jsonData, User::class, 'json');
 
-        $sentData = json_decode($request->getContent(), true);
-        $form->submit($sentData);
+        // We validate the data stored in the $spot object based on
+        // on the critieria of the @Assert annotation of the entity 
+       
 
-        if ($form->isValid()) {
-            $password = $form->get('password')->getData();
-            $confirmedPassword = $form->get('confirmedPassword')->getData();
+       // If the error array is not empty (at least 1 error)
+       // count allows to count the number of elements of an array
+       // count([1, 2, 3]) ==> 3
+       $errors = $validator->validate($user);
 
-            if ($password === $confirmedPassword) {
-                $user->setPassword($passwordEncoder->hashPassword($user, $password));
+       if(count($errors) > 0){
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
+           // Code 400 : bad request , the data received is not
+           // not compliant
+           return $this->json($errors, 400);
+           
+       }
 
-                return $this->json($user, 201, [], [
-                    'groups' => ['add_user'],
-                ]);
-            }
-        }
+        // $password = $user->get('password')->getData();
+        // $user->setPassword($passwordEncoder->hashPassword($user, $password ));
+        $user->setPassword(
+            $passwordEncoder->hashPassword(
+                $user,
+                $user->get('password')->getData()
+            )
+        );
+    
+        // To save, we call the manager
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
 
-        return $this->json($form->getErrors(true, false)->__toString(), 400);
+        // A response is returned indicating that the resource
+        // has been created (http code 201)
+        return $this->json($user, 201, [], [
+                        'groups' => ['add_user'],
+                    ]);
+       
+        // $user = new User();
+
+        // $form = $this->createForm(UserType::class, $user, ['csrf_protection' => false]);
+
+        // $sentData = json_decode($request->getContent(), true);
+        // $form->submit($sentData);
+
+        // if ($form->isValid()) {
+        //     $password = $form->get('password')->getData();
+        //     $confirmedPassword = $form->get('confirmedPassword')->getData();
+
+        //     if ($password === $confirmedPassword) {
+        //         $user->setPassword($passwordEncoder->hashPassword($user, $password));
+
+        //         $em = $this->getDoctrine()->getManager();
+        //         $em->persist($user);
+        //         $em->flush();
+
+        //         return $this->json($user, 201, [], [
+        //             'groups' => ['add_user'],
+        //         ]);
+        //     }
+        // }
+
+        // return $this->json($form->getErrors(true, false)->__toString(), 400);
     }
 
 
