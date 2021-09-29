@@ -145,6 +145,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->categories = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
+       
     }
 
     public function getId(): ?int

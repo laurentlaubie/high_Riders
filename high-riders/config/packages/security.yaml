@@ -52,17 +52,17 @@ security:
         # Il faut avoir le role Admin pour afficher Back office
         - { path: ^/backoffice, roles: PUBLIC_ACCESS }
 
-        - { path: ^/api/v1/user/\d+, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
+        - { path: ^/api/v1/users/\d+, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
         - { path: ^/api/v1/spots/\d+, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/v1/events/\d+, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/v1/users/add, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/v1/events, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/api/v1/events, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/v1/users, roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
-        - { path: ^/api/v1/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/v1/search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/v1/spots, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/v1/home, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        # - { path: ^/api/v1/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/api/v1/search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/api/v1/spots, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/api/v1/home, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
     role_hierarchy:
         # Un role Admin peut faire, tout ce que fait un roleUser

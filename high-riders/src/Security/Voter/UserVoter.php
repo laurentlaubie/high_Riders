@@ -13,7 +13,7 @@ class UserVoter extends Voter
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, ['edit', 'delete'])
-            && $subject instanceof \App\Entity\User;
+            && ($subject instanceof \App\Entity\User||$subject instanceof \App\Entity\Event||$subject instanceof \App\Entity\Spot);
     }
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
@@ -28,20 +28,17 @@ class UserVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case 'edit':
-                if ($subject === $user) {
-                    return true;
-                }
-                if (in_array($user-> getUserIdentifier(), ['IS_AUTHENTICATED_FULLY'])) {
-                    return true;
-                }
+                // if ($subject === $user) {
+                //     return true;
+                // }
+                // if (in_array($user-> getUserIdentifier(), ['IS_AUTHENTICATED_FULLY'])) {
+                //     return true;
+                // }
+                return $subject->getUser() === $user;
                 break;
             case 'delete':
-                if ($subject === $user) {
-                    return true;
-                }
-                if (in_array($user->getUserIdentifier(), ['IS_AUTHENTICATED_FULLY'])) {
-                    return true;
-                }
+                return $subject->getUser() === $user;
+
                 break;
         }
 

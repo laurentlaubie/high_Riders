@@ -223,7 +223,6 @@ class Event
      */
     private $longitude;
 
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -588,6 +587,5 @@ class Event
 
         return $this;
     }
-
    
 }
