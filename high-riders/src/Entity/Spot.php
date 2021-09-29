@@ -275,6 +275,13 @@ class Spot
      */
     private $longitude;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="spots")
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     */
+    private $author;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -697,6 +704,18 @@ class Spot
     public function setLongitude(?float $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

@@ -100,7 +100,7 @@ class SpotsController extends AbstractController
          // We validate the data stored in the $spot object based on
          // on the critieria of the @Assert annotation of the entity (cf. src/Entity/spot.php)
         
-
+            dd($spot);
         // If the error array is not empty (at least 1 error)
         // count allows to count the number of elements of an array
         // count([1, 2, 3]) ==> 3
@@ -121,7 +121,9 @@ class SpotsController extends AbstractController
 
             // A response is returned indicating that the resource
             // has been created (http code 201)
-          return $this->json($spot, 201);
+            return $this->json($spot, 201, [], [
+                'groups' => ['spot_detail'],
+            ]);
         }
 
     }
