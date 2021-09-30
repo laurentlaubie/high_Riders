@@ -38,7 +38,6 @@ class Spot
     /**
      * @ORM\Column(type="string", length=2100)
      * 
-     * @Assert\NotBlank(message="merci d'upload une image")
      * @Groups({"spot_list", "spot_detail", "event_detail", "api_home"})
      * 
      */
