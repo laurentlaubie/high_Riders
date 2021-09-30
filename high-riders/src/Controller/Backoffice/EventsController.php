@@ -68,7 +68,7 @@ class EventsController extends AbstractController
 
             // update the entity
             $event->setSlug($slug);
-
+            //  dd($event);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
             $entityManager->flush();

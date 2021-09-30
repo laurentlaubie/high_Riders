@@ -100,7 +100,8 @@ class SpotsController extends AbstractController
          // We validate the data stored in the $spot object based on
          // on the critieria of the @Assert annotation of the entity (cf. src/Entity/spot.php)
         
-            dd($spot);
+         // dd($spot);
+         
         // If the error array is not empty (at least 1 error)
         // count allows to count the number of elements of an array
         // count([1, 2, 3]) ==> 3

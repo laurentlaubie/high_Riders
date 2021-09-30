@@ -73,7 +73,7 @@ class SpotsController extends AbstractController
 
             // update the entity
             $spot->setSlug($slug);
-
+                
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($spot);
             $entityManager->flush();
