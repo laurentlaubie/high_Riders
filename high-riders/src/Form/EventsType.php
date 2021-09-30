@@ -77,9 +77,9 @@ class EventsType extends AbstractType
             //->add('createdAt')
             //->add('updatedAt')
             //->add('publishedAt')
-            //->add('categories')
-            //->add('spot')
-            //->add('departement')
+            ->add('categories')
+            ->add('spot')
+            ->add('departement')
         ;
     }
 
