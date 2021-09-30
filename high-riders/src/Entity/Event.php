@@ -20,7 +20,7 @@ class Event
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"event_list", "event_detail", "spot_list", "spot_detail", "api_home"})
+     * @Groups({"event_list", "event_detail", "spot_list", "spot_detail", "api_home", "search_list"})
      * 
      */
     private $id;
@@ -29,7 +29,7 @@ class Event
      * @ORM\Column(type="string", length=255)
      * 
      * @Assert\NotBlank(message="merci de saisir un titre")
-     * @Groups({"event_list", "event_detail","spot_list", "spot_detail", "api_home"})
+     * @Groups({"event_list", "event_detail","spot_list", "spot_detail", "api_home", "search_list"})
      * 
      */
     private $title;
@@ -38,7 +38,7 @@ class Event
      * @ORM\Column(type="string", length=2100)
      * 
      * @Assert\NotBlank(message="merci d'upload une image")
-     * @Groups({"event_list", "event_detail", "api_home"})
+     * @Groups({"event_list", "event_detail", "api_home", "search_list"})
      *
      */
     private $image;
@@ -223,6 +223,11 @@ class Event
      */
     private $longitude;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
+    * @Groups({"event_detail"})
+     */
+    private $author;
 
     public function __construct()
     {
@@ -589,5 +594,16 @@ class Event
         return $this;
     }
 
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
    
 }

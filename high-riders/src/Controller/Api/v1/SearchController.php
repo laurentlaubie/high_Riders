@@ -16,19 +16,21 @@ class SearchController extends AbstractController
      */
     public function index(Request $request, SpotRepository $spotRepository, EventRepository $eventRepository): Response
     {
-        $query = $request->query->get('search');
+        $query = trim($request->query->get('search'));
         // We retrieve the series stored in BDD
         // data recovery from the entiy spot whith findBy by selection orderBy and limit the last 3 register.
         $spotsResult = $spotRepository->searchSpotByTitle($query);
         // data recovery from the entiy event whith findBy by selection orderBy and limit the last 3 register.
         $eventsResult = $eventRepository->searchEventByTitle($query);
        
-
+        if (empty($spotsResult&&$eventsResult)) {
+            return $this->json('Result not found', 404);
+        }
         return $this->json( [ $spotsResult, $eventsResult], 200, [],[
             // This input to the Serialiser to transform the objects
             // objects into JSON, fetching only the properties
             // tagged with the name event_list
-            'groups' => ['event_list','spot_list']
+            'groups' => ['search_list']
             
         ]);
     }
