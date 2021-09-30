@@ -20,27 +20,22 @@ class SpotsType extends AbstractType
                 'label' => 'Nom du Spot *',
                 'attr' => ['placeholder' => 'Saisir le nom du spot']
             ])
-            ->add('image', null , [
+            ->add('image', FileType::class, [
                 'label' => 'Image du Spot *',
-                'attr' => ['placeholder' => 'Ajouter votre image']
-            ])
-            // , 
-            
-            // FileType::class, [
-            //     'label' => "Choisir une image",
-            //     'mapped' => false,
-            //     'required' => false,
-            //     'constraints' => [
-            //         new File([
-            //             'maxSize' => '1024k',
-            //             'mimeTypes' => [
-            //                 'image/png',
-            //                 'image/jpeg'
-            //             ],
-            //             'mimeTypesMessage' => 'Merci de ne choisir que des fichiers .png et .jpeg',
-            //         ]) 
-            //     ],
-            // ])
+                'attr' => ['placeholder' => 'Ajouter votre image'],
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                         'maxSize' => '1024k',
+                         'mimeTypes' => [
+                             'image/png',
+                             'image/jpeg'
+                         ],
+                        'mimeTypesMessage' => 'Merci de ne choisir que des fichiers .png et .jpeg',
+                     ]) 
+                 ],
+             ])
             ->add('description', null , [
                 'label' => 'Description du Spot *',
                 'attr' => ['placeholder' => 'Ajouter une description']

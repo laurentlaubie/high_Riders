@@ -39,7 +39,6 @@ class Spot
     /**
      * @ORM\Column(type="string", length=2100)
      * 
-     * @Assert\NotBlank(message="merci d'upload une image")
      * @Groups({"spot_list", "spot_detail", "event_detail", "api_home", "search_list"})
      * 
      */
@@ -276,6 +275,21 @@ class Spot
      */
     private $longitude;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="spots")
+     * 
+     * @Groups({"spot_list", "spot_detail"})
+     */
+    private $author;
+
+    /**
+     * Si l'on tente de faire un echo sur l'objet Departement, PHP retournera la valeur du nom
+     */
+    public function __toString()
+    {
+        return $this->title;
+    }
+    
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -698,6 +712,18 @@ class Spot
     public function setLongitude(?float $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

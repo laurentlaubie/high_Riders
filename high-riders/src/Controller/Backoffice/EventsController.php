@@ -68,7 +68,7 @@ class EventsController extends AbstractController
 
             // update the entity
             $event->setSlug($slug);
-
+            //  dd($event);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
             $entityManager->flush();
@@ -84,6 +84,23 @@ class EventsController extends AbstractController
             ]);
     }
 
+    // ===================== Delete a event  =================//
+    /**
+    * @Route("/{id}/delete", name="event_delete" )
+    *
+    */
+    public function delete(Event $event): Response
+    {
+        // delete an Event in Bdd
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($event);
+        $entityManager->flush();
+            
+        // Flash Message
+        $this->addFlash('info', 'l\'Evenement ' . $event->getTitle() . ' a bien été supprimé');
+
+        return $this->redirectToRoute('backoffice_events');
+    }
 
 
 }

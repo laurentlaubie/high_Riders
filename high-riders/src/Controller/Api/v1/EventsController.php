@@ -102,7 +102,7 @@ class EventsController extends AbstractController
          // We validate the data stored in the $event object based on
          // on the critieria of the @Assert annotation of the entity (cf. src/Entity/event.php)
         
-
+        //  dd($event);
         // If the error array is not empty (at least 1 error)
         // count allows to count the number of elements of an array
         // count([1, 2, 3]) ==> 3
@@ -123,7 +123,9 @@ class EventsController extends AbstractController
 
             // A response is returned indicating that the resource
             // has been created (http code 201)
-          return $this->json($event, 201);
+            return $this->json($event, 201, [], [
+                'groups' => ['event_detail'],
+            ]);
         }
 
     }
