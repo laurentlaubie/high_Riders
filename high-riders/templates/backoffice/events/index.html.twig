@@ -58,8 +58,8 @@
             
                 <td> 
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <a href="" class="btn btn-outline-secondary btn-sm">Modifier</a> 
-                    <a href="{{ path('backoffice_event_delete', {id:listEvent.id}) }}" class="btn btn-outline-secondary btn-sm">Supprimer</a>
+                    <a href="{{ path('backoffice_event_edit', {id:listEvent.id}) }}" class="btn btn-outline-secondary btn-sm">Modifier</a> 
+                    <a href="{{ path('backoffice_event_delete', {id:listEvent.id}) }}" class="btn btn-outline-secondary btn-sm" onclick="return confirm('Êtes-vous sur de vouloir effectuer cette action ?')">Supprimer</a>
                 </div>
                 </td>
             </tr>
