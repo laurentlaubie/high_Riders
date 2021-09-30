@@ -33,6 +33,7 @@
                     <th>Nbre de Like</th>
                     <th>Status</th>
                     <th>Type d'évenement</th>
+                    <th>ACTIONS</th>
                    
                 </tr>
             </thead>
@@ -41,7 +42,13 @@
             <tr>
                 <td>{{ listEvent.id }}</td>
                 <td>{{ listEvent.title }}</td>
-                <th> <image src="{{ listEvent.image }}" width="75" > </th>
+                <th>
+                    {% if "http" in listEvent.image %}
+                        <image src="{{ listEvent.image }}" width="75" >
+                    {% else %}
+                        <image src="{{ asset('uploads/' ~ listEvent.image) }}" width="75">
+                    {% endif %}
+                </th>
                 <td>{{ listEvent.description }}</td>
                 <td>{{ listEvent.openingHours }}</td>
                 <td>{{ listEvent.closedHours }}</td>

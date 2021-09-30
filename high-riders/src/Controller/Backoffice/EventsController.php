@@ -54,11 +54,11 @@ class EventsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            /* $imageFile = $imageUploader->upload($form, 'image');
-            dd($imageFile);
+            $imageFile = $imageUploader->upload($form, 'image');
+           
             if ($imageFile) {
-                $spot->setImage($imageFile);
-            } */
+                $event->setImage($imageFile);
+            }
            
             //recovery the spot's title
             $title = $event->getTitle();
@@ -95,7 +95,13 @@ class EventsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // recovery the spot's title
+            $imageFile = $imageUploader->upload($form, 'image');
+            
+             if ($imageFile) {
+                 $event->setImage($imageFile);
+            }
+
+            // recovery the Event's title
             $title = $event->getTitle();
 
             // transform in slug

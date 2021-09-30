@@ -37,7 +37,6 @@ class Event
     /**
      * @ORM\Column(type="string", length=2100)
      * 
-     * @Assert\NotBlank(message="merci d'upload une image")
      * @Groups({"event_list", "event_detail", "api_home", "search_list"})
      *
      */
