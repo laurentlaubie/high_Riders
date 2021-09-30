@@ -59,11 +59,11 @@ class SpotsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // $imageFile = $imageUploader->upload($form, 'image');
-            // dd($imageFile);
-            // if ($imageFile) {
-            //     $spot->setImage($imageFile);
-            // }
+             $imageFile = $imageUploader->upload($form, 'image');
+             //dd($imageFile);
+             if ($imageFile) {
+                 $spot->setImage($imageFile);
+            }
            
             // recovery the spot's title
             $title = $spot->getTitle();
@@ -77,7 +77,7 @@ class SpotsController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($spot);
             $entityManager->flush();
-
+            
             // Flash Message
             $this->addFlash('success', 'Le Spot ' . $spot->getTitle() . ' a bien été ajouté');
 
