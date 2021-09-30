@@ -22,7 +22,7 @@ class Spot
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"spot_list", "spot_detail", "event_detail", "api_home", "search_list"})
+     * @Groups({"show_user","spot_list", "spot_detail", "event_detail", "api_home", "search_list"})
      * 
      */
     private $id;
@@ -31,7 +31,7 @@ class Spot
      * @ORM\Column(type="string", length=150)
      * 
      * @Assert\NotBlank(message="merci de saisir un nom")
-     * @Groups({"spot_list", "spot_detail", "api_home", "search_list"})
+     * @Groups({"show_user", "spot_list", "spot_detail", "api_home", "search_list"})
      * 
      */
     private $title;

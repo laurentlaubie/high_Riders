@@ -3,9 +3,11 @@
 namespace App\Controller\Api\v1;
 
 use App\Entity\Spot;
+use App\Entity\User;
 use App\Repository\CategoryRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\SpotRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -86,7 +88,7 @@ class SpotsController extends AbstractController
      *
      * @return void
      */
-    public function add(Request $request, SerializerInterface $serialiser, ValidatorInterface $validator)
+    public function add( Request $request, SerializerInterface $serialiser, ValidatorInterface $validator)
     {
          // We retrieve the JSON
          $jsonData = $request->getContent();
@@ -96,7 +98,8 @@ class SpotsController extends AbstractController
          // - We indicate the format of arrival after conversion (object of type spot)
          // - We indicate the format of departure: we want to pass from json towards an object spot
          $spot = $serialiser->deserialize($jsonData, Spot::class, 'json');
- 
+        
+        
          // We validate the data stored in the $spot object based on
          // on the critieria of the @Assert annotation of the entity (cf. src/Entity/spot.php)
         
@@ -143,8 +146,9 @@ class SpotsController extends AbstractController
      
      * @return JsonResponse
      */
-    public function update(int $id, SpotRepository $spotRepository, Request $request, SerializerInterface $serialiser)
+    public function update(int $id, SpotRepository $spotRepository, User $user, Request $request, SerializerInterface $serialiser)
     {
+         $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
         // A spot is retrieved according to its id
         $spot = $spotRepository->find($id);
         

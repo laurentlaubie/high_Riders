@@ -34,10 +34,10 @@ class UserVoter extends Voter
                 // if (in_array($user-> getUserIdentifier(), ['IS_AUTHENTICATED_FULLY'])) {
                 //     return true;
                 // }
-                return $subject->getUser() === $user;
+                return $subject->getUserIdentifier() === $user;
                 break;
             case 'delete':
-                return $subject->getUser() === $user;
+                return $subject->getUserIdentifier() === $user;
 
                 break;
         }
