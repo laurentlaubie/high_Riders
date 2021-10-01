@@ -156,7 +156,6 @@ class EventsController extends AbstractController
             ], 404);
         }
 
-
         // We retrieve the JSON
         $jsonData = $request->getContent();
 
