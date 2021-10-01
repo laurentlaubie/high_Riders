@@ -137,7 +137,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="update", methods={"PUT", "PATCH"}, requirements={"id": "\d+"})
      */
-    public function update(int $id, UserRepository $userRepository, Request $request, SerializerInterface $serialiser): Response
+    public function update(int $id, UserRepository $userRepository, User $user, Request $request, SerializerInterface $serialiser): Response
     {
         // TODO: vérifier les voters
         // $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
@@ -151,7 +151,6 @@ class UserController extends AbstractController
                 'error' => 'La user ' . $id . ' n\'existe pas'
             ], 404);
         }
-            
             
             // We retrieve the JSON
             $jsonData = $request->getContent();
@@ -209,11 +208,11 @@ class UserController extends AbstractController
     public function delete(User $user): Response
     {
 
-        if ($this->denyAccessUnlessGranted('delete', $user,"Vous n'avez pas accés à cette page' !")) {
+        // if ($this->denyAccessUnlessGranted('delete', $user,"Vous n'avez pas accés à cette page' !")) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
-        }
+        // }
 
         return $this->json(['l\'utilisateur à été suprimer'], 204);
     }

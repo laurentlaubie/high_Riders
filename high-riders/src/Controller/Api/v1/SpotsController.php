@@ -5,6 +5,7 @@ namespace App\Controller\Api\v1;
 use App\Entity\Spot;
 use App\Entity\User;
 use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\SpotRepository;
 use App\Repository\UserRepository;
@@ -146,9 +147,9 @@ class SpotsController extends AbstractController
      
      * @return JsonResponse
      */
-    public function update(int $id, SpotRepository $spotRepository, User $user, Request $request, SerializerInterface $serialiser)
+    public function update(int $id, SpotRepository $spotRepository, Request $request, SerializerInterface $serialiser)
     {
-         $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
+        //  $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
         // A spot is retrieved according to its id
         $spot = $spotRepository->find($id);
         
