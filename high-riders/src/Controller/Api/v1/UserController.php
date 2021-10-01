@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -128,46 +129,77 @@ class UserController extends AbstractController
         //         ]);
         //     }
         // }
-
+        
         // return $this->json($form->getErrors(true, false)->__toString(), 400);
     }
-
-
+    
+    
     /**
-     * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id": "\d+"})
+     * @Route("/{id}", name="update", methods={"PUT", "PATCH"}, requirements={"id": "\d+"})
      */
-    public function edit(User $user, Request $request, UserPasswordHasher $passwordEncoder): Response
+    public function update(int $id, UserRepository $userRepository, User $user, Request $request, SerializerInterface $serialiser): Response
     {
-        $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
+        // TODO: vérifier les voters
+        // $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
 
-        $form = $this->createForm(UserEditType::class, $user, ['csrf_protection' => false]);
-
-        $sentData = json_decode($request->getContent(), true);
-        $form->submit($sentData);
-
-
-
-        if ($form->isValid()) {
-            
-            $password = $form->get('password')->getData();
-
-
-            if ($password !== null) {
-                $confirmedPassword = $form->get('confirmedPassword')->getData();
-                if ($password === $confirmedPassword) {
-                    $user->setPassword($passwordEncoder->hashPassword($user, $confirmedPassword));
-                } else {
-                    return $this->json('the 2 passwords are differents', 404);
-                }
-            }
-            $user->setUpdatedAt(new \DateTimeImmutable());
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->json($user, 200, [], [
-                'groups' => ['edit_user'],
-            ]);
+        // A user is retrieved according to its id
+        $user = $userRepository->find($id);
+        
+        // If the user does not exist, we return a 404 error
+        if (!$user) {
+            return $this->json([
+                'error' => 'La user ' . $id . ' n\'existe pas'
+            ], 404);
         }
-        return $this->json($form->getErrors(true, false)->__toString(), 400);
+            
+            // We retrieve the JSON
+            $jsonData = $request->getContent();
+            
+            // We merge the data from the user with the data
+            // from the Front application (insomnia, react, ...)
+            // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
+            $user = $serialiser->deserialize($jsonData, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
+            
+            $user->setUpdatedAt(new \DateTimeImmutable());
+
+            // We call the manager to perform the update in DB
+            $em = $this->getDoctrine()->getManager();
+            
+            $em->flush();
+            
+            return $this->json($user, 200, [], [
+                        'groups' => ['show_user'],
+                    ]);
+             
+
+        // $form = $this->createForm(UserEditType::class, $user, ['csrf_protection' => false]);
+
+        // $sentData = json_decode($request->getContent(), true);
+        // $form->submit($sentData);
+
+
+
+        // if ($form->isValid()) {
+            
+        //     $password = $form->get('password')->getData();
+
+
+        //     if ($password !== null) {
+        //         $confirmedPassword = $form->get('confirmedPassword')->getData();
+        //         if ($password === $confirmedPassword) {
+        //             $user->setPassword($passwordEncoder->hashPassword($user, $confirmedPassword));
+        //         } else {
+        //             return $this->json('the 2 passwords are differents', 404);
+        //         }
+        //     }
+        //     $user->setUpdatedAt(new \DateTimeImmutable());
+        //     $this->getDoctrine()->getManager()->flush();
+
+        //     return $this->json($user, 200, [], [
+        //         'groups' => ['edit_user'],
+        //     ]);
+        // }
+        // return $this->json($form->getErrors(true, false)->__toString(), 400);
     }
 
     /**
@@ -176,11 +208,11 @@ class UserController extends AbstractController
     public function delete(User $user): Response
     {
 
-        if ($this->denyAccessUnlessGranted('delete', $user,"Vous n'avez pas accés à cette page' !")) {
+        // if ($this->denyAccessUnlessGranted('delete', $user,"Vous n'avez pas accés à cette page' !")) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
-        }
+        // }
 
         return $this->json(['l\'utilisateur à été suprimer'], 204);
     }

@@ -97,7 +97,6 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity=Spot::class, inversedBy="comments")
      * 
-     * @Groups({"spot_detail"})
      * 
      */
     private $spot;
@@ -105,7 +104,6 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="comments")
      * 
-     * @Groups({"event_detail"})
      * 
      */
     private $event;
