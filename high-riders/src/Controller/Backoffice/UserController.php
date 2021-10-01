@@ -26,6 +26,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    
     /**
      * @Route("/add", name="backoffice_user_add", methods={"GET","POST"})
      */
