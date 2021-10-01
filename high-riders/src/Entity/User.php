@@ -67,7 +67,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"show_user", "add_user", "edit_user"})
      */
     private $firstname;
-
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"show_user"})
+     */
+    private $lastname;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -116,7 +122,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
      * 
-     * @Groups({"show_user"})
      */
     private $comment;
 
@@ -134,12 +139,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $participations;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * 
-     * @Groups({"show_user"})
-     */
-    private $lastname;
 
     /**
      * @ORM\OneToMany(targetEntity=Spot::class, mappedBy="author")
