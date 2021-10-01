@@ -33,12 +33,12 @@
                             <th>Liens vers site Officiel</th>
                             <th>Prix d'entrée</th>
                             <th>Accessibilité</th>
-                            <th>Nbre de Like/th>
+                            <th>Nbre de Like</th>
                             <th>Denivelé + </th>
                             <th>Denivelé - </th>
-                            <th>traknumber</th>
+                            <th>Nombre de pistes</th>
                             <th>Type de Spot</th>
-                            <th>Actions</th>
+                            <th>ACTIONS</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,7 +46,13 @@
                     <tr>
                         <td>{{ listspot.id }}</td>
                         <td>{{ listspot.title }}</td>
-                        <th> <image src="{{ listspot.image }}" width="75" > </th>
+                        <th> 
+                            {% if "http" in listspot.image %}
+                                <image src="{{ listspot.image }}" width="75" >
+                            {% else %}
+                                <image src="{{ asset('uploads/' ~ listspot.image) }}" width="75">
+                            {% endif %}
+                        </th>
                         <td>{{ listspot.description | u.truncate(100,'...') }}</td>
                         <td>{{ listspot.address }}</td>
                         <td>{{ listspot.city }}</td>

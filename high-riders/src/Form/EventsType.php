@@ -18,26 +18,22 @@ class EventsType extends AbstractType
                 'label' => 'Nom de l\'Evenement *',
                 'attr' => ['placeholder' => 'Saisir le nom de l\'Evenement']
             ])
-            ->add('image', null, [
+            ->add('image', FileType::class, [
                 'label' => 'Image de l\'Evenement *',
                 'attr' => ['placeholder' => 'Ajouter votre image'],
-                ])
-                
-               //test for upload imge
-                //FileType::class
-                   /*  'mapped' => false,
-                    'required' => false,
-                    'constraints' => [
-                        new File([
-                            'maxSize' => '1024k',
-                            'mimeTypes' => [
-                                'image/png',
-                                'image/jpeg'
-                            ],
-                            'mimeTypesMessage' => 'Merci de ne choisir que des fichiers .png et .jpeg',
-                        ]) 
-                    ], */
-            
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                         'maxSize' => '1024k',
+                         'mimeTypes' => [
+                             'image/png',
+                             'image/jpeg'
+                         ],
+                        'mimeTypesMessage' => 'Merci de ne choisir que des fichiers .png et .jpeg',
+                     ]) 
+                 ],
+             ])
             ->add('description', null , [
                 'label' => 'Description de l\'Evenement *',
                 'attr' => ['placeholder' => 'Ajouter votre description']
@@ -50,7 +46,10 @@ class EventsType extends AbstractType
                 'label' => 'Horaire de fermeture de l\'Evenement',
                 'attr' => ['placeholder' => 'Ajouter l\'horaire']
             ])
-            ->add('difficulty')
+            ->add('difficulty', null , [
+                'label' => 'Difficulté de l\'Evenement (sur 5)',
+                'attr' => ['placeholder' => 'Ajouter la note']
+            ])
             ->add('date_event', null , [
                 'label' => 'Date de l\'Evenement *',
                 'attr' => ['placeholder' => 'Ajouter une date']

@@ -26,8 +26,8 @@
                     <th>Firstname</th>
                     <th>Lastname</th>
                     <th>Presentation</th>
-                    <th>City</th>
                     <th>Departement</th>
+                    <th>Ville</th>
                     <th>Equipement</th>
                     <th>CreatedAt</th>
                     {# <th>UpdatedAt</th> #}
@@ -45,8 +45,8 @@
                     <td>{{ user.firstname }}</td>
                     <td>{{ user.lastname }}</td>
                     <td>{{ user.presentation }}</td>
-                    <td>{{ user.city }}</td>
                     <td>{{ user.departement }}</td>
+                    <td>{{ user.city }}</td>
                     <td>{{ user.equipement }}</td>
                     <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>

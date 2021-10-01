@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouveau Spot
+{% block title %}Edition d'un Evenement
 {% endblock %}
 
 {% block body %}
@@ -8,17 +8,19 @@
     <div class="container-fluid">
     <a class="navbar-brand" href="{{ path('backoffice_home')  }}">
         <img src="{{ asset('images/LogoridersV1.1.png') }}" alt="" width="100" height="80" class="d-inline-block align-text">
-        Hihg Riders | Ajouter un nouveau Spot
+        Hihg Riders | Modifier un Evenement
         </a>
         </div>
      </nav>
- 
- 
-    <main class="container">
+     <main class="container">
         <div class="m-4">
-            {{ include('backoffice/spots/_form.html.twig') }}
+    
+        
+            {{ include('backoffice/events/_form.html.twig') }}
 
-            <a href="{{ path('backoffice_spots') }}" class="btn btn-outline-secondary btn-lg mt-2">Retour aux spots</a>
+            <a href="{{ path('backoffice_events') }}" class="btn btn-outline-secondary btn-lg mt-2">Retours aux Evenements</a>
+        
         </div>
     </main>
+    
 {% endblock %}
