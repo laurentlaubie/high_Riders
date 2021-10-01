@@ -40,6 +40,12 @@ class UserController extends AbstractController
     }
 
     /**
+     * Displays the details of a user according to
+     * its ID
+     * 
+     * URL : /api/v1/users/{id}
+     * Road : api_v1_user_show
+     * 
      * @Route("/{id}", name="show", methods={"GET"}, requirements={"id": "\d+"})
      */
     public function show(User $user): Response
@@ -56,6 +62,11 @@ class UserController extends AbstractController
     }
 
     /**
+     * Add a new user 
+     * 
+     * URL : /api/v1/users/{id}
+     * Road : api_v1_user_add
+     * 
      * @Route("/add", name="add", methods={"POST"})
      */
     public function add(Request $request, UserPasswordHasherInterface $passwordEncoder, SerializerInterface $serialiser, ValidatorInterface $validator): Response
@@ -106,35 +117,16 @@ class UserController extends AbstractController
                         'groups' => ['add_user'],
                     ]);
        
-        // $user = new User();
-
-        // $form = $this->createForm(UserType::class, $user, ['csrf_protection' => false]);
-
-        // $sentData = json_decode($request->getContent(), true);
-        // $form->submit($sentData);
-
-        // if ($form->isValid()) {
-        //     $password = $form->get('password')->getData();
-        //     $confirmedPassword = $form->get('confirmedPassword')->getData();
-
-        //     if ($password === $confirmedPassword) {
-        //         $user->setPassword($passwordEncoder->hashPassword($user, $password));
-
-        //         $em = $this->getDoctrine()->getManager();
-        //         $em->persist($user);
-        //         $em->flush();
-
-        //         return $this->json($user, 201, [], [
-        //             'groups' => ['add_user'],
-        //         ]);
-        //     }
-        // }
-        
-        // return $this->json($form->getErrors(true, false)->__toString(), 400);
     }
     
     
     /**
+     * Update the user according to
+     * its ID
+     * 
+     * URL : /api/v1/users/{id}
+     * Road : api_v1_user_update
+     * 
      * @Route("/{id}", name="update", methods={"PUT", "PATCH"}, requirements={"id": "\d+"})
      */
     public function update(int $id, UserRepository $userRepository, User $user, Request $request, SerializerInterface $serialiser): Response
@@ -171,38 +163,15 @@ class UserController extends AbstractController
                         'groups' => ['show_user'],
                     ]);
              
-
-        // $form = $this->createForm(UserEditType::class, $user, ['csrf_protection' => false]);
-
-        // $sentData = json_decode($request->getContent(), true);
-        // $form->submit($sentData);
-
-
-
-        // if ($form->isValid()) {
-            
-        //     $password = $form->get('password')->getData();
-
-
-        //     if ($password !== null) {
-        //         $confirmedPassword = $form->get('confirmedPassword')->getData();
-        //         if ($password === $confirmedPassword) {
-        //             $user->setPassword($passwordEncoder->hashPassword($user, $confirmedPassword));
-        //         } else {
-        //             return $this->json('the 2 passwords are differents', 404);
-        //         }
-        //     }
-        //     $user->setUpdatedAt(new \DateTimeImmutable());
-        //     $this->getDoctrine()->getManager()->flush();
-
-        //     return $this->json($user, 200, [], [
-        //         'groups' => ['edit_user'],
-        //     ]);
-        // }
-        // return $this->json($form->getErrors(true, false)->__toString(), 400);
     }
 
     /**
+     * Delete the user according to
+     * its ID
+     * 
+     * URL : /api/v1/users/{id}
+     * Road : api_v1_user_delete
+     * 
      * @Route("/{id}", name="delete", methods={"DELETE"}, requirements={"id": "\d+"})
      */
     public function delete(User $user): Response

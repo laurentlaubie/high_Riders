@@ -12,7 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class SearchController extends AbstractController
 {
     /**
-     * @Route("/api/v1/search", name="api_v1_search", methods={"GET"})
+     * Displays the details of a search on seach form to navbar
+     * 
+     * URL : /api/v1/search/?search={value}
+     * Road : api_v1_search
+     * 
+     * @Route("/api/v1/search/", name="api_v1_search", methods={"GET"})
      */
     public function index(Request $request, SpotRepository $spotRepository, EventRepository $eventRepository): Response
     {

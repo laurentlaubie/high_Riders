@@ -234,7 +234,6 @@ class Event
         $this->categories = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = new DateTimeImmutable();
         $this->status = 1;
     }
 
