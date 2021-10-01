@@ -101,19 +101,23 @@ class SpotsController extends AbstractController
 
          if ($form->isSubmitted() && $form->isValid()) {
 
-    //     // recovery the spot's title
+            $imageFile = $imageUploader->upload($form, 'image');
+             //dd($imageFile);
+             if ($imageFile) {
+                 $spot->setImage($imageFile);
+            }
+
+            // recovery the spot's title
              $title = $spot->getTitle();
 
-    //         // transform in slug
+            // transform in slug
              $slug = $slugger->slug(strtolower($title));
 
-    //         // update the entity
+            // update the entity
              $spot->setSlug($slug);
 
-             //$imageFile = $imageUploader->upload($form, 'imgupload');
-             //if ($imageFile) {
-             //    $spot->setImage($imageFile);
-             //}
+            
+            
 
              $this->getDoctrine()->getManager()->flush();
 
@@ -121,7 +125,7 @@ class SpotsController extends AbstractController
             $this->addFlash('success', 'Le Spot ' . $spot->getTitle() . ' a bien été modifié');
 
              return $this->redirectToRoute('backoffice_spots', [], Response::HTTP_SEE_OTHER);
-         }
+        }
              return $this->renderForm('backoffice/spots/edit.html.twig', [
                  'spot' => $spot,
                  'form' => $form,

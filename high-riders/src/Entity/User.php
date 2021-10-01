@@ -136,16 +136,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"show_user"})
      */
     private $lastname;
 
     /**
      * @ORM\OneToMany(targetEntity=Spot::class, mappedBy="author")
+     * 
+     * @Groups({"show_user"})
      */
     private $spots;
 
     /**
      * @ORM\OneToMany(targetEntity=Event::class, mappedBy="author")
+     * 
+     * @Groups({"show_user"})
      */
     private $events;
 

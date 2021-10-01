@@ -35,7 +35,7 @@ class EventRepository extends ServiceEntityRepository
             // Clause WHERE pour filtre en fonction de $title
             ->where('event.title LIKE :title')
             ->orderBy('event.createdAt', 'DESC')
-            ->setParameter(':title', "%$title%")
+            ->setParameter('title', "%$title%")
             ->getQuery()
             ->getResult();
     }

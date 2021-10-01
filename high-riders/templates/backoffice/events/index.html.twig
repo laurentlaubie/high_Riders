@@ -33,6 +33,7 @@
                     <th>Nbre de Like</th>
                     <th>Status</th>
                     <th>Type d'évenement</th>
+                    <th>ACTIONS</th>
                    
                 </tr>
             </thead>
@@ -41,7 +42,13 @@
             <tr>
                 <td>{{ listEvent.id }}</td>
                 <td>{{ listEvent.title }}</td>
-                <th> <image src="{{ listEvent.image }}" width="75" > </th>
+                <th>
+                    {% if "http" in listEvent.image %}
+                        <image src="{{ listEvent.image }}" width="75" >
+                    {% else %}
+                        <image src="{{ asset('uploads/' ~ listEvent.image) }}" width="75">
+                    {% endif %}
+                </th>
                 <td>{{ listEvent.description }}</td>
                 <td>{{ listEvent.openingHours }}</td>
                 <td>{{ listEvent.closedHours }}</td>
@@ -58,8 +65,8 @@
             
                 <td> 
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <a href="" class="btn btn-outline-secondary btn-sm">Modifier</a> 
-                    <a href="{{ path('backoffice_event_delete', {id:listEvent.id}) }}" class="btn btn-outline-secondary btn-sm">Supprimer</a>
+                    <a href="{{ path('backoffice_event_edit', {id:listEvent.id}) }}" class="btn btn-outline-secondary btn-sm">Modifier</a> 
+                    <a href="{{ path('backoffice_event_delete', {id:listEvent.id}) }}" class="btn btn-outline-secondary btn-sm" onclick="return confirm('Êtes-vous sur de vouloir effectuer cette action ?')">Supprimer</a>
                 </div>
                 </td>
             </tr>

@@ -54,11 +54,11 @@ class EventsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            /* $imageFile = $imageUploader->upload($form, 'image');
-            dd($imageFile);
+            $imageFile = $imageUploader->upload($form, 'image');
+           
             if ($imageFile) {
-                $spot->setImage($imageFile);
-            } */
+                $event->setImage($imageFile);
+            }
            
             //recovery the spot's title
             $title = $event->getTitle();
@@ -83,6 +83,53 @@ class EventsController extends AbstractController
                 'form' => $form,
             ]);
     }
+
+     // ===================== Page edit an Event  =================//
+    /**
+    * @Route("/{id}/edit", name="event_edit", methods={"GET","POST"})
+    */
+    public function edit(Request $request, Event $event, SluggerInterface $slugger, ImageUploader $imageUploader ): Response
+    {
+        $form = $this->createForm(EventsType::class, $event);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $imageFile = $imageUploader->upload($form, 'image');
+            
+             if ($imageFile) {
+                 $event->setImage($imageFile);
+            }
+
+            // recovery the Event's title
+            $title = $event->getTitle();
+
+            // transform in slug
+            $slug = $slugger->slug(strtolower($title));
+
+            // update the entity
+            $event->setSlug($slug);
+
+            //$imageFile = $imageUploader->upload($form, 'imgupload');
+            //if ($imageFile) {
+            //    $event->setImage($imageFile);
+            //}
+
+            $this->getDoctrine()->getManager()->flush();
+
+            // Flash Message
+           $this->addFlash('success', 'L\'Evenement ' . $event->getTitle() . ' a bien été modifié');
+
+            return $this->redirectToRoute('backoffice_events', [], Response::HTTP_SEE_OTHER);
+        }
+            return $this->renderForm('backoffice/events/edit.html.twig', [
+                'event' => $event,
+                'form' => $form,
+            ]);
+
+   }
+
+
 
     // ===================== Delete a event  =================//
     /**

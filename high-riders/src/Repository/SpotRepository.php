@@ -28,13 +28,13 @@ class SpotRepository extends ServiceEntityRepository
      * @param $title
      * @return Spot[]
      */
-    public function searchSpotByTitle($title)
+    public function searchSpotByTitle($value)
     {
         // https://www.doctrine-project.org/projects/doctrine-orm/en/2.9/reference/query-builder.html
         return $this->createQueryBuilder('spot')
-            // Clause WHERE pour filtre en fonction de $title
+        // Clause WHERE pour filtre en fonction de $title
             ->where('spot.title LIKE :title')
-            ->setParameter(':title', "%$title%")
+            ->setParameter('title', "%$value%")
             ->orderBy('spot.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
