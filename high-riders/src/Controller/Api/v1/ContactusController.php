@@ -50,7 +50,8 @@ class ContactusController extends AbstractController
             return $this->json($errors, 400);
             
         }else{
-            
+            $message->setCreatedAt(new \DateTimeImmutable());
+
             // To save, we call the manager
             $em = $this->getDoctrine()->getManager();
             $em->persist($message);

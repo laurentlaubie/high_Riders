@@ -2,16 +2,22 @@
 
 namespace App\Controller\Api\v1;
 
+use App\Entity\Comment;
 use App\Entity\Event;
+use App\Entity\Participation;
+use App\Entity\User;
 use App\Repository\CategoryRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\EventRepository;
+use App\Repository\UserRepository;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -64,6 +70,7 @@ class EventsController extends AbstractController
         // A event is retrieved according to its id
         $event = $eventRepository->find($id);
 
+
          // If the event does not exist, we return a 404 error
         if (!$event) {
             return $this->json([
@@ -88,7 +95,7 @@ class EventsController extends AbstractController
      *
      * @return void
      */
-    public function add(Request $request, SerializerInterface $serialiser, ValidatorInterface $validator)
+    public function add(Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, SluggerInterface $sluggerInterface)
     {
          // We retrieve the JSON
          $jsonData = $request->getContent();
@@ -116,6 +123,13 @@ class EventsController extends AbstractController
             
         }else{
             
+            //recovery the spot's title
+            $title = $event->getTitle();
+            // transform in slug
+            $slug = $sluggerInterface->slug(strtolower($title));
+            // update the entity
+            $event->setSlug($slug);
+
             // To save, we call the manager
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
@@ -130,6 +144,117 @@ class EventsController extends AbstractController
 
     }
 
+     /**
+     * Allows the creation of a new event
+     * 
+     *  URL : /api/v1/events/{id}/addComment
+     * Road : api_v1_event_addComment
+     * @Route("/{id}/addComment", name="addComment", requirements={"id":"\d+"}, methods={"POST"})
+     *
+     * @return void
+     */
+    public function addComment( Request $request, SerializerInterface $serialiser, ValidatorInterface $validator)
+    {
+         // We retrieve the JSON
+         $jsonData = $request->getContent();
+
+         //  We transform the json into an object : deserialization
+         // - We indicate the data to transform (deserialize)
+         // - We indicate the format of arrival after conversion (object of type comment)
+         // - We indicate the format of departure: we want to pass from json towards an object comment
+         $comment = $serialiser->deserialize($jsonData, Comment::class, 'json');
+        
+         // We validate the data stored in the $comment object based on
+         // on the critieria of the @Assert annotation of the entity (cf. src/Entity/comment.php)
+         
+        // If the error array is not empty (at least 1 error)
+        // count allows to count the number of elements of an array
+        // count([1, 2, 3]) ==> 3
+        $errors = $validator->validate($comment);
+
+        if(count($errors) > 0){
+
+            // Code 400 : bad request , the data received is not
+            // not compliant
+            return $this->json($errors, 400);
+            
+        }else{
+            
+            // To save, we call the manager
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comment);
+            $em->flush();
+
+            // A response is returned indicating that the resource
+            // has been created (http code 201)
+            return $this->json($comment, 201, [], [
+                'groups' => ['event_detail'],
+            ]);
+        }
+
+    }
+
+     /**
+     * Allows the creation of a new event to participation
+     * 
+     *  URL : /api/v1/events/{id}/addParticipation
+     * Road : api_v1_event_addParticipation
+     * @Route("/{id}/addParticipation", name="addParticipation", requirements={"id":"\d+"}, methods={"POST"})
+     *
+     * @return void
+     */
+    public function addParticipation( Event $event, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator)
+    {
+         // We retrieve the JSON
+         $jsonData = $request->getContent();
+
+         //  We transform the json into an object : deserialization
+         // - We indicate the data to transform (deserialize)
+         // - We indicate the format of arrival after conversion (object of type Participation)
+         // - We indicate the format of departure: we want to pass from json towards an object Participation
+         $participation = $serialiser->deserialize($jsonData, Participation::class, 'json');
+         
+         // We validate the data stored in the $participation object based on
+         // on the critieria of the @Assert annotation of the entity (cf. src/Entity/participation.php)
+        
+        // If the error array is not empty (at least 1 error)
+        // count allows to count the number of elements of an array
+        // count([1, 2, 3]) ==> 3
+        $errors = $validator->validate($participation);
+
+        if(count($errors) > 0){
+
+            // Code 400 : bad request , the data received is not
+            // not compliant
+            return $this->json($errors, 400);
+            
+        }else{
+            // To inject the id of the current event in the participation table
+            $event->getId();
+            $participation->setEvent($event);
+
+            // To count the number of participants, we count the number of entries in the 
+            // Participation table and inject it into the ParticipationUser property
+
+            $countParticipation=$event->getParticipations();
+            $InjectionParticipapation = (count($countParticipation));
+            
+            $event->setParticipationUser($InjectionParticipapation);
+
+            // To save, we call the manager
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($participation);
+            $em->persist($event);
+            $em->flush();
+
+            // A response is returned indicating that the resource
+            // has been created (http code 201)
+            return $this->json($participation, 201, [], [
+                'groups' => ['event_detail'],
+            ]);
+        }
+
+    }
 
     /**
      
@@ -156,7 +281,6 @@ class EventsController extends AbstractController
             ], 404);
         }
 
-
         // We retrieve the JSON
         $jsonData = $request->getContent();
 
@@ -164,6 +288,8 @@ class EventsController extends AbstractController
         // from the Front application (insomnia, react, ...)
         // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
          $event = $serialiser->deserialize($jsonData, Event::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $event]);
+
+         $event->setUpdatedAt(new \DateTimeImmutable());
 
          // We call the manager to perform the update in DB
          $em = $this->getDoctrine()->getManager();

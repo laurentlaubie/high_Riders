@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\ParticipationRepository;
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -26,11 +25,15 @@ class Participation
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="participations")
+     * 
+     * @Groups({"event_detail"})
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="participations")
+     * 
+     * @Groups({"show_user"})
      */
     private $event;
 

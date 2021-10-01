@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api\v1;
 
+use App\Entity\Comment;
 use App\Entity\Spot;
 use App\Entity\User;
 use App\Repository\CategoryRepository;
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -89,7 +91,7 @@ class SpotsController extends AbstractController
      *
      * @return void
      */
-    public function add( Request $request, SerializerInterface $serialiser, ValidatorInterface $validator)
+    public function add( Request $request, SerializerInterface $serialiser, ValidatorInterface $validator,SluggerInterface $sluggerInterface)
     {
          // We retrieve the JSON
          $jsonData = $request->getContent();
@@ -100,11 +102,8 @@ class SpotsController extends AbstractController
          // - We indicate the format of departure: we want to pass from json towards an object spot
          $spot = $serialiser->deserialize($jsonData, Spot::class, 'json');
         
-        
          // We validate the data stored in the $spot object based on
          // on the critieria of the @Assert annotation of the entity (cf. src/Entity/spot.php)
-        
-         // dd($spot);
          
         // If the error array is not empty (at least 1 error)
         // count allows to count the number of elements of an array
@@ -118,6 +117,15 @@ class SpotsController extends AbstractController
             return $this->json($errors, 400);
             
         }else{
+
+             // recovery the spot's title
+             $title = $spot->getTitle();
+
+             // transform in slug
+             $slug = $sluggerInterface->slug(strtolower($title));
+ 
+             // update the entity
+             $spot->setSlug($slug);
             
             // To save, we call the manager
             $em = $this->getDoctrine()->getManager();
@@ -127,6 +135,55 @@ class SpotsController extends AbstractController
             // A response is returned indicating that the resource
             // has been created (http code 201)
             return $this->json($spot, 201, [], [
+                'groups' => ['spot_detail'],
+            ]);
+        }
+
+    }
+     /**
+     * Allows the creation of a new spot
+     * 
+     *  URL : /api/v1/spots/{id}/addComment
+     * Road : api_v1_spot_addComment
+     * @Route("/{id}/addComment", name="addComment", requirements={"id":"\d+"}, methods={"POST"})
+     *
+     * @return void
+     */
+    public function addComment( Request $request, SerializerInterface $serialiser, ValidatorInterface $validator)
+    {
+         // We retrieve the JSON
+         $jsonData = $request->getContent();
+
+         //  We transform the json into an object : deserialization
+         // - We indicate the data to transform (deserialize)
+         // - We indicate the format of arrival after conversion (object of type comment)
+         // - We indicate the format of departure: we want to pass from json towards an object comment
+         $comment = $serialiser->deserialize($jsonData, Comment::class, 'json');
+        
+         // We validate the data stored in the $comment object based on
+         // on the critieria of the @Assert annotation of the entity (cf. src/Entity/comment.php)
+         
+        // If the error array is not empty (at least 1 error)
+        // count allows to count the number of elements of an array
+        // count([1, 2, 3]) ==> 3
+        $errors = $validator->validate($comment);
+
+        if(count($errors) > 0){
+
+            // Code 400 : bad request , the data received is not
+            // not compliant
+            return $this->json($errors, 400);
+            
+        }else{
+            
+            // To save, we call the manager
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comment);
+            $em->flush();
+
+            // A response is returned indicating that the resource
+            // has been created (http code 201)
+            return $this->json($comment, 201, [], [
                 'groups' => ['spot_detail'],
             ]);
         }
@@ -169,6 +226,7 @@ class SpotsController extends AbstractController
         // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
          $spot = $serialiser->deserialize($jsonData, Spot::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $spot]);
 
+         $spot->setUpdatedAt(new \DateTimeImmutable());
          // We call the manager to perform the update in DB
          $em = $this->getDoctrine()->getManager();
         
