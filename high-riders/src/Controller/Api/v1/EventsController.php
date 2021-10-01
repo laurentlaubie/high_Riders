@@ -6,12 +6,14 @@ use App\Entity\Event;
 use App\Repository\CategoryRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\EventRepository;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -88,7 +90,7 @@ class EventsController extends AbstractController
      *
      * @return void
      */
-    public function add(Request $request, SerializerInterface $serialiser, ValidatorInterface $validator)
+    public function add(Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, SluggerInterface $sluggerInterface)
     {
          // We retrieve the JSON
          $jsonData = $request->getContent();
@@ -116,6 +118,13 @@ class EventsController extends AbstractController
             
         }else{
             
+            //recovery the spot's title
+            $title = $event->getTitle();
+            // transform in slug
+            $slug = $sluggerInterface->slug(strtolower($title));
+            // update the entity
+            $event->setSlug($slug);
+
             // To save, we call the manager
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
@@ -163,6 +172,8 @@ class EventsController extends AbstractController
         // from the Front application (insomnia, react, ...)
         // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
          $event = $serialiser->deserialize($jsonData, Event::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $event]);
+
+         $event->setUpdatedAt(new \DateTimeImmutable());
 
          // We call the manager to perform the update in DB
          $em = $this->getDoctrine()->getManager();

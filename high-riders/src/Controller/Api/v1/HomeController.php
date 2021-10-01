@@ -11,6 +11,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
+     * Displays the details of a the three last spot editing, the three last event editing,
+     * the three best spot liking.
+     * 
+     * URL : /api/v1/home
+     * Road : api_v1_home
+     * 
      * @Route("/api/v1/home", name="api_v1_home", methods={"GET"})
      */
     public function index(SpotRepository $spotRepository, EventRepository $eventRepository): Response

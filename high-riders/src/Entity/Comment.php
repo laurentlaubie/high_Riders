@@ -27,7 +27,7 @@ class Comment
     /**
      * @ORM\Column(type="text")
      * 
-     * @Assert\NotBlank(message="merci de saisir un nom")
+     * 
      * @Groups({"spot_detail", "event_detail"})
      * 
      */
@@ -107,6 +107,14 @@ class Comment
      * 
      */
     private $event;
+
+    /**
+     * Si l'on tente de faire un echo sur l'objet Departement, PHP retournera la valeur du nom
+     */
+    public function __toString()
+    {
+        return $this->content;
+    }
 
     public function __construct()
     {
