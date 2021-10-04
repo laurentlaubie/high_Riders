@@ -127,10 +127,9 @@ class EventsController extends AbstractController
             
         }else{
 
-            // add a User Id
+            // add a User Id with UserService
             $user = $service->getCurrentUser();
-            // $userId = $user['id'];
-            // dd($user);
+
             //recovery the spot's title
             $title = $event->getTitle();
             // transform in slug
@@ -157,13 +156,13 @@ class EventsController extends AbstractController
      /**
      * Allows the creation of a new event
      * 
-     *  URL : /api/v1/events/{id}/addComment
+     *  URL : /api/v1/events/{id}/comment
      * Road : api_v1_event_addComment
-     * @Route("/{id}/addComment", name="addComment", requirements={"id":"\d+"}, methods={"POST"})
+     * @Route("/{id}/comment", name="addComment", requirements={"id":"\d+"}, methods={"POST"})
      *
      * @return void
      */
-    public function addComment( Request $request, SerializerInterface $serialiser, ValidatorInterface $validator)
+    public function addComment(Event $event, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
     {
          // We retrieve the JSON
          $jsonData = $request->getContent();
@@ -189,7 +188,14 @@ class EventsController extends AbstractController
             return $this->json($errors, 400);
             
         }else{
-            
+             // add a User Id with UserService
+             $user = $service->getCurrentUser();
+              // To inject the id of the current event in the participation table
+              $event->getId();
+             // update the entity
+             $comment->setUser($user);
+             $comment->setEvent($event);
+
             // To save, we call the manager
             $em = $this->getDoctrine()->getManager();
             $em->persist($comment);
@@ -207,13 +213,13 @@ class EventsController extends AbstractController
      /**
      * Allows the creation of a new event to participation
      * 
-     *  URL : /api/v1/events/{id}/addParticipation
+     *  URL : /api/v1/events/{id}/participation
      * Road : api_v1_event_addParticipation
-     * @Route("/{id}/addParticipation", name="addParticipation", requirements={"id":"\d+"}, methods={"POST"})
+     * @Route("/{id}/participation", name="addParticipation", requirements={"id":"\d+"}, methods={"POST"})
      *
      * @return void
      */
-    public function addParticipation( Event $event, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator)
+    public function addParticipation( Event $event, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
     {
          // We retrieve the JSON
          $jsonData = $request->getContent();
@@ -239,8 +245,13 @@ class EventsController extends AbstractController
             return $this->json($errors, 400);
             
         }else{
+             // add a User Id with UserService
+             $user = $service->getCurrentUser();
+             
             // To inject the id of the current event in the participation table
             $event->getId();
+            // update the entity
+            $participation->setUser($user);
             $participation->setEvent($event);
 
             // To count the number of participants, we count the number of entries in the 
