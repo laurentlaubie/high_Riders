@@ -74,11 +74,11 @@ class SpotVoter extends Voter
             return true;
         }
 
-        $roles = $spot->getAuthor()->getRoles();
+        // $roles = $spot->getAuthor()->getRoles();
         //  dd($roles);
-        if (count($roles) == 1 && $roles[0] == 'ROLE_USER') {
-            return true;
-        }
+        // if (count($roles) == 1 && $roles[0] == 'ROLE_USER') {
+        //     return true;
+        // }
         
         return false;
     }
@@ -90,11 +90,11 @@ class SpotVoter extends Voter
             return true;
         }
 
-        $roles = $spot->getAuthor()->getRoles();
-        //  dd($roles);
-        if (count($roles) == 1 && $roles[0] == 'ROLE_USER') {
-            return true;
-        }
+        // $roles = $spot->getAuthor()->getRoles();
+        // //  dd($roles);
+        // if (count($roles) == 1 && $roles[0] == 'ROLE_USER') {
+        //     return true;
+        // }
         
         return false;
     }

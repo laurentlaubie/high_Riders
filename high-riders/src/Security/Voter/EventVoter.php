@@ -40,7 +40,7 @@ class EventVoter extends Voter
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
-        
+        // dd($user);
         if (!$user instanceof User) {
             // the user must be logged in; if not, deny access
             return false;
@@ -72,11 +72,11 @@ class EventVoter extends Voter
             return true;
         }
 
-        $roles = $event->getAuthor()->getRoles();
-        //  dd($roles);
-        if (count($roles) == 1 && $roles[0] == 'ROLE_USER') {
-            return true;
-        }
+        // $roles = $event->getAuthor()->getRoles();
+        // //  dd($roles);
+        // if (count($roles) == 1 && $roles[0] == 'ROLE_USER') {
+        //     return true;
+        // }
         
         return false;
     }
@@ -88,11 +88,11 @@ class EventVoter extends Voter
             return true;
         }
 
-        $roles = $event->getAuthor()->getRoles();
-        //  dd($roles);
-        if (count($roles) == 1 && $roles[0] == 'ROLE_USER') {
-            return true;
-        }
+        // $roles = $event->getAuthor()->getRoles();
+        // //  dd($roles);
+        // if (count($roles) == 1 && $roles[0] == 'ROLE_USER') {
+        //     return true;
+        // }
         
         return false;
     }
