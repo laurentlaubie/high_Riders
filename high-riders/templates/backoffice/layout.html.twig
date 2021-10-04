@@ -25,6 +25,32 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('backoffice_user_index') }}">Utilisateurs</a>
                 </li>
+            {% if app.user %}
+                <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ app.user.firstname }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                 <li>
+                    <a class="dropdown-item" href="#">Profil</a>
+                </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                 <li>
+                    <a class="dropdown-item" href="">Accueil</a>
+                </li>
+                    {% endif %}
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+                </li>
+                    </ul>
+                </li>
+                    {% else %}
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-danger" aria-current="page" href="">Se connecter</a>
+                </li>
+                    {% endif %}
             </ul>
         </div>
     </nav>
