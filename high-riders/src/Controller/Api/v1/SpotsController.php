@@ -210,6 +210,8 @@ class SpotsController extends AbstractController
         // A spot is retrieved according to its id
         $spot = $spotRepository->find($id);
         
+        // check for "edit" access: calls all voters
+        $this->denyAccessUnlessGranted('SPOT_EDIT', $spot);
         // If the spot does not exist, we return a 404 error
         if (!$spot) {
             return $this->json([
@@ -253,6 +255,8 @@ class SpotsController extends AbstractController
          // A spot is retrieved according to its id
          $spot = $spotRepository->find($id);
         
+         // check for "delete" access: calls all voters
+        $this->denyAccessUnlessGranted('SPOT_DELETE', $spot);
          // If the spot does not exist, we return a 404 error
         if (!$spot) {
             return $this->json([

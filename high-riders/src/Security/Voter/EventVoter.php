@@ -2,16 +2,17 @@
 
 namespace App\Security\Voter;
 
+use App\Entity\Event;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 
-class UserVoter extends Voter
+class EventVoter extends Voter
 {
     // these strings are just invented: you can use anything
-    const USER_EDIT = 'USER_EDIT';
-    const USER_DELETE = 'USER_DELETE';
+    const EVENT_EDIT = 'EVENT_EDIT';
+    const EVENT_DELETE = 'EVENT_DELETE';
 
     private $security;
 
@@ -24,12 +25,12 @@ class UserVoter extends Voter
     protected function supports(string $attribute, $subject): bool
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::USER_EDIT, self::USER_DELETE])) {
+        if (!in_array($attribute, [self::EVENT_EDIT, self::EVENT_DELETE])) {
             return false;
         }
 
         // only vote on `spot` objects
-        if (!$subject instanceof User) {
+        if (!$subject instanceof Event) {
             return false;
         }
 
@@ -51,29 +52,27 @@ class UserVoter extends Voter
         }
 
         // you know $subject is a event object, thanks to `supports()`
-        /** @var User $event */
-        $userObjet = $subject;
+        /** @var Event $event */
+        $event = $subject;
 
         switch ($attribute) {
-           case self::USER_EDIT:
-               return $this->canEdit($userObjet, $user);
-           case self::USER_DELETE:
-               return $this->canDelete($userObjet, $user);
+           case self::EVENT_EDIT:
+               return $this->canEdit($event, $user);
+           case self::EVENT_DELETE:
+               return $this->canDelete($event, $user);
        }
 
         throw new \LogicException('This code should not be reached!');
     }
 
-    private function canEdit(User $userObjet, User $user): bool
+    private function canEdit(Event $event, User $user): bool
     {
-        // dd($user);
-
           // this assumes that the event object has a `getOwner()` method
-          if ($user === $userObjet) {
+          if ($user === $event->getAuthor()) {
             return true;
         }
 
-        // $roles = $userObjet->getRoles();
+        // $roles = $event->getAuthor()->getRoles();
         // //  dd($roles);
         // if (count($roles) == 1 && $roles[0] == 'ROLE_USER') {
         //     return true;
@@ -82,14 +81,14 @@ class UserVoter extends Voter
         return false;
     }
 
-    private function canDelete(User $userObjet, User $user): bool
+    private function canDelete(Event $event, User $user): bool
     {
           // this assumes that the event object has a `getOwner()` method
-          if ($user === $userObjet) {
+          if ($user === $event->getAuthor()) {
             return true;
         }
 
-        // $roles = $userObjet->getRoles();
+        // $roles = $event->getAuthor()->getRoles();
         // //  dd($roles);
         // if (count($roles) == 1 && $roles[0] == 'ROLE_USER') {
         //     return true;
