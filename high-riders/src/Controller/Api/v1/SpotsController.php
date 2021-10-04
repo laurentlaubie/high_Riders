@@ -10,6 +10,7 @@ use App\Repository\CommentRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\SpotRepository;
 use App\Repository\UserRepository;
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -91,7 +92,8 @@ class SpotsController extends AbstractController
      *
      * @return void
      */
-    public function add( Request $request, SerializerInterface $serialiser, ValidatorInterface $validator,SluggerInterface $sluggerInterface)
+    public function add( Request $request, SerializerInterface $serialiser, ValidatorInterface $validator,SluggerInterface $sluggerInterface,
+    UserService $service)
     {
          // We retrieve the JSON
          $jsonData = $request->getContent();
@@ -118,6 +120,9 @@ class SpotsController extends AbstractController
             
         }else{
 
+             // add a User Id with UserService
+             $user = $service->getCurrentUser();
+
              // recovery the spot's title
              $title = $spot->getTitle();
 
@@ -127,6 +132,8 @@ class SpotsController extends AbstractController
              // update the entity
              $spot->setSlug($slug);
             
+             $spot->setAuthor($user);
+
             // To save, we call the manager
             $em = $this->getDoctrine()->getManager();
             $em->persist($spot);
@@ -143,13 +150,13 @@ class SpotsController extends AbstractController
      /**
      * Allows the creation of a new spot
      * 
-     *  URL : /api/v1/spots/{id}/addComment
+     *  URL : /api/v1/spots/{id}/comment
      * Road : api_v1_spot_addComment
-     * @Route("/{id}/addComment", name="addComment", requirements={"id":"\d+"}, methods={"POST"})
+     * @Route("/{id}/comment", name="addComment", requirements={"id":"\d+"}, methods={"POST"})
      *
      * @return void
      */
-    public function addComment( Request $request, SerializerInterface $serialiser, ValidatorInterface $validator)
+    public function addComment(Spot $spot, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
     {
          // We retrieve the JSON
          $jsonData = $request->getContent();
@@ -175,7 +182,14 @@ class SpotsController extends AbstractController
             return $this->json($errors, 400);
             
         }else{
-            
+            // add a User Id with UserService
+            $user = $service->getCurrentUser();
+             // To inject the id of the current event in the participation table
+             $spot->getId();
+            // update the entity
+            $comment->setUser($user);
+            $comment->setSpot($spot);
+
             // To save, we call the manager
             $em = $this->getDoctrine()->getManager();
             $em->persist($comment);
