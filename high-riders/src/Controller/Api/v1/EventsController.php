@@ -10,6 +10,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\EventRepository;
 use App\Repository\UserRepository;
+use App\Service\UserService;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -97,7 +98,8 @@ class EventsController extends AbstractController
      * @return void
      */
     public function add(Request $request, SerializerInterface $serialiser, 
-        ValidatorInterface $validator, SluggerInterface $sluggerInterface)
+        ValidatorInterface $validator, SluggerInterface $sluggerInterface,
+        UserService $service)
     {
          // We retrieve the JSON
          $jsonData = $request->getContent();
@@ -126,7 +128,7 @@ class EventsController extends AbstractController
         }else{
 
             // add a User Id
-            // $user = $token->getUser();
+            $user = $service->getCurrentUser();
             // $userId = $user['id'];
             // dd($user);
             //recovery the spot's title
@@ -135,6 +137,8 @@ class EventsController extends AbstractController
             $slug = $sluggerInterface->slug(strtolower($title));
             // update the entity
             $event->setSlug($slug);
+
+            $event->setAuthor($user);
 
             // To save, we call the manager
             $em = $this->getDoctrine()->getManager();

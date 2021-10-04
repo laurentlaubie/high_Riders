@@ -40,7 +40,7 @@ class EventVoter extends Voter
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
-        // dd($user);
+        //  dd($user);
         if (!$user instanceof User) {
             // the user must be logged in; if not, deny access
             return false;

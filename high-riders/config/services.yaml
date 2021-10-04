@@ -28,3 +28,14 @@ services:
         autowire: true
         autoconfigure: true
         tags: [serializer.normalizer]
+
+    # by default, the authentication response is just a json containing the JWT but you can add your own public data to it.
+    acme_api.event.authentication_success_listener:
+        class: App\EventListener\AuthenticationIdListener
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
+    
+    tenant_user_service:
+        class: App\Service\UserService
+        arguments: [ '@security.token_storage' ]
+        autowire: true
