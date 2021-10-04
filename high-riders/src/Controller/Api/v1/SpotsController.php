@@ -204,7 +204,6 @@ class SpotsController extends AbstractController
 
     }
 
-
     /**
      
      *
