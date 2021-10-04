@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -95,7 +96,8 @@ class EventsController extends AbstractController
      *
      * @return void
      */
-    public function add(Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, SluggerInterface $sluggerInterface)
+    public function add(Request $request, SerializerInterface $serialiser, 
+        ValidatorInterface $validator, SluggerInterface $sluggerInterface)
     {
          // We retrieve the JSON
          $jsonData = $request->getContent();
@@ -122,7 +124,11 @@ class EventsController extends AbstractController
             return $this->json($errors, 400);
             
         }else{
-            
+
+            // add a User Id
+            // $user = $token->getUser();
+            // $userId = $user['id'];
+            // dd($user);
             //recovery the spot's title
             $title = $event->getTitle();
             // transform in slug
@@ -274,6 +280,8 @@ class EventsController extends AbstractController
         // A event is retrieved according to its id
         $event = $eventRepository->find($id);
         
+         // check for "edit" access: calls all voters
+         $this->denyAccessUnlessGranted('EVENT_EDIT', $event);
         // If the event does not exist, we return a 404 error
         if (!$event) {
             return $this->json([
@@ -317,6 +325,8 @@ class EventsController extends AbstractController
          // A event is retrieved according to its id
          $event = $eventRepository->find($id);
         
+          // check for "delete" access: calls all voters
+        $this->denyAccessUnlessGranted('EVENT_DELETE', $event);
          // If the event does not exist, we return a 404 error
         if (!$event) {
             return $this->json([

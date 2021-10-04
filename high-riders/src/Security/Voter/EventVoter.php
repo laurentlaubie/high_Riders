@@ -2,17 +2,17 @@
 
 namespace App\Security\Voter;
 
-use App\Entity\Spot;
+use App\Entity\Event;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 
-class SpotVoter extends Voter
+class EventVoter extends Voter
 {
     // these strings are just invented: you can use anything
-    const SPOT_EDIT = 'SPOT_EDIT';
-    const SPOT_DELETE = 'SPOT_DELETE';
+    const EVENT_EDIT = 'EVENT_EDIT';
+    const EVENT_DELETE = 'EVENT_DELETE';
 
     private $security;
 
@@ -25,12 +25,12 @@ class SpotVoter extends Voter
     protected function supports(string $attribute, $subject): bool
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::SPOT_EDIT, self::SPOT_DELETE])) {
+        if (!in_array($attribute, [self::EVENT_EDIT, self::EVENT_DELETE])) {
             return false;
         }
 
         // only vote on `spot` objects
-        if (!$subject instanceof Spot) {
+        if (!$subject instanceof Event) {
             return false;
         }
 
@@ -40,41 +40,39 @@ class SpotVoter extends Voter
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
-
+        
         if (!$user instanceof User) {
             // the user must be logged in; if not, deny access
             return false;
         }
 
-         // ROLE_SUPER_ADMIN can do anything! The power!
-         if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+        // ROLE_SUPER_ADMIN can do anything! The power!
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
             return true;
         }
-       
 
-        // you know $subject is a spot object, thanks to `supports()`
-        /** @var Spot $spot */
-        $spot = $subject;
+        // you know $subject is a event object, thanks to `supports()`
+        /** @var Event $event */
+        $event = $subject;
 
         switch ($attribute) {
-           case self::SPOT_EDIT:
-               return $this->canEdit($spot, $user);
-           case self::SPOT_DELETE:
-               return $this->canDelete($spot, $user);
+           case self::EVENT_EDIT:
+               return $this->canEdit($event, $user);
+           case self::EVENT_DELETE:
+               return $this->canDelete($event, $user);
        }
 
         throw new \LogicException('This code should not be reached!');
     }
 
-    private function canEdit(Spot $spot, User $user): bool
+    private function canEdit(Event $event, User $user): bool
     {
-       
-        // this assumes that the spot object has a `getOwner()` method
-        if ($user === $spot->getAuthor()) {
+          // this assumes that the event object has a `getOwner()` method
+          if ($user === $event->getAuthor()) {
             return true;
         }
 
-        $roles = $spot->getAuthor()->getRoles();
+        $roles = $event->getAuthor()->getRoles();
         //  dd($roles);
         if (count($roles) == 1 && $roles[0] == 'ROLE_USER') {
             return true;
@@ -83,14 +81,14 @@ class SpotVoter extends Voter
         return false;
     }
 
-    private function canDelete(spot $spot, User $user): bool
+    private function canDelete(Event $event, User $user): bool
     {
-          // this assumes that the spot object has a `getOwner()` method
-          if ($user === $spot->getAuthor()) {
+          // this assumes that the event object has a `getOwner()` method
+          if ($user === $event->getAuthor()) {
             return true;
         }
 
-        $roles = $spot->getAuthor()->getRoles();
+        $roles = $event->getAuthor()->getRoles();
         //  dd($roles);
         if (count($roles) == 1 && $roles[0] == 'ROLE_USER') {
             return true;
