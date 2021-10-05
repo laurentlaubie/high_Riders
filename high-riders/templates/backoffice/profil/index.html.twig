@@ -22,11 +22,11 @@
                 <td>{{ user.avatar }}</td>
             </tr>
             <tr>
-                <th>Firstname</th>
+                <th>Prénom</th>
                 <td>{{ user.firstname }}</td>
             </tr>
             <tr>
-                <th>Lastname</th>
+                <th>Nom</th>
                 <td>{{ user.lastname }}</td>
             </tr>
             <tr>
@@ -38,19 +38,19 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>Password</th>
+                <th>Mot de passe</th>
                 <td>{{ user.password }}</td>
             </tr>
             <tr>
-                <th>Roles</th>
+                <th>Mon Roles</th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
             </tr>
             <tr>
-                <th>Presentation</th>
+                <th>Ma Presentation</th>
                 <td>{{ user.presentation }}</td>
             </tr>
             <tr>
-                <th>City</th>
+                <th>Ville</th>
                 <td>{{ user.city }}</td>
             </tr>
             <tr>
@@ -58,19 +58,19 @@
                 <td>{{ user.departement }}</td>
             </tr>
             <tr>
-                <th>Equipement</th>
+                <th>Mon Equipement</th>
                 <td>{{ user.equipement }}</td>
             </tr>
             
         </tbody>
     </table>
 
-    <a href="{{ path('backoffice_user_index') }}">Retour à la liste des Utilisateurs</a> |
+    <a href="{{ path('backoffice_home') }}" class="btn btn-outline-secondary btn-sm mt-2">Retour à l'accueil</a>
 
-    <a href="{{ path('backoffice_user_edit', {'id': user.id}) }}">Modifier</a>
+    <a href="{{ path('backoffice_user_edit', {'id': user.id}) }}" class="btn btn-outline-secondary btn-sm mt-2">Modifier mon Profil</a>
 
     {{ include('backoffice/user/_delete_form.html.twig') }}
-{% endblock %}
+
 
 </main>
     

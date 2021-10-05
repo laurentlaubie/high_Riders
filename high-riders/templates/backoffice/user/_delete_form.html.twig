@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('backoffice_user_delete', {'id': user.id}) }}" onsubmit="return confirm('Etes vous sur de vouloir supprimer ce Spot?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-    <button class="btn btn-danger">Supprimer</button>
+    <button class="btn btn-danger mt-2 ">Supprimer</button>
 </form>
