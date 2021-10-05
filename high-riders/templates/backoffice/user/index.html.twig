@@ -3,7 +3,7 @@
 {% block title %}Page utilisateurs{% endblock %}
 
 {% block body %}
- <main class='container'>
+ 
 
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
@@ -23,13 +23,14 @@
                     <th>Roles</th>
                     <th>Pseudo</th>
                     <th>Avatar</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
                     <th>Presentation</th>
                     <th>Departement</th>
                     <th>Ville</th>
                     <th>Equipement</th>
-                    <th>CreatedAt</th>
+                    <th>Date de création</th>
+                    <th>ACTIONS</th>
                     {# <th>UpdatedAt</th> #}
                     {# <th>actions</th> #}
                 </tr>
@@ -49,7 +50,7 @@
                     <td>{{ user.city }}</td>
                     <td>{{ user.equipement }}</td>
                     <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    
                     <td>
                     <div class="d-grid gap-2 col-6 mx-auto">
                         <a href="{{ path('backoffice_user_show', {'id': user.id}) }}" class="btn btn-outline-secondary btn-sm">Voir</a>
@@ -73,6 +74,6 @@
 
         </table>
     </div>
-</main>
+
     
 {% endblock %}
