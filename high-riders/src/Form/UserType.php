@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -36,9 +38,21 @@ class UserType extends AbstractType
                 'label' => 'Pseudo',
                 'attr' => ['placeholder' => 'Saisir votre Pseudo']
             ])
-            ->add('avatar', null , [
+            ->add('avatar', FileType::class , [
                 'label' => 'Avatar',
-                'attr' => ['placeholder' => 'Télécharger une phot de profil']
+                'attr' => ['placeholder' => 'Télécharger une photo de profil'],
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                         'maxSize' => '1024k',
+                         'mimeTypes' => [
+                             'image/png',
+                             'image/jpeg'
+                         ],
+                        'mimeTypesMessage' => 'Merci de ne choisir que des fichiers .png et .jpeg',
+                     ]) 
+                 ],
             ])
             
             ->add('presentation', null , [

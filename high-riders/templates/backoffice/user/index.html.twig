@@ -42,7 +42,13 @@
                     <td>{{ user.email }}</td>
                     <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                     <td>{{ user.pseudo }}</td>
-                    <td>{{ user.avatar }}</td>
+                    <td>
+                    {% if "http" in user.avatar %}
+                                <image src="{{ user.avatar }}" width="75" >
+                            {% else %}
+                                <image src="{{ asset('uploads/' ~ user.avatar) }}" width="75">
+                            {% endif %}
+                    </td>
                     <td>{{ user.firstname }}</td>
                     <td>{{ user.lastname }}</td>
                     <td>{{ user.presentation }}</td>
