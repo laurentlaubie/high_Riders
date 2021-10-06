@@ -88,7 +88,7 @@ class SpotsController extends AbstractController
      * 
      * URL : /api/v1/spots/
      * 
-     * @Route("/", name="add", methods={"POST"})
+     * @Route("/add", name="add", methods={"POST"})
      *
      * @return void
      */
