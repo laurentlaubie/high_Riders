@@ -18,7 +18,6 @@ class Comment
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * 
      * @Groups({"spot_detail", "event_detail"})
      * 
      */
@@ -26,7 +25,6 @@ class Comment
 
     /**
      * @ORM\Column(type="text")
-     * 
      * 
      * @Groups({"spot_detail", "event_detail"})
      * 
