@@ -88,16 +88,27 @@ class UserController extends AbstractController
         ]);
     }
 
+     // ===================== Page edit an User  =================//
     /**
      * @Route("/{id}/edit", name="backoffice_user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, ImageUploader $imageUploader): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $imageFile = $imageUploader->upload($form, 'avatar');
+            //dd($imageFile);
+            if ($imageFile) {
+                $user->setAvatar($imageFile);
+           }
+
             $this->getDoctrine()->getManager()->flush();
+
+             // Flash Message
+             $this->addFlash('success', 'L\'utilisateur'  . $user->getPseudo() . ' a bien été modifié');
 
             return $this->redirectToRoute('backoffice_user_index', [], Response::HTTP_SEE_OTHER);
         }
