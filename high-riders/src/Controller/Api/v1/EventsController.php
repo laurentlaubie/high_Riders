@@ -93,7 +93,7 @@ class EventsController extends AbstractController
      * 
      * URL : /api/v1/events/
      * 
-     * @Route("/", name="add", methods={"POST"})
+     * @Route("/add", name="add", methods={"POST"})
      *
      * @return void
      */

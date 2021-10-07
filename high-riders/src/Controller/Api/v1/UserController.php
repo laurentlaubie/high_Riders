@@ -64,7 +64,7 @@ class UserController extends AbstractController
     /**
      * Add a new user 
      * 
-     * URL : /api/v1/users/{id}
+     * URL : /api/v1/users/add
      * Road : api_v1_user_add
      * 
      * @Route("/add", name="add", methods={"POST"})
