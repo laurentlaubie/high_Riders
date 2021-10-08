@@ -287,8 +287,9 @@ class SpotsController extends AbstractController
      /**
      * Allows the creation of a new spot
      * 
-     *  URL : /api/v1/spots/{id}/dislike
+     * URL : /api/v1/spots/{id}/dislike
      * Road : api_v1_spot_removeLike
+     * 
      * @Route("/{id}/dislike", name="removeLike", requirements={"id":"\d+"}, methods={"PUT", "PATCH"})
      *
      * @return void
