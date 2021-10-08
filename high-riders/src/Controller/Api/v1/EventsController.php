@@ -211,21 +211,6 @@ class EventsController extends AbstractController
 
     }
 
-    /**
-     * Allows the creation of a new event
-     * 
-     *  URL : /api/v1/events/{id}/comment/{id}
-     * Road : api_v1_event_removeComment
-     * @Route("/{id}/comment/{id}", name="removeComment", requirements={"id":"\d+"}, methods={"POST"})
-     *
-     * @return void
-     */
-    public function removeComment(int $id, CommentRepository $commentRepository, Event $event, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
-    {
-        
-
-    }
-
      /**
      * Allows the creation of a new event to participation
      * 
