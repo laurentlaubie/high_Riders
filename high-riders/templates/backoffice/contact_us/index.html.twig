@@ -1,20 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ContactUsController!{% endblock %}
+{% block title %}Back-Office | Contact {% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<main class"container">
+     
+    <div class="m-4">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr class="table-success">
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Adresse Mail</th>
+                    <th>Messages</th>
+                    <th>Date de création</th>
+                    <th>ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for contactMessage in ContactUs %}
+            <tr>
+                <td>{{ contactMessage.firstname }}</td>
+                <td>{{ contactMessage.lastname }}</td>
+                <td>{{ contactMessage.email }}</td>
+                <td>{{ contactMessage.content | u.truncate(200,'...') }}</td>
+                <td>{{ contactMessage.createdAt|date('Y-m-d H:i:s') }}</td>
+                <td> 
+                <div class="d-grid gap-2 col-6 mx-auto">
+                <a href=""class="btn btn-outline-secondary btn-sm">Modifier</a> 
+                <a href="" class="btn btn-outline-secondary btn-sm" onclick="return confirm('Êtes-vous sur de vouloir effectuer cette action ?')" >Supprimer</a>
+                </div>
+                </td>
+            </tr>
+        {% endfor %}
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('backoffice_home')  }}" class="btn btn-outline-secondary btn-sm mb-2">Retour à l'accueil</a> 
+            </div>
+        </table>
+    </div>            
+</main>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/Spé Symfo/Apothéose/high-riders/high-riders/src/Controller/Backoffice/ContactUsController.php'|file_link(0) }}">src/Controller/Backoffice/ContactUsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/Spé Symfo/Apothéose/high-riders/high-riders/templates/backoffice/contact_us/index.html.twig'|file_link(0) }}">templates/backoffice/contact_us/index.html.twig</a></code></li>
-    </ul>
-</div>
+
 {% endblock %}
