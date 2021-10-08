@@ -7,6 +7,7 @@ use App\Entity\Event;
 use App\Entity\Participation;
 use App\Entity\User;
 use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\EventRepository;
 use App\Repository\UserRepository;
@@ -93,7 +94,7 @@ class EventsController extends AbstractController
      * 
      * URL : /api/v1/events/
      * 
-     * @Route("/", name="add", methods={"POST"})
+     * @Route("/add", name="add", methods={"POST"})
      *
      * @return void
      */
@@ -156,8 +157,9 @@ class EventsController extends AbstractController
      /**
      * Allows the creation of a new event
      * 
-     *  URL : /api/v1/events/{id}/comment
+     * URL : /api/v1/events/{id}/comment
      * Road : api_v1_event_addComment
+     * 
      * @Route("/{id}/comment", name="addComment", requirements={"id":"\d+"}, methods={"POST"})
      *
      * @return void
@@ -208,6 +210,40 @@ class EventsController extends AbstractController
             ]);
         }
 
+    }
+
+    /**
+     * Deleting a event based on its ID
+     * 
+     * URL : /api/v1/events/{id}/comment/{id}
+     * Road : api_v1_event_removeComment
+     * 
+     * @Route("/{event}/comment/{id}", name="removeComment", requirements={"id":"\d+"}, methods={"DELETE"})
+     *
+     * @return JsonResponse
+     */
+    public function removeComment(int $id, CommentRepository $commentRepository)
+    {
+         // A comment is retrieved according to its id
+         $comment = $commentRepository->find($id);
+        // dd($comment);
+          // check for "delete" access: calls all voters
+        $this->denyAccessUnlessGranted('COMMENT_DELETE', $comment);
+         // If the comment does not exist, we return a 404 error
+        if (!$comment) {
+            return $this->json([
+                'error' => 'Le commentaire ' . $id . ' n\'existe pas'
+            ], 404);
+        }
+ 
+
+        // We call the manager to manage the deletion
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($comment);
+        $em->flush(); // A DELETE SQL query is performed
+
+        return $this->json(['le commentaire avec l\'id '. $id . ' à été suprimer'], 203);
+        
     }
 
      /**
@@ -275,6 +311,98 @@ class EventsController extends AbstractController
             ]);
         }
 
+    }
+
+     /**
+     * Allows the creation of a new event
+     * 
+     *  URL : /api/v1/events/{id}/like
+     * Road : api_v1_event_addLike
+     * @Route("/{id}/like", name="addLike", requirements={"id":"\d+"}, methods={"PUT", "PATCH"})
+     *
+     * @return void
+     */
+    public function addLike(int $id, EventRepository $eventRepository, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
+    {
+         //  $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
+        // A event is retrieved according to its id
+        $event = $eventRepository->find($id);
+        
+        
+        // If the event does not exist, we return a 404 error
+        if (!$event) {
+            return $this->json([
+                'error' => 'La event ' . $id . ' n\'existe pas'
+            ], 404);
+        }
+
+
+        // We retrieve the JSON
+        $jsonData = $request->getContent();
+
+         // We merge the data from the event with the data
+        // from the Front application (insomnia, react, ...)
+        // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
+         $event = $serialiser->deserialize($jsonData, Event::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $event]);
+        
+         $eventLike = $event->getSLike();
+         $addLike =($eventLike + 1);
+
+         $event->setSLike($addLike);
+         // We call the manager to perform the update in DB
+         $em = $this->getDoctrine()->getManager();
+        
+         $em->flush();
+       
+         return $this->json($event, 200, [], [
+            'groups' => ['event_detail'],
+        ]);
+    }
+
+     /**
+     * Allows the creation of a new event
+     * 
+     *  URL : /api/v1/events/{id}/dislike
+     * Road : api_v1_event_removeLike
+     * @Route("/{id}/dislike", name="removeLike", requirements={"id":"\d+"}, methods={"PUT", "PATCH"})
+     *
+     * @return void
+     */
+    public function removeLike(int $id, EventRepository $eventRepository, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
+    {
+         //  $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
+        // A event is retrieved according to its id
+        $event = $eventRepository->find($id);
+        
+        
+        // If the event does not exist, we return a 404 error
+        if (!$event) {
+            return $this->json([
+                'error' => 'La event ' . $id . ' n\'existe pas'
+            ], 404);
+        }
+
+
+        // We retrieve the JSON
+        $jsonData = $request->getContent();
+
+         // We merge the data from the event with the data
+        // from the Front application (insomnia, react, ...)
+        // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
+         $event = $serialiser->deserialize($jsonData, Event::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $event]);
+        
+         $eventLike = $event->getSLike();
+         $addLike =($eventLike - 1);
+
+         $event->setSLike($addLike);
+         // We call the manager to perform the update in DB
+         $em = $this->getDoctrine()->getManager();
+        
+         $em->flush();
+       
+         return $this->json($event, 200, [], [
+            'groups' => ['event_detail'],
+        ]);
     }
 
     /**

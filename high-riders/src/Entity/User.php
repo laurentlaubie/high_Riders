@@ -30,6 +30,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * 
      * @Assert\NotBlank(message="merci de saisir un email")
+     * @Assert\Email(message="L'email n'est pas valide")
      * @Groups({"show_user", "add_user", "edit_user"})
      */
     private $email;
@@ -49,14 +50,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=150, unique=true)
      * 
      * @Assert\NotBlank(message="merci de saisir un pseudo")
-     * @Groups({"index_user", "show_user","add_user", "edit_user", "event_list", "event_detail", "spot_list", "spot_detail"})
+     * @Groups({"index_user", "show_user", "event_list", "event_detail", "spot_list", "spot_detail"})
      */
     private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=2100, nullable=true)
      * 
-     * @Groups({"show_user", "add_user", "edit_user"})
+     * @Groups({"show_user"})
      */
     private $avatar;
 
@@ -64,7 +65,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      * 
      * @Assert\NotBlank(message="merci de saisir un prénom")
-     * @Groups({"show_user", "add_user", "edit_user"})
+     * @Groups({"show_user"})
      */
     private $firstname;
     
@@ -78,7 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="text", nullable=true)
      * 
-     * @Groups({"show_user", "add_user", "edit_user"})
+     * @Groups({"show_user"})
      */
     private $presentation;
 
@@ -86,7 +87,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      * 
      * @Assert\NotBlank(message="merci de saisir une ville")
-     * @Groups({"show_user", "add_user", "edit_user"})
+     * @Groups({"show_user"})
      */
     private $city;
 
@@ -94,14 +95,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      * 
      * @Assert\NotBlank(message="merci de saisir un département")
-     * @Groups({"show_user", "add_user", "edit_user"})
+     * @Groups({"show_user"})
      */
     private $departement;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * 
-     * @Groups({"show_user", "add_user", "edit_user"})
+     * @Groups({"show_user"})
      */
     private $equipement;
 

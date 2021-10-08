@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ContactusRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ContactusRepository::class)
@@ -19,21 +20,29 @@ class Contactus
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank(message="merci de saisir un prénom")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank(message="merci de saisir un nom")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank(message="merci de saisir un email")
      */
     private $email;
 
     /**
      * @ORM\Column(type="text")
+     * 
+     * @Assert\NotBlank(message="merci de saisir un message")
      */
     private $content;
 

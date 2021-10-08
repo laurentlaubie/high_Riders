@@ -30,7 +30,7 @@ class Spot
     /**
      * @ORM\Column(type="string", length=150)
      * 
-     * @Assert\NotBlank(message="merci de saisir un nom")
+     * @Assert\NotBlank(message="merci de saisir un titre")
      * @Groups({"show_user", "spot_list", "spot_detail", "api_home", "search_list"})
      * 
      */
@@ -47,7 +47,7 @@ class Spot
     /**
      * @ORM\Column(type="text")
      * 
-     * @Assert\NotBlank(message="merci de saisir un nom")
+     * @Assert\NotBlank(message="merci de saisir une description")
      * @Groups({"spot_list", "spot_detail"})
      * 
      */

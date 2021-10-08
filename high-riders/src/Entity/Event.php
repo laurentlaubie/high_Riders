@@ -78,7 +78,7 @@ class Event
     /**
      * @ORM\Column(type="string", length=50)
      * 
-     * @Assert\NotBlank(message="merci de saisir un nom")
+     * @Assert\NotBlank(message="merci de saisir une date")
      * @Groups({"event_list", "event_detail", "api_home"})
      *
      */
