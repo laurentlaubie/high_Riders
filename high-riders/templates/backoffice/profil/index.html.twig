@@ -28,10 +28,10 @@
                 <th>Email</th>
                 <td>{{ user.email }}</td>
             </tr>
-            <tr>
+           {#  <tr>
                 <th>Mot de passe</th>
                 <td>{{ user.password }}</td>
-            </tr>
+            </tr> #}
             <tr>
                 <th>Mon Roles</th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>

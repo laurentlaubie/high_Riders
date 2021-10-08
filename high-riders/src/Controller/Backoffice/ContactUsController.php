@@ -2,13 +2,14 @@
 
 namespace App\Controller\Backoffice;
 
+use App\Entity\Contactus;
 use App\Repository\ContactusRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
     /**
-     * @Route("/backoffice/contact/us", name="backoffice_")
+     * @Route("/backoffice/contactus", name="backoffice_")
      */
 class ContactUsController extends AbstractController
 {
@@ -24,4 +25,17 @@ class ContactUsController extends AbstractController
             'ContactUs' => $contactUS,
         ]);
     }
+
+    // ===================== Page contact Display by id  =================//
+    /**
+    * @Route("/{id}", name="contact_show",  methods={"GET"})
+    */
+    public function show(Contactus $contactUs): Response
+    {
+        return $this->render('backoffice/contact/show.html.twig', [
+        'contact' => $contactUs,
+        ]);
+    }
+
+
 }
