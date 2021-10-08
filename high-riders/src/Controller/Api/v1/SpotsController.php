@@ -206,6 +206,39 @@ class SpotsController extends AbstractController
     }
 
      /**
+     * Deleting a spot based on its ID
+     * 
+     * URL : /api/v1/spots/{id}/comment/{id}
+     * Road : api_v1_spot_removeComment
+     * 
+     * @Route("/{spot}/comment/{id}", name="removeComment", requirements={"id":"\d+"}, methods={"DELETE"})
+     *
+     * @return JsonResponse
+     */
+    public function removeComment(int $id, CommentRepository $commentRepository)
+    {
+         // A comment is retrieved according to its id
+         $comment = $commentRepository->find($id);
+        // dd($comment);
+          // check for "delete" access: calls all voters
+        $this->denyAccessUnlessGranted('COMMENT_DELETE', $comment);
+         // If the comment does not exist, we return a 404 error
+        if (!$comment) {
+            return $this->json([
+                'error' => 'Le commentaire ' . $id . ' n\'existe pas'
+            ], 404);
+        }
+ 
+
+        // We call the manager to manage the deletion
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($comment);
+        $em->flush(); // A DELETE SQL query is performed
+
+        return $this->json(['le commentaire avec l\'id '. $id . ' à été suprimer'], 203);
+    }    
+  
+     /**
      * Allows the creation of a new spot
      * 
      *  URL : /api/v1/spots/{id}/like
@@ -297,8 +330,7 @@ class SpotsController extends AbstractController
         ]);
     }
 
-    /**
-     
+     /**
      *
      * Update of a spot according to
      * its Identifier
@@ -346,7 +378,7 @@ class SpotsController extends AbstractController
         200);
     }
 
-    /**
+     /**
      * Deleting a spot based on its ID
      * 
      * URL : /api/v1/spots/{id}

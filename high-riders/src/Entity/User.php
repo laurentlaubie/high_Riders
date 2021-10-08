@@ -30,6 +30,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * 
      * @Assert\NotBlank(message="merci de saisir un email")
+     * @Assert\Email(message="L'email n'est pas valide")
      * @Groups({"show_user", "add_user", "edit_user"})
      */
     private $email;
