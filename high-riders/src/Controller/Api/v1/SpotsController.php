@@ -147,6 +147,7 @@ class SpotsController extends AbstractController
         }
 
     }
+
      /**
      * Allows the creation of a new spot
      * 
@@ -202,6 +203,98 @@ class SpotsController extends AbstractController
             ]);
         }
 
+    }
+
+     /**
+     * Allows the creation of a new spot
+     * 
+     *  URL : /api/v1/spots/{id}/like
+     * Road : api_v1_spot_addLike
+     * @Route("/{id}/like", name="addLike", requirements={"id":"\d+"}, methods={"PUT", "PATCH"})
+     *
+     * @return void
+     */
+    public function addLike(int $id, SpotRepository $spotRepository, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
+    {
+         //  $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
+        // A spot is retrieved according to its id
+        $spot = $spotRepository->find($id);
+        
+        
+        // If the spot does not exist, we return a 404 error
+        if (!$spot) {
+            return $this->json([
+                'error' => 'La spot ' . $id . ' n\'existe pas'
+            ], 404);
+        }
+
+
+        // We retrieve the JSON
+        $jsonData = $request->getContent();
+
+         // We merge the data from the spot with the data
+        // from the Front application (insomnia, react, ...)
+        // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
+         $spot = $serialiser->deserialize($jsonData, Spot::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $spot]);
+        
+         $spotLike = $spot->getSLike();
+         $addLike =($spotLike + 1);
+
+         $spot->setSLike($addLike);
+         // We call the manager to perform the update in DB
+         $em = $this->getDoctrine()->getManager();
+        
+         $em->flush();
+       
+         return $this->json($spot, 200, [], [
+            'groups' => ['spot_detail'],
+        ]);
+    }
+
+     /**
+     * Allows the creation of a new spot
+     * 
+     *  URL : /api/v1/spots/{id}/dislike
+     * Road : api_v1_spot_removeLike
+     * @Route("/{id}/dislike", name="removeLike", requirements={"id":"\d+"}, methods={"PUT", "PATCH"})
+     *
+     * @return void
+     */
+    public function removeLike(int $id, SpotRepository $spotRepository, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
+    {
+         //  $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
+        // A spot is retrieved according to its id
+        $spot = $spotRepository->find($id);
+        
+        
+        // If the spot does not exist, we return a 404 error
+        if (!$spot) {
+            return $this->json([
+                'error' => 'La spot ' . $id . ' n\'existe pas'
+            ], 404);
+        }
+
+
+        // We retrieve the JSON
+        $jsonData = $request->getContent();
+
+         // We merge the data from the spot with the data
+        // from the Front application (insomnia, react, ...)
+        // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
+         $spot = $serialiser->deserialize($jsonData, Spot::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $spot]);
+        
+         $spotLike = $spot->getSLike();
+         $removeLike =($spotLike - 1);
+
+         $spot->setSLike($removeLike);
+         // We call the manager to perform the update in DB
+         $em = $this->getDoctrine()->getManager();
+        
+         $em->flush();
+       
+         return $this->json($spot, 200, [], [
+            'groups' => ['spot_detail'],
+        ]);
     }
 
     /**
