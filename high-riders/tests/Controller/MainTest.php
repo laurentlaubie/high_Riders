@@ -12,7 +12,7 @@ class MainTest extends WebTestCase
         // On simule l'accès à une la page /login
         // via un navigateur intégré
         $client = static::createClient();
-        $crawler = $client->request('GET', 'backoffice');
+        $crawler = $client->request('GET', '/login');
 
         // Est ce que la page répond correctement
         $this->assertResponseIsSuccessful();
@@ -27,7 +27,7 @@ class MainTest extends WebTestCase
     //     // On simule l'accès à une la page /login
     //     // via un navigateur intégré
     //     $client = static::createClient();
-    //     $crawler = $client->request('GET', 'backoffice/users/add');
+    //     $crawler = $client->request('GET', '/');
 
     //     // Est ce que la page répond correctement
     //     $this->assertResponseIsSuccessful();
