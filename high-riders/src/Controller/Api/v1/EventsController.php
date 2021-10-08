@@ -464,22 +464,34 @@ class EventsController extends AbstractController
      
      * @return JsonResponse
      */
-    public function delete(int $id, EventRepository $eventRepository, ParticipationRepository $participation)
+    public function delete(int $id, EventRepository $eventRepository, ParticipationRepository $participationRepository, CommentRepository $commentRepository)
     {
          // A event is retrieved according to its id
          $event = $eventRepository->find($id);
         
           // check for "delete" access: calls all voters
         $this->denyAccessUnlessGranted('EVENT_DELETE', $event);
+
          // If the event does not exist, we return a 404 error
         if (!$event) {
             return $this->json([
                 'error' => 'L\'event ' . $id . ' n\'existe pas'
             ], 404);
         }
+        // we get the id of the event 
         $eventId=$event->getId();
-        $entityParticipation = $participation->findBy(array('event'=>$eventId));
+
+        // ---ParticipationRepository--
+        // the Participation entity is recovered in the form of a table
+        $entityParticipation = $participationRepository->findBy(array('event'=>$eventId));
+        // we get the participations linked to the event to validate the deletion if it exists
         $eventParticipation=$event->getParticipations();
+
+        // ---COmmentRepository--
+        // the Comment entity is recovered in the form of a table
+        $entityComment = $commentRepository->findBy(array('event'=>$eventId));
+        // we get the Comments linked to the event to validate the deletion if it exists
+        $eventComment=$event->getComments();
        
         if ($event!==null) {
             // We call the manager to manage the deletion
@@ -489,6 +501,13 @@ class EventsController extends AbstractController
                
                 foreach ($entityParticipation as $idParticipation) {
                     $em->remove($idParticipation);
+                }
+                $em->flush();
+            }
+            if ($eventComment!==null) {
+               
+                foreach ($entityComment as $idComment) {
+                    $em->remove($idComment);
                 }
                 $em->flush();
             }
