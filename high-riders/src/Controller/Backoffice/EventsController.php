@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Entity\Spot;
 use App\Form\EventsType;
 use App\Repository\EventRepository;
+use App\Repository\ParticipationRepository;
 use App\Service\ImageUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -136,17 +137,41 @@ class EventsController extends AbstractController
     * @Route("/{id}/delete", name="event_delete" )
     *
     */
-    public function delete(Event $event): Response
+    public function delete(int $id, EventRepository $eventRepository, ParticipationRepository $participation): Response
     {
-        // delete an Event in Bdd
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($event);
-        $entityManager->flush();
-            
-        // Flash Message
-        $this->addFlash('info', 'l\'Evenement ' . $event->getTitle() . ' a bien été supprimé');
 
-        return $this->redirectToRoute('backoffice_events');
+         // A event is retrieved according to its id
+         $event = $eventRepository->find($id);
+        
+          // check for "delete" access: calls all voters
+        $this->denyAccessUnlessGranted('EVENT_DELETE', $event);
+
+        $eventId=$event->getId();
+        $entityParticipation = $participation->findBy(array('event'=>$eventId));
+        $eventParticipation=$event->getParticipations();
+       
+        if ($event!==null) {
+            // We call the manager to manage the deletion
+            $em = $this->getDoctrine()->getManager();
+
+            if ($eventParticipation!==null) {
+               
+                foreach ($entityParticipation as $idParticipation) {
+                    $em->remove($idParticipation);
+                }
+                $em->flush();
+            }
+            $em->remove($event);
+        
+            $em->flush(); // A DELETE SQL query is performed
+
+            // Flash Message
+            $this->addFlash('info', 'l\'Evenement ' . $event->getTitle() . ' a bien été supprimé');
+    
+            return $this->redirectToRoute('backoffice_events');
+           
+        }
+       
     }
 
 

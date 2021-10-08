@@ -10,6 +10,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\EventRepository;
+use App\Repository\ParticipationRepository;
 use App\Repository\UserRepository;
 use App\Service\UserService;
 use DateTimeImmutable;
@@ -463,7 +464,7 @@ class EventsController extends AbstractController
      
      * @return JsonResponse
      */
-    public function delete(int $id,  EventRepository $eventRepository)
+    public function delete(int $id, EventRepository $eventRepository, ParticipationRepository $participation)
     {
          // A event is retrieved according to its id
          $event = $eventRepository->find($id);
@@ -476,14 +477,26 @@ class EventsController extends AbstractController
                 'error' => 'L\'event ' . $id . ' n\'existe pas'
             ], 404);
         }
- 
+        $eventId=$event->getId();
+        $entityParticipation = $participation->findBy(array('event'=>$eventId));
+        $eventParticipation=$event->getParticipations();
+       
+        if ($event!==null) {
+            // We call the manager to manage the deletion
+            $em = $this->getDoctrine()->getManager();
 
-        // We call the manager to manage the deletion
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($event);
-        $em->flush(); // A DELETE SQL query is performed
-
-        return $this->json(['l\'event avec l\'id '. $id . ' à été suprimer'], 203);
+            if ($eventParticipation!==null) {
+               
+                foreach ($entityParticipation as $idParticipation) {
+                    $em->remove($idParticipation);
+                }
+                $em->flush();
+            }
+            $em->remove($event);
         
+            $em->flush(); // A DELETE SQL query is performed
+
+            return $this->json(['l\'event avec l\'id '. $id . ' à été suprimer'], 203);
+        }
     }
 }
