@@ -1,33 +1,25 @@
+
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Profil{% endblock %}
 
 {% block body %}
 <main class='container'>
 
-<nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ path('backoffice_home')  }}">
             <img src="{{ asset('images/LogoridersV1.1.png') }}" alt="" width="100" height="80" class="d-inline-block align-text">
-            High Riders | Utilisateur
+            High Riders | Mon Profil
             </a>
         </div>
     </nav>
-
-
-    <table class="table table-striped table-hover table-bordered mt-5">
+  
+    <table class="table table-striped table-hover table-bordered mt-5 ">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
             <tr>
                 <th>Avatar</th>
                 <td>{{ user.avatar }}</td>
-            </tr>
-            <tr>
-                <th>Pseudo</th>
-                <td>{{ user.pseudo }}</td>
             </tr>
             <tr>
                 <th>Prénom</th>
@@ -38,6 +30,10 @@
                 <td>{{ user.lastname }}</td>
             </tr>
             <tr>
+                <th>Pseudo</th>
+                <td>{{ user.pseudo }}</td>
+            </tr>
+            <tr>
                 <th>Email</th>
                 <td>{{ user.email }}</td>
             </tr>
@@ -46,11 +42,11 @@
                 <td>{{ user.password }}</td>
             </tr>
             <tr>
-                <th>Roles</th>
+                <th>Mon Roles</th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
             </tr>
             <tr>
-                <th>Présentation</th>
+                <th>Ma Presentation</th>
                 <td>{{ user.presentation }}</td>
             </tr>
             <tr>
@@ -62,25 +58,20 @@
                 <td>{{ user.departement }}</td>
             </tr>
             <tr>
-                <th>Equipement</th>
+                <th>Mon Equipement</th>
                 <td>{{ user.equipement }}</td>
             </tr>
-            <tr>
-                <th>Date de création</th>
-                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Date de mise à jour</th>
-                <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+            
         </tbody>
     </table>
 
-    <a href="{{ path('backoffice_user_index') }}"class="btn btn-outline-secondary btn-sm mt-2">Retour à la liste des Utilisateurs</a>
+    <a href="{{ path('backoffice_home') }}" class="btn btn-outline-secondary btn-sm mt-2">Retour à l'accueil</a>
 
-    <a href="{{ path('backoffice_user_edit', {'id': user.id}) }}"class="btn btn-outline-secondary btn-sm mt-2">Modifier</a>
+    <a href="{{ path('backoffice_user_edit', {'id': user.id}) }}" class="btn btn-outline-secondary btn-sm mt-2">Modifier mon Profil</a>
 
     {{ include('backoffice/user/_delete_form.html.twig') }}
 
+
 </main>
+    
 {% endblock %}

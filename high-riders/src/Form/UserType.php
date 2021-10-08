@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -16,7 +18,59 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
+            ->add('email', null , [
+                'label' => 'EMail *',
+                'attr' => ['placeholder' => 'Saisir votre E-Mail']
+            ])
+            /* ->add('password', null , [
+                'label' => 'Mot de passe',
+                'attr' => ['placeholder' => 'Saisir Nouveau mot de passe']
+            ]) */
+            ->add('firstname', null , [
+                'label' => 'Prénom *',
+                'attr' => ['placeholder' => 'Saisir Prénom']
+            ])
+            ->add('lastname', null , [
+                'label' => 'Nom *',
+                'attr' => ['placeholder' => 'Saisir votre Nom']
+            ])
+            ->add('pseudo', null , [
+                'label' => 'Pseudo',
+                'attr' => ['placeholder' => 'Saisir votre Pseudo']
+            ])
+            ->add('avatar', FileType::class , [
+                'label' => 'Avatar',
+                'attr' => ['placeholder' => 'Télécharger une photo de profil'],
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                         'maxSize' => '1024k',
+                         'mimeTypes' => [
+                             'image/png',
+                             'image/jpeg'
+                         ],
+                        'mimeTypesMessage' => 'Merci de ne choisir que des fichiers .png et .jpeg',
+                     ]) 
+                 ],
+            ])
+            
+            ->add('presentation', null , [
+                'label' => 'Description *',
+                'attr' => ['placeholder' => 'Saisir un présentation de vous-même']
+            ])
+            ->add('city', null , [
+                'label' => 'Ville *',
+                'attr' => ['placeholder' => 'Saisir votre Ville']
+            ])
+            ->add('departement', null , [
+                'label' => 'Departement *',
+                'attr' => ['placeholder' => 'Saisir votre département']
+            ])
+            ->add('equipement', null , [
+                'label' => 'Equipement',
+                'attr' => ['placeholder' => 'Saisir votre Equipement']
+            ])
             ->add('roles',
             ChoiceType::class,
             [
@@ -30,15 +84,6 @@ class UserType extends AbstractType
                 // Affichage des éléments sous forme de cases à cocher
                 // 'expanded' => true 
             ])
-            // ->add('password')
-            ->add('pseudo')
-            ->add('avatar')
-            ->add('firstname')
-            ->add('lastname')
-            ->add('presentation')
-            ->add('city')
-            ->add('departement')
-            ->add('equipement')
             // ->add('createdAt')
             // ->add('updatedAt')
             // ->add('categories')
@@ -55,7 +100,8 @@ class UserType extends AbstractType
       // Alors on ajoute le champs password
       if ($user->getId() === null) {
           $form->add('plainPassword', PasswordType::class, [
-
+            'label' => 'Mot de passe',
+            'attr' => ['placeholder' => 'Choisir votre mot de passe'],
               // On indique à Symfony que la propriété 'plainPassword'
               // n'est pas liée (mapped) à l'entité User
               'mapped' => false

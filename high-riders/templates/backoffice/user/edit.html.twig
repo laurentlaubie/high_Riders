@@ -3,12 +3,24 @@
 {% block title %}Modifier un Utilisateur{% endblock %}
 
 {% block body %}
-    <h1>Modifier un Utilisateur</h1>
-    <a href="{{ path('backoffice_user_index') }}" class="btn btn-outline-secondary btn-sm">Retour à la liste des utilisateurs</a>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+    <a class="navbar-brand" href="{{ path('backoffice_home')  }}">
+        <img src="{{ asset('images/LogoridersV1.1.png') }}" alt="" width="100" height="80" class="d-inline-block align-text">
+        Hihg Riders | Modifier un Utilisateur
+        </a>
+        </div>
+     </nav>
     
-    
-    {{ include('backoffice/user/_form.html.twig', {'button_label': 'Modifier'}) }}
-    {{ include('backoffice/user/_delete_form.html.twig') }}
+    <main class="container">
+        <div class="m-4">
+  
+            {{ include('backoffice/user/_form.html.twig') }}
+            {{ include('backoffice/user/_delete_form.html.twig') }}
 
-    
+            <a href="{{ path('backoffice_user_index') }}" class="btn btn-outline-secondary btn-sm mt-2">Retour à la liste des utilisateurs</a>
+        
+        </div>
+    </main>
+
 {% endblock %}

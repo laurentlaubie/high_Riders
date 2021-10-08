@@ -23,6 +23,11 @@ security:
                 check_path: /api/v1/login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+                # custom_authenticator: App\Security\LoginFormAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: backoffice_home
 
         api:
             pattern:   ^/api
@@ -37,7 +42,10 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            
+            custom_authenticator: App\Security\LoginFormAuthenticator
+            logout:
+                path: app_logout
+                target: backoffice_home
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -50,7 +58,7 @@ security:
     access_control:
         
         # Il faut avoir le role Admin pour afficher Back office
-        - { path: ^/backoffice, roles: PUBLIC_ACCESS }
+        - { path: ^/backoffice, roles: [ROLE_SUPER_ADMIN, ROLE_ADMIN] }
 
         - { path: ^/api/v1/users/\d+, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
         - { path: ^/api/v1/spots/\d+, roles: IS_AUTHENTICATED_FULLY }
