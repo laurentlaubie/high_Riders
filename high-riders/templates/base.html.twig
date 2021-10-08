@@ -12,6 +12,10 @@
 
     </head>
     <body>
+
+        {% set currentRoute = app.request.get('_route') %}
+
+
         {% include "backoffice/_flash.html.twig" %} 
 
         {% block body %}{% endblock %}
