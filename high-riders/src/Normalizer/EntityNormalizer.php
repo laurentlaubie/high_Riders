@@ -10,6 +10,8 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
  */
 class EntityNormalizer implements DenormalizerInterface
 {
+    // this method allows to transform complex objects into arrays when processing complex data.
+    
     /** @var EntityManagerInterface **/
     protected $em;
 

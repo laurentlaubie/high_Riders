@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class UserService
 {
+    // the service allowing to store the token of a user to recover his identifier during a content registration
 
     /** @var  TokenStorageInterface */
     private $tokenStorage;
