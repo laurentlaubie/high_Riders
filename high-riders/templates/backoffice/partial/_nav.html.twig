@@ -4,9 +4,10 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ path('backoffice_home')  }}">
             <img src="{{ asset('images/LogoridersV1.1.png') }}" alt="" width="100" height="80" class="d-inline-block align-text">
-            High Riders |
+            High Riders | {% if not app.user %}Connectez vous pour acceder à votre Back-Office{% endif %}
             </a>
 
+        {% if app.user %}
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
@@ -21,11 +22,14 @@
                 <li class="nav-item">
                     <a class="nav-link{{ currentRoute == 'backoffice_user_index' ? ' active':'' }}" href="{{ path('backoffice_user_index') }}">Utilisateurs</a>
                 </li>
+            {% endif %}
+
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                 <li class="nav-item">
                     <a class="nav-link{{ currentRoute == 'backoffice_contact' ? ' active':'' }}" href="{{ path('backoffice_contact') }}">Messages</a>
                 </li>
                 {% endif %}
+
             {% if app.user %}
                 <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
