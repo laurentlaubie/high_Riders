@@ -21,9 +21,11 @@
                 <li class="nav-item">
                     <a class="nav-link{{ currentRoute == 'backoffice_user_index' ? ' active':'' }}" href="{{ path('backoffice_user_index') }}">Utilisateurs</a>
                 </li>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
                 <li class="nav-item">
                     <a class="nav-link{{ currentRoute == 'backoffice_contact' ? ' active':'' }}" href="{{ path('backoffice_contact') }}">Messages</a>
                 </li>
+                {% endif %}
             {% if app.user %}
                 <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
