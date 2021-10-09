@@ -32,9 +32,27 @@ class ContactUsController extends AbstractController
     */
     public function show(Contactus $contactUs): Response
     {
-        return $this->render('backoffice/contact/show.html.twig', [
+        return $this->render('backoffice/contact_us/show.html.twig', [
         'contact' => $contactUs,
         ]);
+    }
+
+    // ===================== Delete a message  =================//
+    /**
+    * @Route("/{id}/delete", name="contact_delete" )
+    *
+    */
+    public function delete(Contactus $contactus): Response
+    {
+        // delete a message in Bdd
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($contactus);
+        $entityManager->flush();
+            
+        // Flash Message
+        $this->addFlash('info', 'le message de ' . $contactus->getFirstname() . $contactus->getLastname() . ' a bien été supprimé');
+
+        return $this->redirectToRoute('backoffice_contact');
     }
 
 
