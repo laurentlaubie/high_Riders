@@ -57,7 +57,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         
-        # Il faut avoir le role Admin pour afficher Back office
+        # You must have the Admin role to display Back office
         - { path: ^/backoffice, roles: [ROLE_SUPER_ADMIN, ROLE_ADMIN] }
 
         - { path: ^/api/v1/users/\d+, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
@@ -66,17 +66,12 @@ security:
         - { path: ^/api/v1/events/add, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/v1/spots/add, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/v1/users/add, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/api/v1/events, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/v1/users, roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
-        # - { path: ^/api/v1/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/api/v1/search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/api/v1/spots, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/api/v1/home, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
     role_hierarchy:
-        # Un role Admin peut faire, tout ce que fait un roleUser
+        # An Admin role can do everything a User role can do
         ROLE_ADMIN: ROLE_USER
 
-        # Un role SUPER Admin peut faire, tout ce que fait un role Admin
+        # A Super Admin role can do everything an Admin role can do
         ROLE_SUPER_ADMIN: ROLE_ADMIN  

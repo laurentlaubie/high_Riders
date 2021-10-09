@@ -19,20 +19,21 @@ class SearchController extends AbstractController
      * 
      * @Route("/api/v1/search/", name="api_v1_search", methods={"GET"})
      */
-    public function index(Request $request, SpotRepository $spotRepository, EventRepository $eventRepository): Response
+    public function index(
+        Request $request, 
+        SpotRepository $spotRepository, 
+        EventRepository $eventRepository
+        ): Response
     {
+        // we get the string and pass it to the trim method to remove the spaces
         $query = trim($request->query->get('search'));
-        // dd($request);
         // We retrieve the series stored in BDD
         // data recovery from the entiy spot whith findBy by selection orderBy and limit the last 3 register.
         $spotsResult = $spotRepository->searchSpotByTitle($query);
         
         // data recovery from the entiy event whith findBy by selection orderBy and limit the last 3 register.
         $eventsResult = $eventRepository->searchEventByTitle($query);
-        // dd($spotsResult);
-        // if (empty($spotsResult&&$eventsResult)) {
-        //     return $this->json('Result not found', 404);
-        // }
+        
         return $this->json( [ $spotsResult, $eventsResult], 200, [],[
             // This input to the Serialiser to transform the objects
             // objects into JSON, fetching only the properties

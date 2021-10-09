@@ -20,10 +20,7 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * Effectue une recherche de séries en fonction de la variable
-     * $title
-     * 
-     * Version 1 : Query builder
+     * Performs a event search based on the variable $title
      *
      * @param $title
      * @return Event[]
@@ -32,7 +29,7 @@ class EventRepository extends ServiceEntityRepository
     {
         // https://www.doctrine-project.org/projects/doctrine-orm/en/2.9/reference/query-builder.html
         return $this->createQueryBuilder('event')
-            // Clause WHERE pour filtre en fonction de $title
+            // Clause WHERE for filter according to $title
             ->where('event.title LIKE :title')
             ->orderBy('event.createdAt', 'DESC')
             ->setParameter('title', "%$title%")

@@ -4,12 +4,10 @@ namespace App\Controller\Api\v1;
 
 use App\Entity\Comment;
 use App\Entity\Spot;
-use App\Entity\User;
 use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\SpotRepository;
-use App\Repository\UserRepository;
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +31,11 @@ class SpotsController extends AbstractController
      * 
      * @Route("/", name="index")
      */
-    public function index(SpotRepository $spotRepository, CategoryRepository $categoryRepository, DepartementRepository $departementRepository): Response
+    public function index(
+        SpotRepository $spotRepository, 
+        CategoryRepository $categoryRepository, 
+        DepartementRepository $departementRepository
+        ): Response
     {
         // We retrieve the series stored in BDD
         $spots = $spotRepository->findAll();
@@ -92,24 +94,28 @@ class SpotsController extends AbstractController
      *
      * @return void
      */
-    public function add( Request $request, SerializerInterface $serialiser, ValidatorInterface $validator,SluggerInterface $sluggerInterface,
-    UserService $service)
+    public function add(
+        Request $request, 
+        SerializerInterface $serialiser, 
+        ValidatorInterface $validator,
+        SluggerInterface $sluggerInterface,
+        UserService $service
+        )
     {
          // We retrieve the JSON
          $jsonData = $request->getContent();
 
-         //  We transform the json into an object : deserialization
+         // We transform the json into an object : deserialization
          // - We indicate the data to transform (deserialize)
          // - We indicate the format of arrival after conversion (object of type spot)
          // - We indicate the format of departure: we want to pass from json towards an object spot
          $spot = $serialiser->deserialize($jsonData, Spot::class, 'json');
         
-         // We validate the data stored in the $spot object based on
-         // on the critieria of the @Assert annotation of the entity (cf. src/Entity/spot.php)
+        // We validate the data stored in the $spot object based on
+        // on the critieria of the @Assert annotation of the entity (cf. src/Entity/spot.php)
          
         // If the error array is not empty (at least 1 error)
         // count allows to count the number of elements of an array
-        // count([1, 2, 3]) ==> 3
         $errors = $validator->validate($spot);
 
         if(count($errors) > 0){
@@ -120,19 +126,19 @@ class SpotsController extends AbstractController
             
         }else{
 
-             // add a User Id with UserService
-             $user = $service->getCurrentUser();
+            // add a User Id with UserService
+            $user = $service->getCurrentUser();
 
-             // recovery the spot's title
-             $title = $spot->getTitle();
+            // recovery the spot's title
+            $title = $spot->getTitle();
 
-             // transform in slug
-             $slug = $sluggerInterface->slug(strtolower($title));
- 
-             // update the entity
-             $spot->setSlug($slug);
-            
-             $spot->setAuthor($user);
+            // transform in slug
+            $slug = $sluggerInterface->slug(strtolower($title));
+
+            // update the entity
+            $spot->setSlug($slug);
+        
+            $spot->setAuthor($user);
 
             // To save, we call the manager
             $em = $this->getDoctrine()->getManager();
@@ -157,23 +163,28 @@ class SpotsController extends AbstractController
      *
      * @return void
      */
-    public function addComment(Spot $spot, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
+    public function addComment(
+        Spot $spot, 
+        Request $request, 
+        SerializerInterface $serialiser, 
+        ValidatorInterface $validator, 
+        UserService $service
+        )
     {
-         // We retrieve the JSON
-         $jsonData = $request->getContent();
+        // We retrieve the JSON
+        $jsonData = $request->getContent();
 
-         //  We transform the json into an object : deserialization
-         // - We indicate the data to transform (deserialize)
-         // - We indicate the format of arrival after conversion (object of type comment)
-         // - We indicate the format of departure: we want to pass from json towards an object comment
-         $comment = $serialiser->deserialize($jsonData, Comment::class, 'json');
-        
-         // We validate the data stored in the $comment object based on
-         // on the critieria of the @Assert annotation of the entity (cf. src/Entity/comment.php)
+        //  We transform the json into an object : deserialization
+        // - We indicate the data to transform (deserialize)
+        // - We indicate the format of arrival after conversion (object of type comment)
+        // - We indicate the format of departure: we want to pass from json towards an object comment
+        $comment = $serialiser->deserialize($jsonData, Comment::class, 'json');
+    
+        // We validate the data stored in the $comment object based on
+        // on the critieria of the @Assert annotation of the entity (cf. src/Entity/comment.php)
          
         // If the error array is not empty (at least 1 error)
         // count allows to count the number of elements of an array
-        // count([1, 2, 3]) ==> 3
         $errors = $validator->validate($comment);
 
         if(count($errors) > 0){
@@ -185,8 +196,10 @@ class SpotsController extends AbstractController
         }else{
             // add a User Id with UserService
             $user = $service->getCurrentUser();
-             // To inject the id of the current event in the participation table
-             $spot->getId();
+
+            // To inject the id of the current event in the participation table
+            $spot->getId();
+
             // update the entity
             $comment->setUser($user);
             $comment->setSpot($spot);
@@ -219,9 +232,10 @@ class SpotsController extends AbstractController
     {
          // A comment is retrieved according to its id
          $comment = $commentRepository->find($id);
-        // dd($comment);
-          // check for "delete" access: calls all voters
+
+        // check for "delete" access: calls all voters
         $this->denyAccessUnlessGranted('COMMENT_DELETE', $comment);
+
          // If the comment does not exist, we return a 404 error
         if (!$comment) {
             return $this->json([
@@ -241,18 +255,21 @@ class SpotsController extends AbstractController
      /**
      * Allows the creation of a new spot
      * 
-     *  URL : /api/v1/spots/{id}/like
+     * URL : /api/v1/spots/{id}/like
      * Road : api_v1_spot_addLike
      * @Route("/{id}/like", name="addLike", requirements={"id":"\d+"}, methods={"PUT", "PATCH"})
      *
      * @return void
      */
-    public function addLike(int $id, SpotRepository $spotRepository, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
+    public function addLike(
+        int $id, 
+        SpotRepository $spotRepository, 
+        Request $request, 
+        SerializerInterface $serialiser
+        )
     {
-         //  $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
         // A spot is retrieved according to its id
         $spot = $spotRepository->find($id);
-        
         
         // If the spot does not exist, we return a 404 error
         if (!$spot) {
@@ -265,7 +282,7 @@ class SpotsController extends AbstractController
         // We retrieve the JSON
         $jsonData = $request->getContent();
 
-         // We merge the data from the spot with the data
+        // We merge the data from the spot with the data
         // from the Front application (insomnia, react, ...)
         // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
          $spot = $serialiser->deserialize($jsonData, Spot::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $spot]);
@@ -294,9 +311,13 @@ class SpotsController extends AbstractController
      *
      * @return void
      */
-    public function removeLike(int $id, SpotRepository $spotRepository, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
+    public function removeLike(
+        int $id, 
+        SpotRepository $spotRepository, 
+        Request $request, 
+        SerializerInterface $serialiser
+        )
     {
-         //  $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
         // A spot is retrieved according to its id
         $spot = $spotRepository->find($id);
         
@@ -312,7 +333,7 @@ class SpotsController extends AbstractController
         // We retrieve the JSON
         $jsonData = $request->getContent();
 
-         // We merge the data from the spot with the data
+        // We merge the data from the spot with the data
         // from the Front application (insomnia, react, ...)
         // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
          $spot = $serialiser->deserialize($jsonData, Spot::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $spot]);
@@ -343,9 +364,13 @@ class SpotsController extends AbstractController
      
      * @return JsonResponse
      */
-    public function update(int $id, SpotRepository $spotRepository, Request $request, SerializerInterface $serialiser)
+    public function update(
+        int $id, 
+        SpotRepository $spotRepository, 
+        Request $request, 
+        SerializerInterface $serialiser
+        )
     {
-        //  $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
         // A spot is retrieved according to its id
         $spot = $spotRepository->find($id);
         
@@ -362,7 +387,7 @@ class SpotsController extends AbstractController
         // We retrieve the JSON
         $jsonData = $request->getContent();
 
-         // We merge the data from the spot with the data
+        // We merge the data from the spot with the data
         // from the Front application (insomnia, react, ...)
         // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
          $spot = $serialiser->deserialize($jsonData, Spot::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $spot]);
@@ -389,7 +414,11 @@ class SpotsController extends AbstractController
      
      * @return JsonResponse
      */
-    public function delete(int $id,  SpotRepository $spotRepository,  CommentRepository $commentRepository)
+    public function delete(
+        int $id,  
+        SpotRepository $spotRepository, 
+        CommentRepository $commentRepository
+        )
     {
         // A spot is retrieved according to its id
         $spot = $spotRepository->find($id);
@@ -405,7 +434,7 @@ class SpotsController extends AbstractController
         // we get the id of the event 
         $spotId=$spot->getId();
  
-        // ---COmmentRepository--
+        // ---CommentRepository--
         // the Comment entity is recovered in the form of a table
         $entityComment = $commentRepository->findBy(array('spot'=>$spotId));
         // we get the Comments linked to the event to validate the deletion if it exists
@@ -414,8 +443,9 @@ class SpotsController extends AbstractController
         if ($spot!==null) {
             // We call the manager to manage the deletion
             $em = $this->getDoctrine()->getManager();
+
             if ($spotComment!==null) {
-                
+                // If we have any comments related to this event, we delete them
                 foreach ($entityComment as $idComment) {
                     $em->remove($idComment);
                 }

@@ -3,7 +3,6 @@
 namespace App\Controller\Api\v1;
 
 use App\Entity\User;
-use App\Form\UserType;
 use App\Repository\CommentRepository;
 use App\Repository\EventRepository;
 use App\Repository\ParticipationRepository;
@@ -12,7 +11,6 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -26,7 +24,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class UserController extends AbstractController
 {
     /**
-     * Display all spots
+     * Display all userss
      * 
      * URL : /api/v1/users/
      * Road : api_v1_user_index
@@ -60,6 +58,7 @@ class UserController extends AbstractController
                 'error' => 'L\'utilisateur n\'existe pas'
             ], 404);
         }
+        // returns the requested user in json format
         return $this->json($user, 200, [], [
             'groups' => ['show_user']
         ]);
@@ -73,7 +72,12 @@ class UserController extends AbstractController
      * 
      * @Route("/add", name="add", methods={"POST"})
      */
-    public function add(Request $request, UserPasswordHasherInterface $passwordEncoder, SerializerInterface $serialiser, ValidatorInterface $validator): Response
+    public function add(
+        Request $request, 
+        UserPasswordHasherInterface $passwordEncoder, 
+        SerializerInterface $serialiser, 
+        ValidatorInterface $validator
+        ): Response
     {
         // We retrieve the JSON
         $jsonData = $request->getContent();
@@ -87,7 +91,6 @@ class UserController extends AbstractController
         // We validate the data stored in the $spot object based on
         // on the critieria of the @Assert annotation of the entity 
        
-
        // If the error array is not empty (at least 1 error)
        // count allows to count the number of elements of an array
        // count([1, 2, 3]) ==> 3
@@ -100,9 +103,7 @@ class UserController extends AbstractController
            return $this->json($errors, 400);
            
        }
-
-        // $password = $user->get('password')->getData();
-        // $user->setPassword($passwordEncoder->hashPassword($user, $password ));
+        // encodes the password
         $user->setPassword(
             $passwordEncoder->hashPassword(
                 $user,
@@ -133,14 +134,20 @@ class UserController extends AbstractController
      * 
      * @Route("/{id}", name="update", methods={"PUT", "PATCH"}, requirements={"id": "\d+"})
      */
-    public function update(int $id, UserRepository $userRepository, User $user, Request $request, SerializerInterface $serialiser)
+    public function update(
+        int $id, 
+        UserRepository $userRepository, 
+        User $user, 
+        Request $request, 
+        SerializerInterface $serialiser
+        )
     {
         // A user is retrieved according to its id
         $user = $userRepository->find($id);
-       
+
+        // check for "edit" access: calls all voters
         $this->denyAccessUnlessGranted('USER_EDIT', $user, "Vous n'avez pas accés à cette page' !");
 
-        
         // If the user does not exist, we return a 404 error
         if (!$user) {
             return $this->json([
@@ -178,12 +185,20 @@ class UserController extends AbstractController
      * 
      * @Route("/{id}", name="delete", methods={"DELETE"}, requirements={"id": "\d+"})
      */
-    public function delete(int $id, UserRepository $userRepository,EventRepository $eventRepository,SpotRepository $spotRepository , ParticipationRepository $participationRepository, CommentRepository $commentRepository)
+    public function delete(
+        int $id, 
+        UserRepository $userRepository,
+        EventRepository $eventRepository,
+        SpotRepository $spotRepository, 
+        ParticipationRepository $participationRepository, 
+        CommentRepository $commentRepository
+        )
     {
         // A user is retrieved according to its id
         $user = $userRepository->find($id);
+        // retrieve the anonymous user intended for the id replacement 
         $userReplace = $userRepository->find(22);
-        // dd($userReplace);  
+ 
         // check for "edit" access: calls all voters
         $this->denyAccessUnlessGranted('USER_DELETE', $user,"Vous n'avez pas accés à cette page' !");
 
@@ -193,6 +208,7 @@ class UserController extends AbstractController
                 'error' => 'L\'utilisateur ' . $id . ' n\'existe pas'
             ], 404);
         }
+        
         // we get the id of the user 
         $userId=$user->getId();
 
@@ -214,34 +230,32 @@ class UserController extends AbstractController
         // we get the Events linked to the user to validate the deletion if it exists
         $userEvent=$user->getEvents();
 
-         // ---SpotRepository--
+        // ---SpotRepository--
         // the Spot entity is recovered in the form of a table
         $entitySpot = $spotRepository->findBy(array('author'=>$userId));
         // we get the Spots linked to the user to validate the deletion if it exists
         $userSpot=$user->getSpots();
        
-        // $entityAuthor = $entityEvent[0]->getAuthor();
-    //    dd($entityAuthor);
         if ($user!==null) {
             // We call the manager to manage the deletion
             $em = $this->getDoctrine()->getManager();
 
             if ($userParticipation!==null) {
-               
+                // If we have any participations related to this event, we delete them
                 foreach ($entityParticipation as $idParticipation) {
                     $em->remove($idParticipation);
                 }
                 $em->flush();
             }
             if ($userComment!==null) {
-               
+                // If we have any comments related to this event, we delete them
                 foreach ($entityComment as $idComment) {
                     $em->remove($idComment);
                 }
                 $em->flush();
             }
             if ($userEvent!==null) {
-               
+                // If events are created by the user we replace his id by the id of an anonymous user
                 foreach ($entityEvent as $idEvent) {
                     $authorReplace=$idEvent->setAuthor($userReplace);
                     $em->persist($authorReplace);
@@ -249,7 +263,7 @@ class UserController extends AbstractController
                 $em->flush();
             }
             if ($userSpot!==null) {
-               
+               // If spots are created by the user we replace his id by the id of an anonymous user
                 foreach ($entitySpot as $idSpot) {
                     $authorReplace=$idSpot->setAuthor($userReplace);
                     $em->persist($authorReplace);

@@ -20,11 +20,8 @@ class SpotRepository extends ServiceEntityRepository
     }
 
     /**
-     * Effectue une recherche de séries en fonction de la variable
-     * $title
+     * Performs a spot search based on the variable $title
      * 
-     * Version 1 : Query builder
-     *
      * @param $title
      * @return Spot[]
      */
@@ -32,7 +29,7 @@ class SpotRepository extends ServiceEntityRepository
     {
         // https://www.doctrine-project.org/projects/doctrine-orm/en/2.9/reference/query-builder.html
         return $this->createQueryBuilder('spot')
-        // Clause WHERE pour filtre en fonction de $title
+        // Clause WHERE for filter according to $title
             ->where('spot.title LIKE :title')
             ->setParameter('title', "%$value%")
             ->orderBy('spot.createdAt', 'DESC')
@@ -40,9 +37,6 @@ class SpotRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    // /**
-    //  * @return Spot[] Returns an array of Spot objects
-    //  */
     /*
     public function findByExampleField($value)
     {
