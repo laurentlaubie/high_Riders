@@ -14,12 +14,17 @@
 - Check your MySQL version with the command `mysql --version` and replace 5.7 by your version.
 
 - run the command :
-- `composer instal`
+  - `composer instal`
 
 - run the command :
-- `php bin/console doctrine:database:create`
-- 
+  - `php bin/console doctrine:database:create`
+  - `php bin/console doctrine:schema:update --force`
+
 - Go to Adminer, connect to the database high-riders_dev, in the tab 'SQL command' copy, paste the file Adminer 4 in the folder Leav Dev Back of google drive of the project.
 - run the command execute.
 
 - Then open a terminal in your text editor and run the command `php -S 0.0.0.0:8080 -t public`. From your browser go to the URL http://localhost:8080/ and log in.
+
+- Generate a JWT key with the command 
+    -`bin/console lexik:jwt:generate-keypair`
+- copy and paste the passphrase into the .env.local 
