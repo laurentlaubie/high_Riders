@@ -10,6 +10,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\EventRepository;
+use App\Repository\ParticipationRepository;
 use App\Repository\UserRepository;
 use App\Service\UserService;
 use DateTimeImmutable;
@@ -463,27 +464,58 @@ class EventsController extends AbstractController
      
      * @return JsonResponse
      */
-    public function delete(int $id,  EventRepository $eventRepository)
+    public function delete(int $id, EventRepository $eventRepository, ParticipationRepository $participationRepository, CommentRepository $commentRepository)
     {
          // A event is retrieved according to its id
          $event = $eventRepository->find($id);
         
           // check for "delete" access: calls all voters
         $this->denyAccessUnlessGranted('EVENT_DELETE', $event);
+
          // If the event does not exist, we return a 404 error
         if (!$event) {
             return $this->json([
                 'error' => 'L\'event ' . $id . ' n\'existe pas'
             ], 404);
         }
- 
+        // we get the id of the event 
+        $eventId=$event->getId();
 
-        // We call the manager to manage the deletion
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($event);
-        $em->flush(); // A DELETE SQL query is performed
+        // ---ParticipationRepository--
+        // the Participation entity is recovered in the form of a table
+        $entityParticipation = $participationRepository->findBy(array('event'=>$eventId));
+        // we get the participations linked to the event to validate the deletion if it exists
+        $eventParticipation=$event->getParticipations();
 
-        return $this->json(['l\'event avec l\'id '. $id . ' à été suprimer'], 203);
+        // ---COmmentRepository--
+        // the Comment entity is recovered in the form of a table
+        $entityComment = $commentRepository->findBy(array('event'=>$eventId));
+        // we get the Comments linked to the event to validate the deletion if it exists
+        $eventComment=$event->getComments();
+       
+        if ($event!==null) {
+            // We call the manager to manage the deletion
+            $em = $this->getDoctrine()->getManager();
+
+            if ($eventParticipation!==null) {
+               
+                foreach ($entityParticipation as $idParticipation) {
+                    $em->remove($idParticipation);
+                }
+                $em->flush();
+            }
+            if ($eventComment!==null) {
+               
+                foreach ($entityComment as $idComment) {
+                    $em->remove($idComment);
+                }
+                $em->flush();
+            }
+            $em->remove($event);
         
+            $em->flush(); // A DELETE SQL query is performed
+
+            return $this->json(['l\'event avec l\'id '. $id . ' à été suprimer'], 203);
+        }
     }
 }

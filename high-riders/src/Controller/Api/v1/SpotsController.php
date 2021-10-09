@@ -389,27 +389,43 @@ class SpotsController extends AbstractController
      
      * @return JsonResponse
      */
-    public function delete(int $id,  SpotRepository $spotRepository)
+    public function delete(int $id,  SpotRepository $spotRepository,  CommentRepository $commentRepository)
     {
-         // A spot is retrieved according to its id
-         $spot = $spotRepository->find($id);
+        // A spot is retrieved according to its id
+        $spot = $spotRepository->find($id);
         
-         // check for "delete" access: calls all voters
+        // check for "delete" access: calls all voters
         $this->denyAccessUnlessGranted('SPOT_DELETE', $spot);
-         // If the spot does not exist, we return a 404 error
+        // If the spot does not exist, we return a 404 error
         if (!$spot) {
             return $this->json([
                 'error' => 'La spot ' . $id . ' n\'existe pas'
             ], 404);
         }
+        // we get the id of the event 
+        $spotId=$spot->getId();
  
+        // ---COmmentRepository--
+        // the Comment entity is recovered in the form of a table
+        $entityComment = $commentRepository->findBy(array('spot'=>$spotId));
+        // we get the Comments linked to the event to validate the deletion if it exists
+        $spotComment=$spot->getComments();
 
-        // We call the manager to manage the deletion
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($spot);
-        $em->flush(); // A DELETE SQL query is performed
+        if ($spot!==null) {
+            // We call the manager to manage the deletion
+            $em = $this->getDoctrine()->getManager();
+            if ($spotComment!==null) {
+                
+                foreach ($entityComment as $idComment) {
+                    $em->remove($idComment);
+                }
+                $em->flush();
+            }
+            
+            $em->remove($spot);
+            $em->flush(); // A DELETE SQL query is performed
 
         return $this->json(['la spot avec l\'id '. $id . ' à été suprimer'], 203);
-        
+        }
     }
 }

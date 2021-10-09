@@ -25,7 +25,7 @@ class Comment
 
     /**
      * @ORM\Column(type="text")
-     * 
+     * @Assert\NotBlank(message="merci de saisir un commentaire")
      * @Groups({"spot_detail", "event_detail"})
      * 
      */
