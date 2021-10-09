@@ -15,15 +15,17 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class ContactusController extends AbstractController
 {
       /**
-     * Allows the creation of a new event
+     * Allows the creation of a new contact form
      * 
      * URL : /api/v1/contactus/
      * 
      * @Route("/", name="add", methods={"POST"})
-     *
      * @return void
      */
-    public function add(Request $request, SerializerInterface $serialiser, ValidatorInterface $validator)
+    public function add(
+        Request $request, 
+        SerializerInterface $serialiser, 
+        ValidatorInterface $validator)
     {
          // We retrieve the JSON
          $jsonData = $request->getContent();

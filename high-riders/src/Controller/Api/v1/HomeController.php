@@ -19,7 +19,10 @@ class HomeController extends AbstractController
      * 
      * @Route("/api/v1/home", name="api_v1_home", methods={"GET"})
      */
-    public function index(SpotRepository $spotRepository, EventRepository $eventRepository): Response
+    public function index(
+        SpotRepository $spotRepository, 
+        EventRepository $eventRepository
+        ): Response
     {
         // We retrieve the series stored in BDD
         // data recovery from the entiy spot whith findBy by selection orderBy and limit the last 3 register.
