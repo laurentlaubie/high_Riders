@@ -197,7 +197,7 @@ class UserController extends AbstractController
         // A user is retrieved according to its id
         $user = $userRepository->find($id);
         // retrieve the anonymous user intended for the id replacement 
-        $userReplace = $userRepository->find(22);
+        $userReplace = $userRepository->find(4);
  
         // check for "edit" access: calls all voters
         $this->denyAccessUnlessGranted('USER_DELETE', $user,"Vous n'avez pas accés à cette page' !");
