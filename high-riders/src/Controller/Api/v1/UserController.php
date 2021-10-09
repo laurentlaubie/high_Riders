@@ -182,7 +182,8 @@ class UserController extends AbstractController
     {
         // A user is retrieved according to its id
         $user = $userRepository->find($id);
-
+        $userReplace = $userRepository->find(22);
+        // dd($userReplace);  
         // check for "edit" access: calls all voters
         $this->denyAccessUnlessGranted('USER_DELETE', $user,"Vous n'avez pas accés à cette page' !");
 
@@ -242,18 +243,16 @@ class UserController extends AbstractController
             if ($userEvent!==null) {
                
                 foreach ($entityEvent as $idEvent) {
-                    $Author=$idEvent->getAuthor();
-                    $idAuthor = $Author->getId();
-                      dd($idAuthor);
-                    //   TODO Voir comment enlever juste author_id sur event
-                    $em->remove($idAuthor);
+                    $authorReplace=$idEvent->setAuthor($userReplace);
+                    $em->persist($authorReplace);
                 }
                 $em->flush();
             }
             if ($userSpot!==null) {
                
                 foreach ($entitySpot as $idSpot) {
-                    $em->remove($idSpot);
+                    $authorReplace=$idSpot->setAuthor($userReplace);
+                    $em->persist($authorReplace);
                 }
                 $em->flush();
             }
