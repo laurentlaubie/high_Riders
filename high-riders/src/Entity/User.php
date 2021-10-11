@@ -43,6 +43,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(
+     *      min = 6,
+     *      minMessage = "Votre mot de passe doit faire {{ limit }} caractére minimum"
+     * )
      */
     private $password;
 
@@ -50,6 +54,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=150, unique=true)
      * 
      * @Assert\NotBlank(message="merci de saisir un pseudo")
+     * @Assert\Length(
+     *      min = 6,
+     *      minMessage = "Votre pseudo doit faire {{ limit }} caractére minimum"
+     * )
      * @Groups({"index_user", "show_user", "event_list", "event_detail", "spot_list", "spot_detail"})
      */
     private $pseudo;
@@ -72,6 +80,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * 
+     * @Assert\NotBlank(message="merci de saisir un nom")
      * @Groups({"show_user"})
      */
     private $lastname;

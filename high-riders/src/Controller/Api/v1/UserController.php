@@ -248,9 +248,10 @@ class UserController extends AbstractController
                 $em->flush();
             }
             if ($userComment!==null) {
-                // If we have any comments related to this event, we delete them
+                // If comments are created by the user we replace his id by the id of an anonymous user
                 foreach ($entityComment as $idComment) {
-                    $em->remove($idComment);
+                    $authorReplace=$idComment->setUser($userReplace);
+                    $em->persist($authorReplace);
                 }
                 $em->flush();
             }
