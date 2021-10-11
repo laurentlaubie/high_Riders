@@ -71,14 +71,12 @@ class UserType extends AbstractType
                 'label' => 'Equipement',
                 'attr' => ['placeholder' => 'Saisir votre Equipement']
             ])
-            ->add('roles',
-            ChoiceType::class,
-            [
+            ->add('roles',ChoiceType::class, [
+                'label' => 'Rôles *',
                 'choices' => [
                     'ROLE_USER' => "ROLE_USER",
                     'ROLE_EDITOR' => "ROLE_EDITOR",
                     'ROLE_ADMIN' => "ROLE_ADMIN",
-                    
                 ],
                 'multiple' => true,
                 // Affichage des éléments sous forme de cases à cocher

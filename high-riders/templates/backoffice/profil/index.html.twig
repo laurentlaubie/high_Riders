@@ -1,20 +1,11 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil{% endblock %}
+{% block title %}Back-Office | Profil{% endblock %}
 
 {% block body %}
 <main class='container'>
 
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ path('backoffice_home')  }}">
-            <img src="{{ asset('images/LogoridersV1.1.png') }}" alt="" width="100" height="80" class="d-inline-block align-text">
-            High Riders | Mon Profil
-            </a>
-        </div>
-    </nav>
-  
     <table class="table table-striped table-hover table-bordered mt-5 ">
         <tbody>
             <tr>
@@ -37,10 +28,10 @@
                 <th>Email</th>
                 <td>{{ user.email }}</td>
             </tr>
-            <tr>
+           {#  <tr>
                 <th>Mot de passe</th>
                 <td>{{ user.password }}</td>
-            </tr>
+            </tr> #}
             <tr>
                 <th>Mon Roles</th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
