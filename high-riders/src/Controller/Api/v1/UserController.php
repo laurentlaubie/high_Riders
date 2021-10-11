@@ -29,7 +29,6 @@ class UserController extends AbstractController
      * URL : /api/v1/users/
      * Road : api_v1_user_index
      * 
-     * 
      * @Route("/", name="index")
      */
     public function index(UserRepository $userRepository): Response
@@ -139,7 +138,8 @@ class UserController extends AbstractController
         UserRepository $userRepository, 
         User $user, 
         Request $request, 
-        SerializerInterface $serialiser
+        SerializerInterface $serialiser,
+        UserPasswordHasherInterface $passwordEncoder
         )
     {
         // A user is retrieved according to its id
@@ -162,8 +162,19 @@ class UserController extends AbstractController
             // from the Front application (insomnia, react, ...)
             // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
             $user = $serialiser->deserialize($jsonData, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
-            
+
+            // we add the date of the update
             $user->setUpdatedAt(new \DateTimeImmutable());
+
+            // If the user updates his password, we retrieve it and pass it to the password encoder
+            if ($user->getPassword() !== null) {
+                $user->setPassword(
+                    $passwordEncoder->hashPassword(
+                        $user,
+                        $user->getPassword('password')
+                    )
+                );
+            }
 
             // We call the manager to perform the update in DB
             $em = $this->getDoctrine()->getManager();
