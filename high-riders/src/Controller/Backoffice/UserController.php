@@ -122,12 +122,14 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="backoffice_user_delete", methods={"POST"})
      */
-    public function delete(Request $request, User $user): Response
+    public function delete(User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->denyAccessUnlessGranted('USER_DELETE', $user,"Vous n'avez pas accés à cette page' !")) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
+            // Flash Message
+        $this->addFlash('info', 'L utilisateur ' . $user->getPseudo() . ' a bien été supprimé');
         }
 
         return $this->redirectToRoute('backoffice_user_index', [], Response::HTTP_SEE_OTHER);

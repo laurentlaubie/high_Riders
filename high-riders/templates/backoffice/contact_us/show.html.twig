@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Back-Office | Contactez-nous{% endblock %}
+
+{% block body %}
+
+<main class='container'>
+
+    <table class="table table-striped table-hover table-bordered mt-5 ">
+        <tbody>
+            
+            <tr>
+                <th>Prénom</th>
+                <td>{{ contact.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ contact.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ contact.email }}</td>
+            </tr>
+            <tr>
+                <th>Message</th>
+                <td>{{ contact.content }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+   
+    <a href="{{ path('backoffice_contact') }}" class="btn btn-outline-secondary btn-sm mt-2">Retour aux messages</a>
+
+</main>
+    
+{% endblock %}

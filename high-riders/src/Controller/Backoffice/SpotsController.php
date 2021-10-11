@@ -140,6 +140,8 @@ class SpotsController extends AbstractController
     */
      public function delete(Spot $spot): Response
     {
+         // check for "delete" access: calls all voters
+         $this->denyAccessUnlessGranted('SPOT_DELETE', $spot);
         // delete Spot in Bdd
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($spot);

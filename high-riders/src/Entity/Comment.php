@@ -25,7 +25,7 @@ class Comment
 
     /**
      * @ORM\Column(type="text")
-     * 
+     * @Assert\NotBlank(message="merci de saisir un commentaire")
      * @Groups({"spot_detail", "event_detail"})
      * 
      */
@@ -107,7 +107,7 @@ class Comment
     private $event;
 
     /**
-     * Si l'on tente de faire un echo sur l'objet Departement, PHP retournera la valeur du nom
+     * If we try to echo the Comment object, PHP will return the value of the name
      */
     public function __toString()
     {

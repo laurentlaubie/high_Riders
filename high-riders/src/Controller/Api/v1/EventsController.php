@@ -5,19 +5,16 @@ namespace App\Controller\Api\v1;
 use App\Entity\Comment;
 use App\Entity\Event;
 use App\Entity\Participation;
-use App\Entity\User;
 use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\EventRepository;
-use App\Repository\UserRepository;
+use App\Repository\ParticipationRepository;
 use App\Service\UserService;
-use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -34,9 +31,14 @@ class EventsController extends AbstractController
      * URL : /api/v1/events/
      * Road : api_v1_event_index
      * 
+     * @param mixed $name
      * @Route("/", name="index")
      */
-    public function index(EventRepository $eventRepository, CategoryRepository $categoryRepository, DepartementRepository $departementRepository): Response
+    public function index(
+        EventRepository $eventRepository, 
+        CategoryRepository $categoryRepository, 
+        DepartementRepository $departementRepository
+        ): Response
     {
         // We retrieve the series stored in BDD
         $events =$eventRepository->findAll();
@@ -68,13 +70,16 @@ class EventsController extends AbstractController
      
      * @return JsonResponse
      */
-    public function show(int $id, eventRepository $eventRepository)
+    public function show(
+        int $id, 
+        eventRepository $eventRepository
+        )
     {
         // A event is retrieved according to its id
         $event = $eventRepository->find($id);
 
 
-         // If the event does not exist, we return a 404 error
+        // If the event does not exist, we return a 404 error
         if (!$event) {
             return $this->json([
                 'error' => 'Le event ' . $id . ' n\'existe pas'
@@ -98,9 +103,13 @@ class EventsController extends AbstractController
      *
      * @return void
      */
-    public function add(Request $request, SerializerInterface $serialiser, 
-        ValidatorInterface $validator, SluggerInterface $sluggerInterface,
-        UserService $service)
+    public function add(
+        Request $request, 
+        SerializerInterface $serialiser, 
+        ValidatorInterface $validator, 
+        SluggerInterface $sluggerInterface,
+        UserService $service
+        )
     {
          // We retrieve the JSON
          $jsonData = $request->getContent();
@@ -114,10 +123,8 @@ class EventsController extends AbstractController
          // We validate the data stored in the $event object based on
          // on the critieria of the @Assert annotation of the entity (cf. src/Entity/event.php)
         
-        //  dd($event);
         // If the error array is not empty (at least 1 error)
         // count allows to count the number of elements of an array
-        // count([1, 2, 3]) ==> 3
         $errors = $validator->validate($event);
 
         if(count($errors) > 0){
@@ -164,19 +171,24 @@ class EventsController extends AbstractController
      *
      * @return void
      */
-    public function addComment(Event $event, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
+    public function addComment(
+        Event $event, 
+        Request $request, 
+        SerializerInterface $serialiser, 
+        ValidatorInterface $validator, 
+        UserService $service)
     {
-         // We retrieve the JSON
-         $jsonData = $request->getContent();
+        // We retrieve the JSON
+        $jsonData = $request->getContent();
 
-         //  We transform the json into an object : deserialization
-         // - We indicate the data to transform (deserialize)
-         // - We indicate the format of arrival after conversion (object of type comment)
-         // - We indicate the format of departure: we want to pass from json towards an object comment
-         $comment = $serialiser->deserialize($jsonData, Comment::class, 'json');
-        
-         // We validate the data stored in the $comment object based on
-         // on the critieria of the @Assert annotation of the entity (cf. src/Entity/comment.php)
+        //  We transform the json into an object : deserialization
+        // - We indicate the data to transform (deserialize)
+        // - We indicate the format of arrival after conversion (object of type comment)
+        // - We indicate the format of departure: we want to pass from json towards an object comment
+        $comment = $serialiser->deserialize($jsonData, Comment::class, 'json');
+    
+        // We validate the data stored in the $comment object based on
+        // on the critieria of the @Assert annotation of the entity (cf. src/Entity/comment.php)
          
         // If the error array is not empty (at least 1 error)
         // count allows to count the number of elements of an array
@@ -190,13 +202,15 @@ class EventsController extends AbstractController
             return $this->json($errors, 400);
             
         }else{
-             // add a User Id with UserService
-             $user = $service->getCurrentUser();
-              // To inject the id of the current event in the participation table
-              $event->getId();
-             // update the entity
-             $comment->setUser($user);
-             $comment->setEvent($event);
+            // add a User Id with UserService
+            $user = $service->getCurrentUser();
+
+            // To inject the id of the current event in the participation table
+            $event->getId();
+
+            // update the entity
+            $comment->setUser($user);
+            $comment->setEvent($event);
 
             // To save, we call the manager
             $em = $this->getDoctrine()->getManager();
@@ -222,14 +236,18 @@ class EventsController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function removeComment(int $id, CommentRepository $commentRepository)
+    public function removeComment(
+        int $id, 
+        CommentRepository $commentRepository
+        )
     {
-         // A comment is retrieved according to its id
-         $comment = $commentRepository->find($id);
-        // dd($comment);
-          // check for "delete" access: calls all voters
+        // A comment is retrieved according to its id
+        $comment = $commentRepository->find($id);
+       
+        // check for "delete" access: calls all voters
         $this->denyAccessUnlessGranted('COMMENT_DELETE', $comment);
-         // If the comment does not exist, we return a 404 error
+
+        // If the comment does not exist, we return a 404 error
         if (!$comment) {
             return $this->json([
                 'error' => 'Le commentaire ' . $id . ' n\'existe pas'
@@ -255,20 +273,26 @@ class EventsController extends AbstractController
      *
      * @return void
      */
-    public function addParticipation( Event $event, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
+    public function addParticipation(
+        Event $event, 
+        Request $request, 
+        SerializerInterface $serialiser, 
+        ValidatorInterface $validator, 
+        UserService $service
+        )
     {
-         // We retrieve the JSON
-         $jsonData = $request->getContent();
+        // We retrieve the JSON
+        $jsonData = $request->getContent();
 
-         //  We transform the json into an object : deserialization
-         // - We indicate the data to transform (deserialize)
-         // - We indicate the format of arrival after conversion (object of type Participation)
-         // - We indicate the format of departure: we want to pass from json towards an object Participation
-         $participation = $serialiser->deserialize($jsonData, Participation::class, 'json');
-         
-         // We validate the data stored in the $participation object based on
-         // on the critieria of the @Assert annotation of the entity (cf. src/Entity/participation.php)
+        //  We transform the json into an object : deserialization
+        // - We indicate the data to transform (deserialize)
+        // - We indicate the format of arrival after conversion (object of type Participation)
+        // - We indicate the format of departure: we want to pass from json towards an object Participation
+        $participation = $serialiser->deserialize($jsonData, Participation::class, 'json');
         
+        // We validate the data stored in the $participation object based on
+        // on the critieria of the @Assert annotation of the entity (cf. src/Entity/participation.php)
+    
         // If the error array is not empty (at least 1 error)
         // count allows to count the number of elements of an array
         // count([1, 2, 3]) ==> 3
@@ -281,8 +305,8 @@ class EventsController extends AbstractController
             return $this->json($errors, 400);
             
         }else{
-             // add a User Id with UserService
-             $user = $service->getCurrentUser();
+            // add a User Id with UserService
+            $user = $service->getCurrentUser();
              
             // To inject the id of the current event in the participation table
             $event->getId();
@@ -322,9 +346,13 @@ class EventsController extends AbstractController
      *
      * @return void
      */
-    public function addLike(int $id, EventRepository $eventRepository, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
+    public function addLike(
+        int $id, 
+        EventRepository $eventRepository, 
+        Request $request, 
+        SerializerInterface $serialiser 
+        )
     {
-         //  $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
         // A event is retrieved according to its id
         $event = $eventRepository->find($id);
         
@@ -340,7 +368,7 @@ class EventsController extends AbstractController
         // We retrieve the JSON
         $jsonData = $request->getContent();
 
-         // We merge the data from the event with the data
+        // We merge the data from the event with the data
         // from the Front application (insomnia, react, ...)
         // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
          $event = $serialiser->deserialize($jsonData, Event::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $event]);
@@ -368,9 +396,13 @@ class EventsController extends AbstractController
      *
      * @return void
      */
-    public function removeLike(int $id, EventRepository $eventRepository, Request $request, SerializerInterface $serialiser, ValidatorInterface $validator, UserService $service)
+    public function removeLike(
+        int $id, 
+        EventRepository $eventRepository, 
+        Request $request, 
+        SerializerInterface $serialiser
+        )
     {
-         //  $this->denyAccessUnlessGranted('edit', $user, "Vous n'avez pas accés à cette page' !");
         // A event is retrieved according to its id
         $event = $eventRepository->find($id);
         
@@ -386,7 +418,7 @@ class EventsController extends AbstractController
         // We retrieve the JSON
         $jsonData = $request->getContent();
 
-         // We merge the data from the event with the data
+        // We merge the data from the event with the data
         // from the Front application (insomnia, react, ...)
         // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
          $event = $serialiser->deserialize($jsonData, Event::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $event]);
@@ -413,12 +445,17 @@ class EventsController extends AbstractController
      * 
      * URL : /api/v1/events/{id}
      * Road : api_v1_event_update
+     * 
      * @Route("/{id}", name="update", requirements={"id":"\d+"}, methods={"PUT", "PATCH"})
      * 
-     
      * @return JsonResponse
      */
-    public function update(int $id, EventRepository $eventRepository, Request $request, SerializerInterface $serialiser)
+    public function update(
+        int $id, 
+        EventRepository $eventRepository, 
+        Request $request, 
+        SerializerInterface $serialiser
+        )
     {
         // A event is retrieved according to its id
         $event = $eventRepository->find($id);
@@ -463,27 +500,62 @@ class EventsController extends AbstractController
      
      * @return JsonResponse
      */
-    public function delete(int $id,  EventRepository $eventRepository)
+    public function delete(
+        int $id, 
+        EventRepository $eventRepository, 
+        ParticipationRepository $participationRepository, 
+        CommentRepository $commentRepository)
     {
          // A event is retrieved according to its id
          $event = $eventRepository->find($id);
         
           // check for "delete" access: calls all voters
         $this->denyAccessUnlessGranted('EVENT_DELETE', $event);
+
          // If the event does not exist, we return a 404 error
         if (!$event) {
             return $this->json([
                 'error' => 'L\'event ' . $id . ' n\'existe pas'
             ], 404);
         }
- 
+        // we get the id of the event 
+        $eventId=$event->getId();
 
-        // We call the manager to manage the deletion
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($event);
-        $em->flush(); // A DELETE SQL query is performed
+        // ---ParticipationRepository--
+        // the Participation entity is recovered in the form of a table
+        $entityParticipation = $participationRepository->findBy(array('event'=>$eventId));
+        // we get the participations linked to the event to validate the deletion if it exists
+        $eventParticipation=$event->getParticipations();
 
-        return $this->json(['l\'event avec l\'id '. $id . ' à été suprimer'], 203);
+        // ---CommentRepository--
+        // the Comment entity is recovered in the form of a table
+        $entityComment = $commentRepository->findBy(array('event'=>$eventId));
+        // we get the Comments linked to the event to validate the deletion if it exists
+        $eventComment=$event->getComments();
+       
+        if ($event!==null) {
+            // We call the manager to manage the deletion
+            $em = $this->getDoctrine()->getManager();
+
+            if ($eventParticipation!==null) {
+                // If we have any participations related to this event, we delete them
+                foreach ($entityParticipation as $idParticipation) {
+                    $em->remove($idParticipation);
+                }
+                $em->flush();
+            }
+            if ($eventComment!==null) {
+                // If we have any comments related to this event, we delete them
+                foreach ($entityComment as $idComment) {
+                    $em->remove($idComment);
+                }
+                $em->flush();
+            }
+            $em->remove($event);
         
+            $em->flush(); // A DELETE SQL query is performed
+
+            return $this->json(['l\'event avec l\'id '. $id . ' à été suprimer'], 203);
+        }
     }
 }

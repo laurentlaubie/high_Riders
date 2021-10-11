@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ContactusRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -50,6 +51,15 @@ class Contactus
      * @ORM\Column(type="datetime_immutable")
      */
     private $createdAt;
+
+        
+    public function __construct()
+    {
+        
+        $this->createdAt = new DateTimeImmutable();
+       
+    }
+
 
     public function getId(): ?int
     {

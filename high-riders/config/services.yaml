@@ -35,6 +35,7 @@ services:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
     
+    # access to the service allowing to store the token of a user to recover his identifier during a content registration
     tenant_user_service:
         class: App\Service\UserService
         arguments: [ '@security.token_storage' ]
