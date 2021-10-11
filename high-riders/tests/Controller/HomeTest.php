@@ -7,28 +7,28 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class HomeTest extends WebTestCase
 {
-    /**
-     * Test de la page d'accueil en monde non connecté (public)
-     *
-     * @return void
-     */
-    public function testHomePagePublic(): void
-    {
-        // On va se mettre dans la peau d'un navigateur
-        // Et tenter d'accéder à la page d'accueil ("/")
-        $client = static::createClient();
-        $crawler = $client->request('GET', 'api/v1/home');
+    // /**
+    //  * Test de la page d'accueil en monde non connecté (public)
+    //  *
+    //  * @return void
+    //  */
+    // public function testHomePagePublic(): void
+    // {
+    //     // On va se mettre dans la peau d'un navigateur
+    //     // Et tenter d'accéder à la page d'accueil ("/")
+    //     $client = static::createClient();
+    //     $crawler = $client->request('GET', '/');
 
-        // On vérifie ensuite si la page existe bien.
-        // Si c'est OK, alors la page est potentiellement fonctionnelle
-        $this->assertResponseIsSuccessful();
+    //     // On vérifie ensuite si la page existe bien.
+    //     // Si c'est OK, alors la page est potentiellement fonctionnelle
+    //     $this->assertRedi();
 
-        // On vérifie s'il existe une balise h1 avec le contenu : 
-        // "Séries TV et bien plus en illimité."
-        // $this->assertSelectorTextContains('h1.fw-light', 'Séries TV et bien plus en illimité.');
-    }
+    //     // On vérifie s'il existe une balise h1 avec le contenu : 
+    //     // "Séries TV et bien plus en illimité."
+    //     $this->assertSelectorTextContains('h1.fw-light', 'Séries TV et bien plus en illimité.');
+    // }
 
-    /**
+   /**
      * Test de la page en mode connecté
      *
      * @return void
@@ -49,7 +49,7 @@ class HomeTest extends WebTestCase
 
         // On teste l'accès à la page d'accueil en tant qu'utilisateur
         // connecté
-        $crawler = $client->request('GET', '/api/v1/home');
+        $crawler = $client->request('GET', '/backoffice');
 
         // On vérifie ensuite si la page existe bien.
         // Si c'est OK, alors la page est potentiellement fonctionnelle
