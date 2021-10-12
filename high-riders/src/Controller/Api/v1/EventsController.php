@@ -162,7 +162,7 @@ class EventsController extends AbstractController
     }
 
      /**
-     * Allows the creation of a new event
+     * Allows the creation of a new comment
      * 
      * URL : /api/v1/events/{id}/comment
      * Road : api_v1_event_addComment
@@ -176,7 +176,8 @@ class EventsController extends AbstractController
         Request $request, 
         SerializerInterface $serialiser, 
         ValidatorInterface $validator, 
-        UserService $service)
+        UserService $service
+        )
     {
         // We retrieve the JSON
         $jsonData = $request->getContent();
@@ -227,7 +228,7 @@ class EventsController extends AbstractController
     }
 
     /**
-     * Deleting a event based on its ID
+     * Deleting a comment based on its ID
      * 
      * URL : /api/v1/events/{id}/comment/{id}
      * Road : api_v1_event_removeComment
@@ -265,10 +266,11 @@ class EventsController extends AbstractController
     }
 
      /**
-     * Allows the creation of a new event to participation
+     * Allows the creation of a new participation
      * 
      *  URL : /api/v1/events/{id}/participation
      * Road : api_v1_event_addParticipation
+     * 
      * @Route("/{id}/participation", name="addParticipation", requirements={"id":"\d+"}, methods={"POST"})
      *
      * @return void
@@ -295,11 +297,9 @@ class EventsController extends AbstractController
     
         // If the error array is not empty (at least 1 error)
         // count allows to count the number of elements of an array
-        // count([1, 2, 3]) ==> 3
         $errors = $validator->validate($participation);
 
         if(count($errors) > 0){
-
             // Code 400 : bad request , the data received is not
             // not compliant
             return $this->json($errors, 400);
@@ -318,7 +318,7 @@ class EventsController extends AbstractController
             // Participation table and inject it into the ParticipationUser property
 
             $countParticipation=$event->getParticipations();
-            $InjectionParticipapation = (count($countParticipation));
+            $InjectionParticipapation = (count($countParticipation)+1);
             
             $event->setParticipationUser($InjectionParticipapation);
 
@@ -338,10 +338,11 @@ class EventsController extends AbstractController
     }
 
      /**
-     * Allows the creation of a new event
+     * Allows the creation of a new like
      * 
      *  URL : /api/v1/events/{id}/like
      * Road : api_v1_event_addLike
+     * 
      * @Route("/{id}/like", name="addLike", requirements={"id":"\d+"}, methods={"PUT", "PATCH"})
      *
      * @return void
@@ -355,7 +356,6 @@ class EventsController extends AbstractController
     {
         // A event is retrieved according to its id
         $event = $eventRepository->find($id);
-        
         
         // If the event does not exist, we return a 404 error
         if (!$event) {
@@ -373,10 +373,11 @@ class EventsController extends AbstractController
         // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
          $event = $serialiser->deserialize($jsonData, Event::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $event]);
         
+        //  method to get the number of likes on the current object and add a like
          $eventLike = $event->getSLike();
          $addLike =($eventLike + 1);
-
          $event->setSLike($addLike);
+
          // We call the manager to perform the update in DB
          $em = $this->getDoctrine()->getManager();
         
@@ -388,10 +389,11 @@ class EventsController extends AbstractController
     }
 
      /**
-     * Allows the creation of a new event
+     * methods to delete a like
      * 
      *  URL : /api/v1/events/{id}/dislike
      * Road : api_v1_event_removeLike
+     * 
      * @Route("/{id}/dislike", name="removeLike", requirements={"id":"\d+"}, methods={"PUT", "PATCH"})
      *
      * @return void
@@ -423,10 +425,11 @@ class EventsController extends AbstractController
         // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
          $event = $serialiser->deserialize($jsonData, Event::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $event]);
         
+        //  method to get the number of likes on the current object and delete a like
          $eventLike = $event->getSLike();
          $addLike =($eventLike - 1);
-
          $event->setSLike($addLike);
+
          // We call the manager to perform the update in DB
          $em = $this->getDoctrine()->getManager();
         

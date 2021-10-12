@@ -3,34 +3,23 @@
 {% block title %}Back-Office | Evenements {% endblock %}
 
 {% block body %}
-<main class"container">
- 
-        <div class="m-4">
-        <table class="table table-striped table-hover">
+
+<main class"container m-4">
+    <div class="m-4 align-item-center"> 
+    <div class="container ">
+        <table class="table table-striped table-hover table-bordered align-middle m-4">
             <thead>
-                <tr class="table-success">
+                <tr class="table-success text-center">
                     <th>Id</th>
                     <th>Titre</th>
                     <th>Image</th>
-                    <th>Description del'évenement</th>
-                    <th>Heures d'ouverture</th>
-                    <th>Heures de fermeture</th>
-                    <th>Difficulté de l'évenement</th>
-                    <th>Date de l'évenement</th>
-                    <th>Liens vers site Officiel</th>
-                    <th>Prix d'entrée</th>
-                    <th>Accessibilité</th>
-                    <th>Nbre de Participants</th>
-                    <th>Nbre de Like</th>
-                    <th>Status</th>
                     <th>Type d'évenement</th>
                     <th>ACTIONS</th>
-                   
                 </tr>
             </thead>
             <tbody>
         {% for listEvent in events %}
-            <tr>
+            
                 <td>{{ listEvent.id }}</td>
                 <td>{{ listEvent.title }}</td>
                 <th>
@@ -40,23 +29,12 @@
                         <image src="{{ asset('uploads/' ~ listEvent.image) }}" width="75">
                     {% endif %}
                 </th>
-                <td>{{ listEvent.description }}</td>
-                <td>{{ listEvent.openingHours }}</td>
-                <td>{{ listEvent.closedHours }}</td>
-                <td>{{ listEvent.difficulty }}</td>
-                <td>{{ listEvent.dateEvent }}</td>
-                <td>{{ listEvent.link }}</td>
-                <td>{{ listEvent.price }}</td>
-                <td>{{ listEvent.accessibility}}</td>
-                <td>{{ listEvent.participationUser }}</td>
-                <td>{{ listEvent.eLike }}</td>
-                <td>{{ listEvent.status }}</td>
+                
                 <td>{{ listEvent.typeEvent }}</td>
-               
-            
+
                 <td> 
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <a href="{{ path('backoffice_event_edit', {id:listEvent.id}) }}" class="btn btn-outline-secondary btn-sm">Modifier</a> 
+                <div class="d-grid gap-2 col-6 mx-2">
+                    <a href="{{ path('backoffice_events_show', {id:listEvent.id}) }}" class="btn btn-outline-secondary btn-sm">Voir</a> 
                     <a href="{{ path('backoffice_event_delete', {id:listEvent.id}) }}" class="btn btn-outline-secondary btn-sm" onclick="return confirm('Êtes-vous sur de vouloir effectuer cette action ?')">Supprimer</a>
                 </div>
                 </td>
@@ -64,7 +42,9 @@
         {% endfor %}
                 <a href="{{ path('backoffice_event_add')  }}" class="btn btn-outline-success btn-sm mb-2">Ajouter un nouvel Evenement </a>   
                 <a href="{{ path('backoffice_home')  }}" class="btn btn-outline-secondary btn-sm mb-2 ms-2">Retour à l'accueil</a> 
-        </table>   
+            </div>
+        </table>
+    </div>
     </div>            
 </main>
 

@@ -51,8 +51,7 @@ class SpotsController extends AbstractController
         ]);
     }
 
-      /**
-     
+    /**
      *
      * Displays the details of a spot according to
      * its ID
@@ -62,7 +61,6 @@ class SpotsController extends AbstractController
      * 
      * @Route("/{id}", name="_show", requirements={"id":"\d+"}, methods={"GET"})
      * 
-     
      * @return JsonResponse
      */
     public function show(int $id, SpotRepository $spotRepository)
@@ -89,6 +87,7 @@ class SpotsController extends AbstractController
      * Allows the creation of a new spot
      * 
      * URL : /api/v1/spots/
+     * Road : api_v1_spot_add
      * 
      * @Route("/add", name="add", methods={"POST"})
      *
@@ -157,8 +156,9 @@ class SpotsController extends AbstractController
      /**
      * Allows the creation of a new spot
      * 
-     *  URL : /api/v1/spots/{id}/comment
+     * URL : /api/v1/spots/{id}/comment
      * Road : api_v1_spot_addComment
+     * 
      * @Route("/{id}/comment", name="addComment", requirements={"id":"\d+"}, methods={"POST"})
      *
      * @return void
@@ -257,6 +257,7 @@ class SpotsController extends AbstractController
      * 
      * URL : /api/v1/spots/{id}/like
      * Road : api_v1_spot_addLike
+     * 
      * @Route("/{id}/like", name="addLike", requirements={"id":"\d+"}, methods={"PUT", "PATCH"})
      *
      * @return void
@@ -287,10 +288,11 @@ class SpotsController extends AbstractController
         // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
          $spot = $serialiser->deserialize($jsonData, Spot::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $spot]);
         
+         //  method to get the number of likes on the current object and add a like
          $spotLike = $spot->getSLike();
          $addLike =($spotLike + 1);
-
          $spot->setSLike($addLike);
+
          // We call the manager to perform the update in DB
          $em = $this->getDoctrine()->getManager();
         
@@ -302,7 +304,7 @@ class SpotsController extends AbstractController
     }
 
      /**
-     * Allows the creation of a new spot
+     * Methods to delete a like
      * 
      * URL : /api/v1/spots/{id}/dislike
      * Road : api_v1_spot_removeLike
@@ -338,10 +340,11 @@ class SpotsController extends AbstractController
         // Deserializing in an Existing Object : https://symfony.com/doc/current/components/serializer.html#deserializing-in-an-existing-object
          $spot = $serialiser->deserialize($jsonData, Spot::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $spot]);
         
+         //  method to get the number of likes on the current object and delete a like
          $spotLike = $spot->getSLike();
          $removeLike =($spotLike - 1);
-
          $spot->setSLike($removeLike);
+
          // We call the manager to perform the update in DB
          $em = $this->getDoctrine()->getManager();
         
