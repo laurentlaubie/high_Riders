@@ -4,76 +4,61 @@
 
 {% block body %}
 <main class="container">
-    <h1>Evenement</h1>
+   
+    <section class="py-5">
+            <a class="text-success" href="{{ path('backoffice_events')  }}"> <- Retour aux Evenements</a> 
+                <div class="container px-4 px-lg-5 my-5 ">
+                    <div class="row gx-4 gx-lg-5">
+                        <div class="col-md-6 align-item-top">
+                            <div class = "d-flex flex-column lh-1">
+                                <div class="p-2 bd-highlight border"><img class="card-img-top mb-5 mb-md-0" src="{{ event.image }}" alt="..." /></div>
+                                <div class="container border" >
+                                    <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Date de l'Evenement :</h6> {{ event.dateEvent|date('d-m-Y')}}</div>
+                                    <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Horaire d'ouverture :</h6> {{ event.openingHours }}</div>
+                                    <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Horaire de fermeture :</h6> {{ event.closedHours }}</div>div>
+                                    <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Difficultées :</h6> {{ event.difficulty }}</div>
+                                    <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Lien site :</h6> {{ event.link }}</div>
+                                    <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Prix d'entrée :</h6> {{ event.price }}</div>
+                                    <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Accessibilités :</h6> {{ event.accessibility }}</div>
+                                    <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Nombre de Like :</h6> {{ event.eLike }}</div>
+                                    <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Nombre de Participants :</h6> {{ event.participationUser }}</div>
+                                    <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Type d'Evenements :</h6> {{ event.typeEvent }}</div>
+                                    <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Status :</h6> {{ event.status }}</div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <a href="{{ path('backoffice_events')  }}">Retour aux évenements</a> 
+                        <div class="col-md-6">
+                            <div class=" container align-items-center">
+                                <div class="small mb-1 badge bg-success">Id : {{ event.id }} </div>
+                                <h1 class="display-5 fw-bolder">{{ event.title }}</h1>
+                                <div class="fs-5 mb-5">
+                                    <p class="fst-italic text-secondary">créer le : {{ event.createdAt |date ("m/d/Y H:i" )}}</p>
+                                    <p class="fst-italic text-secondary">par : 
 
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>Id</th>
-                        <td>{{ event.id }}</td>
-                    </tr>  
-                    <tr>
-                        <th>Titre</th>
-                        <td>{{ event.title }}</td>
-                    </tr>  
-                     <tr>
-                        <th>Image</th>
-                        <th> <image src="{{ event.image }}" width="75" > </th>
-                    </tr>          
-                    <tr>
-                        <th>Description</th>
-                        <td>{{ event.description }}</td>
-                    </tr>
-                    <tr>
-                        <th>Horaire d'ouverture</th>
-                        <td>{{ event.openingHours|date('d-m-Y') }}</td>
-                    </tr>
-                    <tr>
-                        <th>Horaire de fermeture</th>
-                        <td>{{ event.closedHours|date('d-m-Y') }}</td>
-                    </tr>
-                    <tr>
-                        <th>Difficultées</th>
-                        <td>{{ event.difficulty }}</td>
-                    </tr>
-                    <tr>
-                        <th>Date de l'evenement</th>
-                        <td>{{ event.dateEvent|date('d-m-Y') }}</td>
-                    </tr>
-                    <tr>
-                        <th>Lien site</th>
-                        <td>{{ event.link }}</td>
-                    </tr>
-                    <tr>
-                        <th>Prix d'entrée</th>
-                        <td>{{ event.price }}</td>
-                    </tr>
-                    <tr>
-                        <th>Accessibilités</th>
-                        <td>{{ event.accessibility }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nbre de Participant</th>
-                        <td>{{ event.participationUser }}</td>
-                    </tr>
-                     <tr>
-                        <th>Nbre de Like</th>
-                        <td>{{ event.eLike }}</td>
-                    </tr>
-                     <tr>
-                        <th>Status</th>
-                        <td>{{ event.status }}</td>
-                    </tr>
-                     <tr>
-                        <th>Type d'évenement</th>
-                        <td>{{ event.typeEvent }}</td>
-                    </tr>
-                    
-
-                </tbody>
-            </table>  
+                                    {% if event.author %}
+                                        <a href="{{ path('backoffice_user_show', {id:event.author.id}) }}" class="text-success flex-shrink-0" type="link">
+                                        {{ event.author.pseudo}}
+                                        </a>
+                                    {% else %}
+                                        <a class="text-success flex-shrink-0" type="link">
+                                        Anonyme
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                
+                                <p class="lead">{{ event.description }}</p>
+                                <div class="d-flex">
+                                    
+                                    <a href="{{ path('backoffice_event_edit', {id:event.id}) }}" class="btn btn-outline-success flex-shrink-0" type="button">
+                                        Modifier
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
 
 </main>
