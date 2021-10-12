@@ -4,6 +4,10 @@ namespace App\Controller\Backoffice;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\CommentRepository;
+use App\Repository\EventRepository;
+use App\Repository\ParticipationRepository;
+use App\Repository\SpotRepository;
 use App\Repository\UserRepository;
 use App\Service\ImageUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,20 +43,19 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $imageFile = $imageUploader->upload($form, 'avatar');
             //dd($imageFile);
             if ($imageFile) {
                 $user->setAvatar($imageFile);
-           }
-           /* // recovery the avatar's pseudo
-           $title = $user->getPseudo();
+            }
+            /* // recovery the avatar's pseudo
+            $title = $user->getPseudo();
 
-           // transform in slug
-           $slug = $slugger->slug(strtolower($title));
+            // transform in slug
+            $slug = $slugger->slug(strtolower($title));
 
-           // update the entity
-           $user->setSlug($slug); */
+            // update the entity
+            $user->setSlug($slug); */
 
 
             // A la création d'un utilisateur
@@ -88,7 +91,7 @@ class UserController extends AbstractController
         ]);
     }
 
-     // ===================== Page edit an User  =================//
+    // ===================== Page edit an User  =================//
     /**
      * @Route("/{id}/edit", name="backoffice_user_edit", methods={"GET","POST"})
      */
@@ -98,17 +101,16 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $imageFile = $imageUploader->upload($form, 'avatar');
             //dd($imageFile);
             if ($imageFile) {
                 $user->setAvatar($imageFile);
-           }
+            }
 
             $this->getDoctrine()->getManager()->flush();
 
-             // Flash Message
-             $this->addFlash('success', 'L\'utilisateur'  . $user->getPseudo() . ' a bien été modifié');
+            // Flash Message
+            $this->addFlash('success', 'L\'utilisateur'  . $user->getPseudo() . ' a bien été modifié');
 
             return $this->redirectToRoute('backoffice_user_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -120,18 +122,100 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="backoffice_user_delete", methods={"POST"})
+     * @Route("/{id}/delete", name="backoffice_user_delete", methods={"DELETE"}),requirements={"id": "\d+"})
      */
-    public function delete(User $user): Response
+    public function delete(
+        int $id,
+        UserRepository $userRepository,
+        EventRepository $eventRepository,
+        SpotRepository $spotRepository,
+        ParticipationRepository $participationRepository,
+        CommentRepository $commentRepository
+    ): Response
     {
-        if ($this->denyAccessUnlessGranted('USER_DELETE', $user,"Vous n'avez pas accés à cette page' !")) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
-            $entityManager->flush();
-            // Flash Message
-        $this->addFlash('info', 'L utilisateur ' . $user->getPseudo() . ' a bien été supprimé');
+        // A user is retrieved according to its id
+        $user = $userRepository->find($id);
+        // retrieve the anonymous user intended for the id replacement
+        $userReplace = $userRepository->find(4);
+ 
+        // check for "edit" access: calls all voters
+        $this->denyAccessUnlessGranted('USER_DELETE', $user, "Vous n'avez pas accés à cette page' !");
+        // If the user does not exist, we return a 404 error
+        if (!$user) {
+            return $this->json([
+                'error' => 'L\'utilisateur ' . $id . ' n\'existe pas'
+            ], 404);
         }
+        // we get the id of the user
+        $userId=$user->getId();
 
-        return $this->redirectToRoute('backoffice_user_index', [], Response::HTTP_SEE_OTHER);
+        // ---ParticipationRepository--
+        // the Participation entity is recovered in the form of a table
+        $entityParticipation = $participationRepository->findBy(array('user'=>$userId));
+        // we get the participations linked to the user to validate the deletion if it exists
+        $userParticipation=$user->getParticipations();
+
+        // ---CommentRepository--
+        // the Comment entity is recovered in the form of a table
+        $entityComment = $commentRepository->findBy(array('user'=>$userId));
+        // we get the Comments linked to the user to validate the deletion if it exists
+        $userComment=$user->getComment();
+
+        // ---EventRepository--
+        // the Event entity is recovered in the form of a table
+        $entityEvent = $eventRepository->findBy(array('author'=>$userId));
+        // we get the Events linked to the user to validate the deletion if it exists
+        $userEvent=$user->getEvents();
+
+        // ---SpotRepository--
+        // the Spot entity is recovered in the form of a table
+        $entitySpot = $spotRepository->findBy(array('author'=>$userId));
+        // we get the Spots linked to the user to validate the deletion if it exists
+        $userSpot=$user->getSpots();
+       
+        if ($user!==null) {
+            // We call the manager to manage the deletion
+            $em = $this->getDoctrine()->getManager();
+
+            if ($userParticipation!==null) {
+                // If we have any participations related to this event, we delete them
+                foreach ($entityParticipation as $idParticipation) {
+                    $em->remove($idParticipation);
+                }
+                $em->flush();
+            }
+            if ($userComment!==null) {
+                // If comments are created by the user we replace his id by the id of an anonymous user
+                foreach ($entityComment as $idComment) {
+                    $authorReplace=$idComment->setUser($userReplace);
+                    $em->persist($authorReplace);
+                }
+                $em->flush();
+            }
+            if ($userEvent!==null) {
+                // If events are created by the user we replace his id by the id of an anonymous user
+                foreach ($entityEvent as $idEvent) {
+                    $authorReplace=$idEvent->setAuthor($userReplace);
+                    $em->persist($authorReplace);
+                }
+                $em->flush();
+            }
+            if ($userSpot!==null) {
+                // If spots are created by the user we replace his id by the id of an anonymous user
+                foreach ($entitySpot as $idSpot) {
+                    $authorReplace=$idSpot->setAuthor($userReplace);
+                    $em->persist($authorReplace);
+                }
+                $em->flush();
+            }
+            $em->remove($user);
+        
+            $em->flush(); // A DELETE SQL query is performed
+            // Flash Message
+            $this->addFlash('info', 'L utilisateur ' . $user->getPseudo() . ' a bien été supprimé');
+        
+
+            return $this->redirectToRoute('backoffice_user_index', [], Response::HTTP_SEE_OTHER);
+        }
     }
 }
