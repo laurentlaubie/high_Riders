@@ -5,69 +5,66 @@
 {% block body %}
 <main class="container">
   
-{# ------------------------------------------------- #}
-        <!-- Product section-->
-        <section class="py-5">
+    <section class="py-5">
+
         <a class="text-success" href="{{ path('backoffice_spots')  }}"> <- Retour aux Spots</a> 
-            <div class="container px-4 px-lg-5 my-5 ">
-                <div class="row gx-4 gx-lg-5">
-                    <div class="col-md-6 align-item-top">
-                        <div class = "d-flex flex-column lh-1">
-                            <div class="p-2 bd-highlight border"><img class="card-img-top mb-5 mb-md-0" src="{{ spot.image }}" alt="..." /></div>
-                            <div class="container border" >
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Adresse :</h6> {{ spot.address }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Ville :</h6> {{ spot.city }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Horaire d'ouverture :</h6> {{ spot.openingHours }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Horaire de fermeture :</h6> {{ spot.closedHours }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Ouverture Saison :</h6> {{ spot.saisonDate }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Nombre de Riders :</h6> {{ spot.numbersUsers }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Difficultées :</h6> {{ spot.difficulty }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Lien site :</h6> {{ spot.link }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Prix d'entrée :</h6> {{ spot.price }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Accessibilités :</h6> {{ spot.accessibility }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Nombre de Like :</h6> {{ spot.sLike }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Denivelé + :</h6> {{ spot.dPositif }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Denivelé - :</h6> {{ spot.link }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Nombre de pistes :</h6> {{ spot.trackNumber }}</div>
-                                <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Type de spot :</h6> {{ spot.typeSpot }}</div>
-                            </div>
-                         </div>
-                    </div>
+        <div class="container px-4 px-lg-5 my-5 ">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-6 align-item-top">
+                    <div class = "d-flex flex-column lh-1">
+                        <div class="p-2 bd-highlight border"><img class="card-img-top mb-5 mb-md-0" src="{{ spot.image }}" alt="..." /></div>
+                        <div class="container border" >
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Adresse :</h6> {{ spot.address }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Ville :</h6> {{ spot.city }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Horaire d'ouverture :</h6> {{ spot.openingHours }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Horaire de fermeture :</h6> {{ spot.closedHours }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Ouverture Saison :</h6> {{ spot.saisonDate }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Nombre de Riders :</h6> {{ spot.numbersUsers }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Difficultées :</h6> {{ spot.difficulty }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Lien site :</h6> {{ spot.link }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Prix d'entrée :</h6> {{ spot.price }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Accessibilités :</h6> {{ spot.accessibility }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Nombre de Like :</h6> {{ spot.sLike }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Denivelé + :</h6> {{ spot.dPositif }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Denivelé - :</h6> {{ spot.link }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Nombre de pistes :</h6> {{ spot.trackNumber }}</div>
+                            <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Type de spot :</h6> {{ spot.typeSpot }}</div>
+                        </div>
+                        </div>
+                </div>
 
-                    <div class="col-md-6">
-                        <div class=" container align-items-center">
-                            <div class="small mb-1 badge bg-success">Id : {{ spot.id }} </div>
-                            <h1 class="display-5 fw-bolder">{{ spot.title }}</h1>
-                            <div class="fs-5 mb-5">
-                                <p class="fst-italic text-secondary">créer le : {{ spot.createdAt |date ("m/d/Y H:i" )}}</p>
-                                <p class="fst-italic text-secondary">par : 
+                <div class="col-md-6">
+                    <div class=" container align-items-center">
+                        <div class="small mb-1 badge bg-success">Id : {{ spot.id }} </div>
+                        <h1 class="display-5 fw-bolder">{{ spot.title }}</h1>
+                        <div class="fs-5 mb-5">
+                            <p class="fst-italic text-secondary">créer le : {{ spot.createdAt |date ("m/d/Y H:i" )}}</p>
+                            <p class="fst-italic text-secondary">par : 
 
-                                {% if spot.author %}
-                                    <a href="{{ path('backoffice_user_show', {id:spot.author.id}) }}" class="text-success flex-shrink-0" type="link">
-                                    {{ spot.author.pseudo}}
-                                    </a>
-                                {% else %}
-                                    <a class="text-success flex-shrink-0" type="link">
-                                    Anonyme
-                                     </a>
-                                {% endif %}
-                            </div>
-                            
-                            <p class="lead">{{ spot.description }}</p>
-                            <div class="d-flex">
-                                
-                                <a href="{{ path('backoffice_spot_edit', {id:spot.id}) }}" class="btn btn-outline-success flex-shrink-0" type="button">
-                                    Modifier
+                            {% if spot.author %}
+                                <a href="{{ path('backoffice_user_show', {id:spot.author.id}) }}" class="text-success flex-shrink-0" type="link">
+                                {{ spot.author.pseudo}}
                                 </a>
-                            </div>
+                            {% else %}
+                                <a class="text-success flex-shrink-0" type="link">
+                                Anonyme
+                                    </a>
+                            {% endif %}
+                        </div>
+                        
+                        <p class="lead">{{ spot.description }}</p>
+                        <div class="d-flex">
+                            
+                            <a href="{{ path('backoffice_spot_edit', {id:spot.id}) }}" class="btn btn-outline-success flex-shrink-0" type="button">
+                                Modifier
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    
-        {# ------------------------------------------- #}
-            
+        </div>
+    </section>
 
+    <br class="m-4">
 </main>
 {% endblock %}

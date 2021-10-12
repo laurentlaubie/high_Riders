@@ -5,73 +5,61 @@
 {% block body %}
  
 
-
-    <div class="m-4">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr class="table-success">
-                    <th>Id</th>
-                    <th>Email</th>
-                    <th>Roles</th>
-                    <th>Pseudo</th>
-                    <th>Avatar</th>
-                    <th>Prénom</th>
-                    <th>Nom</th>
-                    <th>Presentation</th>
-                    <th>Departement</th>
-                    <th>Ville</th>
-                    <th>Equipement</th>
-                    <th>Date de création</th>
-                    <th>ACTIONS</th>
-                    {# <th>UpdatedAt</th> #}
-                    {# <th>actions</th> #}
-                </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                    <td>{{ user.pseudo }}</td>
-                    <td>
-                    {% if "http" in user.avatar %}
-                                <image src="{{ user.avatar }}" width="75" >
-                            {% else %}
-                                <image src="{{ asset('uploads/' ~ user.avatar) }}" width="75">
-                            {% endif %}
-                    </td>
-                    <td>{{ user.firstname }}</td>
-                    <td>{{ user.lastname }}</td>
-                    <td>{{ user.presentation }}</td>
-                    <td>{{ user.departement }}</td>
-                    <td>{{ user.city }}</td>
-                    <td>{{ user.equipement }}</td>
-                    <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                    
-                    <td>
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                        <a href="{{ path('backoffice_user_show', {'id': user.id}) }}" class="btn btn-outline-secondary btn-sm">Voir</a>
-                        <a href="{{ path('backoffice_user_edit', {'id': user.id}) }}" class="btn btn-outline-secondary btn-sm">Modifier</a>
-                    </div>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="15">no records found</td>
-                </tr>
-            {% endfor %}
-
-            <div class="d-grid gap-2 d-md-block">
-            <a href="{{ path('backoffice_user_add') }}" class="btn btn-outline-success btn-sm mb-2">Ajouter un utilisateur</a>  
-            <a  href="{{ path('backoffice_home')  }}" class="btn btn-outline-secondary btn-sm mb-2">Retour à l'accueil</a> 
-            </div>
-            
-            </tbody>
+<main class"container m-4">
+    <div class="m-4 align-item-center"> 
+        <div class="container ">
+            <table class="table table-striped table-hover table-bordered align-middle m-4">
+                <thead>
+                    <tr class="table-success text-center">
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>Pseudo</th>
+                        <th>Avatar</th>
+                        <th>Date de création</th>
+                        <th>ACTIONS</th>
     
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr class="text-center">
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.pseudo }}</td>
+                            <td>
+                                {% if "http" in user.avatar %}
+                                    <image src="{{ user.avatar }}" width="75" >
+                                {% else %}
+                                    <image src="{{ asset('uploads/' ~ user.avatar) }}" width="75">
+                                {% endif %}
+                            </td>
+                            <td>{{ user.createdAt ? user.createdAt|date('m/d/Y H:i') : '' }}
+                            </td>
+                            
+                            <td>
+                                <div class="d-grid gap-2 col-6 mx-auto">
+                                    <a href="{{ path('backoffice_user_show', {'id': user.id}) }}" class="btn btn-outline-secondary btn-sm">Voir</a>
+                                    <a href="{{ path('backoffice_user_edit', {'id': user.id}) }}" class="btn btn-outline-secondary btn-sm">Modifier</a>
+                                </div>
+                            </td>
+                        </tr>
 
-        </table>
+                    {% else %}
+                        <tr>
+                            <td colspan="15">no records found</td>
+                        </tr>
+                    {% endfor %}
+
+                    <div class="d-grid gap-2 d-md-block mx-4">
+                        <a href="{{ path('backoffice_user_add') }}" class="btn btn-outline-success btn-sm mb-2">Ajouter un utilisateur</a>  
+                        <a  href="{{ path('backoffice_home')  }}" class="btn btn-outline-secondary btn-sm mb-2 mx-2">Retour à l'accueil</a> 
+                    </div>
+                    
+                </tbody>
+            </table>
+            <br class="m-4">
+        </div>
     </div>
-
+</main>
     
 {% endblock %}
