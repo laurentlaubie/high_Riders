@@ -5,24 +5,25 @@
 {% endblock %}
 
 {% block content %}
-        <header>
 
-    <main class="container">
- 
-               <h1 class="mt-5">
-                        {% if app.user %}
-                            Bienvenue
-                            {{ app.user.pseudo }}
-                        {% else %}
-                            <a href="{{ path('app_login') }}" class="btn btn-danger my-2">Se connecter</a>
-                            
-                        {% endif %}
-                    </h1>
-        
-        <div class="m-6 mt-4">
-            <img src="https://image.freepik.com/photos-gratuite/beau-paysage-montagnes-rocheuses-paysage-verdoyant-sous-ciel-nuageux_181624-26086.jpg" alt="Backgound High Rider" class="rounded img-fluid " >
-        </div>
+    <main class="container m-4">
+        <section class="text-center m-4">
+
+            <h1 class="mt-5 text-center">
+                {% if app.user %}
+                    Bienvenue
+                    {{ app.user.pseudo }}
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="btn btn-danger my-2">Se connecter</a>
+                    
+                {% endif %}
+            </h1>
+            
+            <div class="m-6 mt-4">
+                <img src="https://image.freepik.com/photos-gratuite/beau-paysage-montagnes-rocheuses-paysage-verdoyant-sous-ciel-nuageux_181624-26086.jpg" alt="Background High Rider" class="rounded img-fluid " >
+            </div>
+
+        </section>
     </main>
 
-    </main>
 {% endblock %}
