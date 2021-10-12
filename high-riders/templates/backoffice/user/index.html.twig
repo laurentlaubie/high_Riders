@@ -39,7 +39,7 @@
                             <td>
                                 <div class="d-grid gap-2 col-6 mx-auto">
                                     <a href="{{ path('backoffice_user_show', {'id': user.id}) }}" class="btn btn-outline-secondary btn-sm">Voir</a>
-                                    <a href="{{ path('backoffice_user_delete', {'id': user.id}) }}" class="btn btn-outline-secondary btn-sm">Supprimer</a>
+                                    <a href="{{ path('backoffice_user_edit', {'id': user.id}) }}" class="btn btn-outline-secondary btn-sm">Modifier</a>
                                 </div>
                             </td>
                         </tr>
@@ -57,6 +57,7 @@
                     
                 </tbody>
             </table>
+            <br class="m-4">
         </div>
     </div>
 </main>

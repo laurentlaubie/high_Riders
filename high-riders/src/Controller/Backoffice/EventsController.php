@@ -34,7 +34,7 @@ class EventsController extends AbstractController
 
     // ===================== Page Event Display by id  =================//
     /**
-    * @Route("/{id}", name="_events_show", methods={"GET"})
+    * @Route("/{id}", name="events_show", methods={"GET"})
     */
     public function show(Event $event): Response
     {

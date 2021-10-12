@@ -36,7 +36,7 @@ class SpotsController extends AbstractController
 
     // ===================== Page spot Display by id  =================//
     /**
-    * @Route("/{id}", name="spot_show",  methods={"GET"})
+    * @Route("/{id}", name="spots_show",  methods={"GET"})
     */
     public function show(Spot $spot): Response
     {

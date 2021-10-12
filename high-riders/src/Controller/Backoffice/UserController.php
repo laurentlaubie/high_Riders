@@ -122,7 +122,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/delete", name="backoffice_user_delete", methods={"DELETE"}),requirements={"id": "\d+"})
+     * @Route("/{id}/delete", name="backoffice_user_delete", methods={"GET","DELETE"}),requirements={"id": "\d+"})
      */
     public function delete(
         int $id,
