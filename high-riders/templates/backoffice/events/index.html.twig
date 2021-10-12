@@ -3,6 +3,7 @@
 {% block title %}Back-Office | Evenements {% endblock %}
 
 {% block body %}
+
 <main class"container m-4">
     <div class="m-4 align-item-center"> 
     <div class="container ">
@@ -18,7 +19,7 @@
             </thead>
             <tbody>
         {% for listEvent in events %}
-            <tr>
+            
                 <td>{{ listEvent.id }}</td>
                 <td>{{ listEvent.title }}</td>
                 <th>
@@ -32,7 +33,7 @@
                 <td>{{ listEvent.typeEvent }}</td>
 
                 <td> 
-                <div class="d-grid gap-2 col-6 mx-auto">
+                <div class="d-grid gap-2 col-6 mx-2">
                     <a href="{{ path('backoffice_events_show', {id:listEvent.id}) }}" class="btn btn-outline-secondary btn-sm">Voir</a> 
                     <a href="{{ path('backoffice_event_delete', {id:listEvent.id}) }}" class="btn btn-outline-secondary btn-sm" onclick="return confirm('Êtes-vous sur de vouloir effectuer cette action ?')">Supprimer</a>
                 </div>
