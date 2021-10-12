@@ -6,13 +6,14 @@
 
     <main class="container">
         <div class="m-4">
-  
+            <div class="d-flex justify-content-around">
             {{ include('backoffice/user/_form.html.twig') }}
             {{ include('backoffice/user/_delete_form.html.twig') }}
-
+            </div>
             <a href="{{ path('backoffice_user_index') }}" class="btn btn-outline-secondary btn-sm mt-2">Retour à la liste des utilisateurs</a>
         
         </div>
+        <br class="m-4">
     </main>
 
 {% endblock %}
