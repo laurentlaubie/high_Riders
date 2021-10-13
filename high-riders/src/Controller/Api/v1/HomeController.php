@@ -26,11 +26,11 @@ class HomeController extends AbstractController
     {
         // We retrieve the series stored in BDD
         // data recovery from the entiy spot whith findBy by selection orderBy and limit the last 3 register.
-        $lastSpots = $spotRepository->findBy([],['id' => 'DESC'], 3);
+        $lastSpots = $spotRepository->findBy([],['id' => 'DESC'], 6);
         // data recovery from the entiy event whith findBy by selection orderBy and limit the last 3 register.
-        $lastEvents = $eventRepository->findBy([],['id' => 'DESC'], 3);
+        $lastEvents = $eventRepository->findBy([],['id' => 'DESC'], 6);
         // data recovery from the entiy spot whith findBy by selection orderBy and limit 3 best like register.
-        $bestSpots = $spotRepository->findBy([],['s_like' => 'DESC'], 3);
+        $bestSpots = $spotRepository->findBy([],['s_like' => 'DESC'], 6);
 
         return $this->json( [ $lastSpots, $lastEvents, $bestSpots ], 200, [],[
             // This input to the Serialiser to transform the objects
