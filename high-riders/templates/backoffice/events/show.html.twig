@@ -15,7 +15,7 @@
                                 <div class="container border" >
                                     <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Date de l'Evenement :</h6> {{ event.dateEvent|date('d-m-Y')}}</div>
                                     <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Horaire d'ouverture :</h6> {{ event.openingHours }}</div>
-                                    <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Horaire de fermeture :</h6> {{ event.closedHours }}</div>div>
+                                    <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Horaire de fermeture :</h6> {{ event.closedHours }}</div>
                                     <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Difficultées :</h6> {{ event.difficulty }}</div>
                                     <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Lien site :</h6> {{ event.link }}></div>
                                     <div class="p-2 bd-highlight"><h6 class="fw-bold text-success">Prix d'entrée :</h6> {{ event.price }}</div>
@@ -33,7 +33,7 @@
                                 <div class="small mb-1 badge bg-success">Id : {{ event.id }} </div>
                                 <h1 class="display-5 fw-bolder">{{ event.title }}</h1>
                                 <div class="fs-5 mb-5">
-                                    <p class="fst-italic text-secondary">créer le : {{ event.createdAt |date ("m/d/Y H:i" )}}</p>
+                                    <p class="fst-italic text-secondary">créé le : {{ event.createdAt |date ("d/m/Y H:i" )}}</p>
                                     <p class="fst-italic text-secondary">par : 
 
                                     {% if event.author %}

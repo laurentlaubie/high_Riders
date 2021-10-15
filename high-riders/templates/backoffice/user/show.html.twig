@@ -35,7 +35,7 @@
                         <div class="small mb-1 badge bg-success">Id : {{ user.id }} </div>
                         <h1 class="display-5 fw-bolder">{{ user.pseudo}}</h1>
                         <div class="fs-5 mb-5">
-                            <p class="fst-italic text-secondary">créer le : {{ user.createdAt |date ("m/d/Y H:i" )}}</p>
+                            <p class="fst-italic text-secondary">créé le : {{ user.createdAt |date ("d/m/Y H:i" )}}</p>
                            
                         </div>
                         
@@ -58,7 +58,7 @@
         <div class="col-sm-6 " id="user_events">
             <div class="card">
             <div class="card-body">
-                <h5 class="card-title text-success">Evenements créer :</h5>
+                <h5 class="card-title text-success">Evenements créés :</h5>
                     {% for events in user.events %}
                         <div class=" container align-items-center">
                             <a href="{{ path('backoffice_events_show', {id:events.id}) }}" class="text-dark " type="link">
@@ -73,7 +73,7 @@
         <div class="col-sm-6" id="user_spots">
             <div class="card">
             <div class="card-body">
-                <h5 class="card-title text-success">Spots créer :</h5>
+                <h5 class="card-title text-success">Spots créés :</h5>
                     {% for spots in user.spots %}
                         <div class=" container align-items-center">
                         <a href="{{ path('backoffice_spots_show', {id:spots.id}) }}" class="text-dark " type="link">
